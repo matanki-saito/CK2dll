@@ -1518,10 +1518,10 @@ namespace Test {
 		__asm {
 			lea ecx, [ebp - 0x168];
 			cmp dword ptr[ecx + 0x14], 0x10;
-			jb y_8;
+			jb y_8_;
 			mov ecx, [ecx];
 
-		y_8:
+		y_8_:
 			mov al, [ecx];
 
 			cmp al, ESCAPE_SEQ_1;
@@ -1560,10 +1560,10 @@ namespace Test {
 		__asm {
 			lea ecx,[ebp - 0x168];
 			cmp dword ptr[ecx + 0x14], 0x10;
-			jb z_8;
+			jb z_8_;
 			mov ecx, [ecx];
 
-		z_8:
+		z_8_:
 			mov al, [ecx];
 
 			cmp al, ESCAPE_SEQ_1;
