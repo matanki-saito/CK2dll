@@ -1,0 +1,117 @@
+﻿全游戏txt编码处理
+
+黑色描边白色文字为模板，PS
+
+只有地图字体需要mipmap
+
+不包含0-31
+
+合并字体
+
+14  NotoSansBold_14
+16  NotoSansBold_16
+18  NotoSansBold_18
+20  NotoSansBold_20
+--------------------------
+12  NotoSansThin_12
+14  NotoSansThin_14
+16  NotoSansThin_16
+18  NotoSansThin_18
+20  NotoSansRegular_20
+22  NotoSansRegular_22
+24  NotoSansRegular_24
+29  NotoSansRegular_29
+36  NotoSerifSemiBold_36
+100 NotoSansBold_100
+
+standard 18
+garamond_16
+garamond_16_bold
+tahoma_60 100
+standard_18
+standard_22
+vic_22_bl
+tahoma_20_bold
+garamond_24
+garamond_14
+garamond_14_bold
+vic_18
+vic_18s
+vic_18_grey
+vic_22
+vic_22s
+vic_29
+vic_29s
+vic_36
+vic_36s
+Arial12
+flaunch_16b
+flaunch_18b
+newsfeed_body 16
+
+---------------------------------------------------
+languages.yml增加l_schinese
+
+l_english:
+ l_english:0 "English"
+ l_german:0 "German"
+ l_french:0 "French"
+ l_spanish:0 "Spanish"
+ l_schinese:0 "Simplified Chinese"
+ l_english_tag:0 ""
+l_german:
+ l_english:0 "Englisch"
+ l_german:0 "Deutsch"
+ l_french:0 "Französisch"
+ l_spanish:0 "Spanisch"
+ l_schinese:0 "Vereinfachtes Chinesisch"
+ l_english_tag:0 ""
+l_french:
+ l_english:0 "Anglais"
+ l_german:0 "Allemand"
+ l_french:0 "Français"
+ l_spanish:0 "Espagnol"
+ l_schinese:0 "Chinois simplifié"
+ l_english_tag:0 ""
+l_spanish:
+ l_english:0 "Inglés"
+ l_german:0 "Alemán"
+ l_french:0 "Francés"
+ l_spanish:0 "Español"
+ l_schinese:0 "Chino simplificado"
+ l_english_tag:0 ""
+l_schinese:
+ l_english:0 "英语"
+ l_german:0 "德语"
+ l_french:0 "法语"
+ l_spanish:0 "西班牙语"
+ l_schinese:0 "简体中文"
+ l_english_tag:0 ""
+---------------------------------------------------------------------
+pdx_launcher/game/interface/launcher.gui 语言按钮排版
+
+				gridBoxType = {
+					name = "elements"
+					position = { x = 20 y = 20 }
+					size = { width = 199 height = 100%% }
+					slotsize = { width = 186 height = 45 }
+					max_slots_horizontal = 1
+					format = "UPPER_LEFT"
+}
+--------------------------------------------------------------------
+pdx_launcher/common/interface/common_core.gfx 增加中国国旗
+
+	spriteType = {
+	name = "GFX_lang_flag_l_schinese"
+	texturefile = "pdx_launcher/common/gfx/interface/Chinese_flag.dds"
+	}
+---------------------------------------------------------------------
+pdx_launcher/common/gfx/interface/Chinese_flag.dds 国旗贴图
+---------------------------------------------------------------------
+editbin /dynamicbase:no "D:\SteamLibrary\steamapps\common\Europa Universalis IV\eu4.exe"
+--------------------------------------------------------------------------------------------
+
+17F025C 17F0430
+CTextBuffer的删除插入移动等工作
+可能仍需要将A3 A4 A7改为03 04 07
+通过查找change_province_name等语句寻找txt里的文本
