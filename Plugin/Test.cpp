@@ -1112,7 +1112,7 @@ namespace Test {
 			add esi, 2;
 
 			cmp esi, ebx;
-			jb j_4;
+			jnb j_4;
 
 		j_6:
 			mov ecx, [ebp - 0x10];
