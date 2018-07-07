@@ -2020,6 +2020,74 @@ namespace Test {
 		}
 	}
 
+	uintptr_t loc_172DEE2;
+	__declspec(naked) void yy_1() {
+		__asm {
+			// store reg / counter
+			push esi;
+			xor esi, esi;
+
+			mov eax, [edi + 0x28]; // 文字列長さ
+			
+			lea ecx, [edi + 0x18]; // テキスト
+
+			cmp eax, 0x10;
+			jbe yy_2;
+
+			mov ecx, [ecx];
+
+		yy_2:
+			mov eax, [edi + 0x34]; // キャレット位置
+			sub eax, 3;
+			js yy_3;
+			mov al, [ecx + eax];
+
+			cmp al, ESCAPE_SEQ_1;
+			jz yy_4;
+
+			cmp al, ESCAPE_SEQ_2;
+			jz yy_4;
+
+			cmp al, ESCAPE_SEQ_3;
+			jz yy_4;
+
+			cmp al, ESCAPE_SEQ_4;
+			jnz yy_3;
+
+		yy_4:
+			mov esi, 2;
+
+		yy_3:
+			mov eax, [edi];
+			mov ecx, edi;
+
+			test bl, bl;
+			jnz yy_6;
+
+			call dword ptr[eax + 0xA0];
+			jmp yy_5;
+
+		yy_6:
+			call dword ptr[eax + 0x9C];
+
+		yy_5:
+			cmp esi, 0;
+			jz yy_7;
+
+			sub esi, 1;
+			jmp yy_3;
+
+		yy_7:
+			// restore reg / counter
+			pop esi;
+
+			pop ebx;
+
+			push loc_172DEE2;
+			ret;
+		}
+	}
+
 	void InitAndPatch() {
 
 		/* sub_12CC4E0 */
@@ -2441,5 +2509,16 @@ namespace Test {
 			injector::MakeJMP(sub_122FEC0_f1, byte_pattern::temp_instance().get_first().address(-0x12));
 		}
 		/* sub_15AB8F0 入力 */
+
+		/*  Backspace */
+		byte_pattern::temp_instance().find_pattern("8B 07 84 DB 5B 8B CF");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), yy_1);
+		}
+		byte_pattern::temp_instance().find_pattern("0F B7 47 36 8B CF 50 8D 45 DC 50");
+		if (byte_pattern::temp_instance().has_size(2)) { // select first !
+			loc_172DEE2 = byte_pattern::temp_instance().get_first().address();
+		}
+		/*  Backspace */
 	}
 }
