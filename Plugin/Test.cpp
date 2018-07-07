@@ -12,7 +12,10 @@ namespace Test {
 #define ESCAPE_SEQ_3 0x12
 #define ESCAPE_SEQ_4 0x13
 
-#define SHIFT_2 0x0F
+#define LOW_SHIFT 0x0F
+#define HIGH_SHIFT 0x9
+
+#define SHIFT_2 LOW_SHIFT
 #define SHIFT_3 0x900
 #define SHIFT_4 0x8F1
 
@@ -1746,6 +1749,251 @@ namespace Test {
 		}
 	}
 
+	uintptr_t xx_end;
+	uintptr_t xx_end2;
+	void __declspec(naked) heap_alloc_f1(void *p) {__asm {nop;nop;nop;nop;nop;}}
+	void __declspec(naked) heap_free_f1(void *p) { __asm {nop; nop; nop; nop; nop; } }
+	void __declspec(naked) PHYSFS_utf8ToUcs2_f1(void *p) { __asm {nop; nop; nop; nop; nop; } }
+	void __declspec(naked) sub_122FEC0_f1(void *p) { __asm {nop; nop; nop; nop; nop; } }
+	__declspec(naked) void xx_start()
+	{
+		__asm {
+			mov ecx, [ebp - 0x64];
+
+			cmp ch, 0;
+			jnz xx_1;
+
+			xor esi, esi;
+			push xx_end;
+			ret;
+
+		xx_1:
+			push 0xFF;	/* 適当 */
+			call heap_alloc_f1;
+			pop ecx;
+
+			test eax, eax;
+			jz xx_1;
+			
+			push 0;
+			push 0xFF;
+			lea eax, [eax];
+			mov[ebp - 0x74], eax;
+			push eax;
+			lea ecx, [ebp - 0x64];
+			call PHYSFS_utf8ToUcs2_f1;
+			add esp, 0x10;
+
+			push 0xFF;
+			call heap_alloc_f1;
+			pop ecx;
+
+		xx_9s: /* push */
+			push edi;
+			push ebx;
+
+			xor edi, edi;
+			mov[ebp - 0x78], eax;
+
+
+		xx_9r:
+			xor esi, esi;
+
+		xx_2:
+			mov eax, [ebp - 0x74];
+			movzx ax, word ptr[eax + esi];
+
+			cmp ax, 0;
+			jz xx_10;
+
+			xor ecx, ecx;
+			mov ecx, ESCAPE_SEQ_1;
+
+			cmp ah, 0xA4;
+			jz xx_4;
+
+			cmp ah, 0xA3;
+			jz xx_4;
+
+			cmp ah, 0xA7;
+			jz xx_4;
+
+			cmp ah, 0x24;
+			jz xx_4;
+
+			cmp ah, 0x5B;
+			jz xx_4;
+
+			cmp ah, 0x0;
+			jz xx_4;
+
+			cmp ah, 0x5C;
+			jz xx_4;
+
+			cmp ah, 0x20;
+			jz xx_4;
+
+			cmp ah, 0x0D;
+			jz xx_4;
+
+			cmp ah, 0x0A;
+			jz xx_4;
+
+			cmp ah, 0x22;
+			jz xx_4;
+
+			cmp ah, 0x7B;
+			jz xx_4;
+
+			cmp ah, 0x7D;
+			jz xx_4;
+
+			cmp ah, 0x40;
+			jz xx_4;
+
+			cmp ah, 0x80;
+			jz xx_4;
+
+			cmp ah, 0x7E;
+			jz xx_4;
+
+			cmp ah, 0x2F;
+			jnz xx_3;
+
+		xx_4:
+			add ecx, 2;
+
+		xx_3:
+			cmp al, 0xA4;
+			jz xx_5;
+
+			cmp al, 0xA3;
+			jz xx_5;
+
+			cmp al, 0xA7;
+			jz xx_5;
+
+			cmp al, 0x24;
+			jz xx_5;
+
+			cmp al, 0x5B;
+			jz xx_5;
+
+			cmp al, 0x0;
+			jz xx_5;
+
+			cmp al, 0x5C;
+			jz xx_5;
+
+			cmp al, 0x20;
+			jz xx_5;
+
+			cmp al, 0x0D;
+			jz xx_5;
+
+			cmp al, 0x0A;
+			jz xx_5;
+
+			cmp al, 0x22;
+			jz xx_5;
+
+			cmp al, 0x7B;
+			jz xx_5;
+
+			cmp al, 0x7D;
+			jz xx_5;
+
+			cmp al, 0x40;
+			jz xx_5;
+
+			cmp al, 0x80;
+			jz xx_5;
+
+			cmp al, 0x7E;
+			jz xx_5;
+
+			cmp al, 0x2F;
+			jnz xx_6;
+
+		xx_5:
+			add ecx, 1;
+
+		xx_6:
+			cmp ecx, ESCAPE_SEQ_2;
+			jnz xx_6_1;
+			add al, LOW_SHIFT;
+			jmp xx_7;
+
+		xx_6_1:
+			cmp ecx, ESCAPE_SEQ_3;
+			jnz xx_6_2;
+			sub ah, HIGH_SHIFT;
+			jmp xx_7;
+
+		xx_6_2:
+			cmp ecx, ESCAPE_SEQ_4;
+			jnz xx_7;
+			add al, LOW_SHIFT;
+			sub ah, HIGH_SHIFT;
+		
+		xx_7:
+			add esi, 2;
+			mov ebx, [ebp - 0x78];
+			mov[ebx + edi], cl;
+			mov[ebx + edi + 1], ax;
+			add edi, 3;
+
+			jmp xx_2;
+
+		/* LOOP END */
+
+		xx_10:
+			/* pop */
+			pop ebx;
+			pop edi;
+
+			/* count */
+			xor esi, esi;
+
+		xx_12:
+			mov ecx, [ebp - 0x78];
+			mov cl, [ecx + esi];
+
+			cmp cl, 0;
+			jz xx_13;
+
+			/*  edi */
+			/* eax, esi, ecx */
+
+			lea eax, [ebp - 0x1C];
+			mov[ebp - 0x1C], cl;
+			mov edx, [edi];
+			lea ecx, [ebp - 0x38];
+			push eax;
+			mov[ebp - 0x18], 1;
+			call sub_122FEC0_f1;
+			push eax;
+			mov ecx, edi;
+			call dword ptr[edx + 0x28];
+
+			inc esi;
+
+		xx_13:
+
+			push[ebp - 0x74];
+			call heap_free_f1;
+
+			push[ebp - 0x78];
+			call heap_free_f1;
+
+			pop ecx;
+			pop ecx;
+
+			push xx_end2;
+			ret;
+		}
+	}
+
 	void InitAndPatch() {
 
 		/* sub_12CC4E0 */
@@ -2106,17 +2354,16 @@ namespace Test {
 		}
 		/* end sub_19BEB40 */
 
-		/* ヒープクリアフラグの修正 */
+		/* sub_16FEEFB ヒープクリアフラグの修正 */
 		byte_pattern::temp_instance().find_pattern("59 85 C0 74 15 56 6A 00");
 		if (byte_pattern::temp_instance().has_size(1)) {
 			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x7), 0x08, true);
 		}
-		/* ヒープクリアフラグの修正 */
+		/* sub_16FEEFB ヒープクリアフラグの修正 */
 
 		/* 日付 */
 		byte_pattern::temp_instance().find_pattern("64 20 77 20 6D 77 20 2C");
 		if (byte_pattern::temp_instance().has_size(1)) {
-
 			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0), 0x79, true);
 			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(1), 0x20, true);
 			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(2), 0x10, true);
@@ -2133,12 +2380,40 @@ namespace Test {
 			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(13), 0x65, true);
 		}
 		/* 日付 */
-
-
-
-
-
-
-
+		
+		/* sub_15AB8F0 入力 */
+		byte_pattern::temp_instance().find_pattern("55 8B EC 83 EC 70 53 56 57 8B F9 8B DA");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(5), 0x78, true);
+		}
+		byte_pattern::temp_instance().find_pattern("8A 4D 9C 33 F6 80 F9 80");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), xx_start);
+			xx_end = byte_pattern::temp_instance().get_first().address(5);
+		}
+		byte_pattern::temp_instance().find_pattern("FF 75 A0 E8 ? ? ? ?  83 C4 04 25");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			xx_end2 = byte_pattern::temp_instance().get_first().address();
+		}
+		// same as sub_16FEEFB
+		byte_pattern::temp_instance().find_pattern("8B FF 55 8B EC 56 8B 75  08 83 FE E0");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(heap_alloc_f1, byte_pattern::temp_instance().get_first().address());
+		}
+		byte_pattern::temp_instance().find_pattern("8B FF 55 8B EC 83 7D 08 00 74 2D FF 75");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(heap_free_f1, byte_pattern::temp_instance().get_first().address());
+		}
+		// PHYSFS_utf8ToUcs2
+		byte_pattern::temp_instance().find_pattern("55 8B EC 51 8B 4D 10 53");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(PHYSFS_utf8ToUcs2_f1, byte_pattern::temp_instance().get_first().address());
+		}
+		// struct init
+		byte_pattern::temp_instance().find_pattern("C7 41 08 01 00 00 00 C7 41 0C 00 00 00 00");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(sub_122FEC0_f1, byte_pattern::temp_instance().get_first().address(-0x12));
+		}
+		/* sub_15AB8F0 入力 */
 	}
 }
