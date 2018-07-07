@@ -1,5 +1,4 @@
-﻿#include "misc.h"
-#include "eu4.h"
+﻿#include "stdinc.h"
 #include "byte_pattern.h"
 
 using namespace std;
@@ -283,14 +282,7 @@ namespace Test {
 		}
 	};
 
-//2.8.3.2
-//#define DIFF -0x800
-
-//2.8.1.1
-//#define DIFF 0x100
-
 	uintptr_t diff;
-
 	uintptr_t b_5;
 	uintptr_t b_3;
 	__declspec(naked) void b_2()
@@ -1751,10 +1743,43 @@ namespace Test {
 
 	uintptr_t xx_end;
 	uintptr_t xx_end2;
-	void __declspec(naked) heap_alloc_f1(void *p) {__asm {nop;nop;nop;nop;nop;}}
-	void __declspec(naked) heap_free_f1(void *p) { __asm {nop; nop; nop; nop; nop; } }
-	void __declspec(naked) PHYSFS_utf8ToUcs2_f1(void *p) { __asm {nop; nop; nop; nop; nop; } }
-	void __declspec(naked) sub_122FEC0_f1(void *p) { __asm {nop; nop; nop; nop; nop; } }
+	__declspec(naked) void heap_alloc_f1() {
+		__asm {
+			nop;
+			nop;
+			nop;
+			nop;
+			nop;
+		}
+	}
+	__declspec(naked) void heap_free_f1() {
+		__asm {
+			nop;
+			nop;
+			nop;
+			nop;
+			nop;
+		}
+	}
+	__declspec(naked) void PHYSFS_utf8ToUcs2_f1() {
+		__asm {
+			nop;
+			nop;
+			nop;
+			nop;
+			nop;
+		}
+	}
+	__declspec(naked) void sub_122FEC0_f1() {
+		__asm {
+			nop;
+			nop;
+			nop;
+			nop;
+			nop;
+		}
+	}
+
 	__declspec(naked) void xx_start()
 	{
 		__asm {
@@ -1768,7 +1793,7 @@ namespace Test {
 			ret;
 
 		xx_1:
-			push 0xFF;	/* 適当 */
+			push 0xFF;	/* dwBytes */
 			call heap_alloc_f1;
 			pop ecx;
 
@@ -1781,22 +1806,21 @@ namespace Test {
 			mov[ebp - 0x74], eax;
 			push eax;
 			lea ecx, [ebp - 0x64];
+			push ecx;
 			call PHYSFS_utf8ToUcs2_f1;
 			add esp, 0x10;
 
-			push 0xFF;
+			push 0xFF; /* dwBytes */
 			call heap_alloc_f1;
 			pop ecx;
 
-		xx_9s: /* push */
+			/* push */
 			push edi;
 			push ebx;
 
 			xor edi, edi;
 			mov[ebp - 0x78], eax;
 
-
-		xx_9r:
 			xor esi, esi;
 
 		xx_2:
@@ -1957,7 +1981,7 @@ namespace Test {
 
 		xx_12:
 			mov ecx, [ebp - 0x78];
-			mov cl, [ecx + esi];
+			movzx ecx,byte ptr [ecx + esi];
 
 			cmp cl, 0;
 			jz xx_13;
@@ -1966,7 +1990,7 @@ namespace Test {
 			/* eax, esi, ecx */
 
 			lea eax, [ebp - 0x1C];
-			mov[ebp - 0x1C], cl;
+			mov[ebp - 0x1C], ecx;
 			mov edx, [edi];
 			lea ecx, [ebp - 0x38];
 			push eax;
@@ -1974,9 +1998,11 @@ namespace Test {
 			call sub_122FEC0_f1;
 			push eax;
 			mov ecx, edi;
+			mov edx,[edi];
 			call dword ptr[edx + 0x28];
 
 			inc esi;
+			jmp xx_12;
 
 		xx_13:
 
@@ -2391,12 +2417,12 @@ namespace Test {
 			injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), xx_start);
 			xx_end = byte_pattern::temp_instance().get_first().address(5);
 		}
-		byte_pattern::temp_instance().find_pattern("FF 75 A0 E8 ? ? ? ?  83 C4 04 25");
+		byte_pattern::temp_instance().find_pattern("FF 75 A0 E8 ? ? ? ? 83 C4 04 25");
 		if (byte_pattern::temp_instance().has_size(1)) {
 			xx_end2 = byte_pattern::temp_instance().get_first().address();
 		}
 		// same as sub_16FEEFB
-		byte_pattern::temp_instance().find_pattern("8B FF 55 8B EC 56 8B 75  08 83 FE E0");
+		byte_pattern::temp_instance().find_pattern("8B FF 55 8B EC 56 8B 75 08 83 FE E0");
 		if (byte_pattern::temp_instance().has_size(1)) {
 			injector::MakeJMP(heap_alloc_f1, byte_pattern::temp_instance().get_first().address());
 		}

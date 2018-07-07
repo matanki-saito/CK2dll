@@ -15,8 +15,6 @@
 #include <cstring>
 #include <filesystem>
 #include <boost/utility/string_view.hpp>
-#include "../include/utf8cpp/utf8.h"
-#include "../include/utf8cpp/eu4utf8.h"
 #include "../include/injector/hooking.hpp"
 #include "../include/injector/calling.hpp"
 #include "../include/injector/assembly.hpp"

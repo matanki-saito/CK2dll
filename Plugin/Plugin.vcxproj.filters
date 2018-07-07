@@ -15,22 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="bitmapfont.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="byte_pattern.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="misc.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="province.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="textbuffer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Test.cpp">
@@ -38,25 +26,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bitmapfont.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="byte_pattern.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="eu4.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="misc.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="province.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="stdinc.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="textbuffer.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Test.h">

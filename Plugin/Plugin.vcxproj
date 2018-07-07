@@ -91,23 +91,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="bitmapfont.cpp" />
     <ClCompile Include="byte_pattern.cpp" />
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="misc.cpp" />
-    <ClCompile Include="province.cpp" />
     <ClCompile Include="Test.cpp" />
-    <ClCompile Include="textbuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bitmapfont.h" />
     <ClInclude Include="byte_pattern.h" />
-    <ClInclude Include="eu4.h" />
-    <ClInclude Include="misc.h" />
-    <ClInclude Include="province.h" />
     <ClInclude Include="stdinc.h" />
     <ClInclude Include="Test.h" />
-    <ClInclude Include="textbuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Note.txt" />
