@@ -1827,8 +1827,13 @@ namespace Test {
 			mov eax, [ebp - 0x74];
 			movzx ax, word ptr[eax + esi];
 
+			// 終了
 			cmp ax, 0;
 			jz xx_10;
+
+			// 2バイトじゃない
+			cmp ah, 0;
+			jz xx_2_1;
 
 			xor ecx, ecx;
 			mov ecx, ESCAPE_SEQ_1;
@@ -1978,6 +1983,14 @@ namespace Test {
 			mov[ebx + edi], cl;
 			mov[ebx + edi + 1], ax;
 			add edi, 3;
+
+			jmp xx_2;
+
+		xx_2_1:
+			inc esi;
+			mov ebx, [ebp - 0x78];
+			mov byte ptr [ebx + edi], al;
+			inc edi;
 
 			jmp xx_2;
 
