@@ -1585,6 +1585,8 @@ namespace Test {
 		z_4:
 			lea eax, [ebp - 0xAD4];
 
+			lea ecx, [ebp - 0x168];
+
 			push z_6;
 			ret;
 		}
@@ -1748,8 +1750,7 @@ namespace Test {
 			nop;
 			nop;
 			nop;
-			nop;
-			nop;
+			add eax, 1;
 		}
 	}
 	__declspec(naked) void heap_free_f1() {
@@ -1757,8 +1758,7 @@ namespace Test {
 			nop;
 			nop;
 			nop;
-			nop;
-			nop;
+			add eax, 2;
 		}
 	}
 	__declspec(naked) void PHYSFS_utf8ToUcs2_f1() {
@@ -1766,8 +1766,7 @@ namespace Test {
 			nop;
 			nop;
 			nop;
-			nop;
-			nop;
+			add eax, 3;
 		}
 	}
 	__declspec(naked) void sub_122FEC0_f1() {
@@ -1775,8 +1774,7 @@ namespace Test {
 			nop;
 			nop;
 			nop;
-			nop;
-			nop;
+			add eax, 4;
 		}
 	}
 
@@ -2137,8 +2135,7 @@ namespace Test {
 			nop;
 			nop;
 			nop;
-			nop;
-			nop;
+			add eax, 5;
 		}
 	}
 	__declspec(naked) void zz_2() {
