@@ -1,5 +1,4 @@
-﻿#include "misc.h"
-#include "eu4.h"
+﻿#include "stdinc.h"
 #include "byte_pattern.h"
 
 using namespace std;
@@ -12,7 +11,10 @@ namespace Test {
 #define ESCAPE_SEQ_3 0x12
 #define ESCAPE_SEQ_4 0x13
 
-#define SHIFT_2 0x0F
+#define LOW_SHIFT 0x0F
+#define HIGH_SHIFT 0x9
+
+#define SHIFT_2 LOW_SHIFT
 #define SHIFT_3 0x900
 #define SHIFT_4 0x8F1
 
@@ -280,14 +282,7 @@ namespace Test {
 		}
 	};
 
-//2.8.3.2
-//#define DIFF -0x800
-
-//2.8.1.1
-//#define DIFF 0x100
-
 	uintptr_t diff;
-
 	uintptr_t b_5;
 	uintptr_t b_3;
 	__declspec(naked) void b_2()
@@ -1735,13 +1730,437 @@ namespace Test {
 			jmp ii_4;
 
 		ii_3:
-			push 4;
+			push 3;
 
 		ii_4:
 			push eax;
 			lea ecx, [ebp - 0x70];
 
 			push ii_5;
+			ret;
+		}
+	}
+
+	uintptr_t xx_end;
+	uintptr_t xx_end2;
+	__declspec(naked) void heap_alloc_f1() {
+		__asm {
+			nop;
+			nop;
+			nop;
+			nop;
+			nop;
+		}
+	}
+	__declspec(naked) void heap_free_f1() {
+		__asm {
+			nop;
+			nop;
+			nop;
+			nop;
+			nop;
+		}
+	}
+	__declspec(naked) void PHYSFS_utf8ToUcs2_f1() {
+		__asm {
+			nop;
+			nop;
+			nop;
+			nop;
+			nop;
+		}
+	}
+	__declspec(naked) void sub_122FEC0_f1() {
+		__asm {
+			nop;
+			nop;
+			nop;
+			nop;
+			nop;
+		}
+	}
+
+	__declspec(naked) void xx_start()
+	{
+		__asm {
+			mov ecx, [ebp - 0x64];
+
+			cmp ch, 0;
+			jnz xx_1;
+
+			xor esi, esi;
+			push xx_end;
+			ret;
+
+		xx_1:
+			push 0xFF;	/* dwBytes */
+			call heap_alloc_f1;
+			pop ecx;
+
+			test eax, eax;
+			jz xx_1;
+			
+			push 0;
+			push 0xFF;
+			lea eax, [eax];
+			mov[ebp - 0x74], eax;
+			push eax;
+			lea ecx, [ebp - 0x64];
+			push ecx;
+			call PHYSFS_utf8ToUcs2_f1;
+			add esp, 0x10;
+
+			push 0xFF; /* dwBytes */
+			call heap_alloc_f1;
+			pop ecx;
+
+			/* push */
+			push edi;
+			push ebx;
+
+			xor edi, edi;
+			mov[ebp - 0x78], eax;
+
+			xor esi, esi;
+
+		xx_2:
+			mov eax, [ebp - 0x74];
+			movzx ax, word ptr[eax + esi];
+
+			// 終了
+			cmp ax, 0;
+			jz xx_10;
+
+			// 2バイトじゃない
+			cmp ah, 0;
+			jz xx_2_1;
+
+			xor ecx, ecx;
+			mov ecx, ESCAPE_SEQ_1;
+
+			cmp ah, 0xA4;
+			jz xx_4;
+
+			cmp ah, 0xA3;
+			jz xx_4;
+
+			cmp ah, 0xA7;
+			jz xx_4;
+
+			cmp ah, 0x24;
+			jz xx_4;
+
+			cmp ah, 0x5B;
+			jz xx_4;
+
+			cmp ah, 0x0;
+			jz xx_4;
+
+			cmp ah, 0x5C;
+			jz xx_4;
+
+			cmp ah, 0x20;
+			jz xx_4;
+
+			cmp ah, 0x0D;
+			jz xx_4;
+
+			cmp ah, 0x0A;
+			jz xx_4;
+
+			cmp ah, 0x22;
+			jz xx_4;
+
+			cmp ah, 0x7B;
+			jz xx_4;
+
+			cmp ah, 0x7D;
+			jz xx_4;
+
+			cmp ah, 0x40;
+			jz xx_4;
+
+			cmp ah, 0x3B;
+			jz xx_4;
+
+			cmp ah, 0x80;
+			jz xx_4;
+
+			cmp ah, 0x7E;
+			jz xx_4;
+
+			cmp ah, 0xBD;
+			jz xx_4;
+
+			cmp ah, 0x5F;
+			jnz xx_3;
+
+		xx_4:
+			add ecx, 2;
+
+		xx_3:
+			cmp al, 0xA4;
+			jz xx_5;
+
+			cmp al, 0xA3;
+			jz xx_5;
+
+			cmp al, 0xA7;
+			jz xx_5;
+
+			cmp al, 0x24;
+			jz xx_5;
+
+			cmp al, 0x5B;
+			jz xx_5;
+
+			cmp al, 0x0;
+			jz xx_5;
+
+			cmp al, 0x5C;
+			jz xx_5;
+
+			cmp al, 0x20;
+			jz xx_5;
+
+			cmp al, 0x0D;
+			jz xx_5;
+
+			cmp al, 0x0A;
+			jz xx_5;
+
+			cmp al, 0x22;
+			jz xx_5;
+
+			cmp al, 0x7B;
+			jz xx_5;
+
+			cmp al, 0x7D;
+			jz xx_5;
+
+			cmp al, 0x40;
+			jz xx_5;
+
+			cmp al, 0x3B;
+			jz xx_5;
+
+			cmp al, 0x80;
+			jz xx_5;
+
+			cmp al, 0x7E;
+			jz xx_5;
+
+			cmp al, 0xBD;
+			jz xx_5;
+
+			cmp al, 0x5F;
+			jnz xx_6;
+
+		xx_5:
+			add ecx, 1;
+
+		xx_6:
+			cmp ecx, ESCAPE_SEQ_2;
+			jnz xx_6_1;
+			add al, LOW_SHIFT;
+			jmp xx_7;
+
+		xx_6_1:
+			cmp ecx, ESCAPE_SEQ_3;
+			jnz xx_6_2;
+			sub ah, HIGH_SHIFT;
+			jmp xx_7;
+
+		xx_6_2:
+			cmp ecx, ESCAPE_SEQ_4;
+			jnz xx_7;
+			add al, LOW_SHIFT;
+			sub ah, HIGH_SHIFT;
+		
+		xx_7:
+			add esi, 2;
+			mov ebx, [ebp - 0x78];
+			mov[ebx + edi], cl;
+			mov[ebx + edi + 1], ax;
+			add edi, 3;
+
+			jmp xx_2;
+
+		xx_2_1:
+			inc esi;
+			mov ebx, [ebp - 0x78];
+			mov byte ptr [ebx + edi], al;
+			inc edi;
+
+			jmp xx_2;
+
+		/* LOOP END */
+
+		xx_10:
+			/* pop */
+			pop ebx;
+			pop edi;
+
+			/* count */
+			xor esi, esi;
+
+		xx_12:
+			mov ecx, [ebp - 0x78];
+			movzx ecx,byte ptr [ecx + esi];
+
+			cmp cl, 0;
+			jz xx_13;
+
+			/*  edi */
+			/* eax, esi, ecx */
+
+			lea eax, [ebp - 0x1C];
+			mov[ebp - 0x1C], ecx;
+			mov edx, [edi];
+			lea ecx, [ebp - 0x38];
+			push eax;
+			mov[ebp - 0x18], 1;
+			call sub_122FEC0_f1;
+			push eax;
+			mov ecx, edi;
+			mov edx,[edi];
+			call dword ptr[edx + 0x28];
+
+			inc esi;
+			jmp xx_12;
+
+		xx_13:
+
+			push[ebp - 0x74];
+			call heap_free_f1;
+
+			push[ebp - 0x78];
+			call heap_free_f1;
+
+			pop ecx;
+			pop ecx;
+
+			push xx_end2;
+			ret;
+		}
+	}
+
+	uintptr_t loc_172DEE2;
+	__declspec(naked) void yy_1() {
+		__asm {
+			// store reg / counter
+			push esi;
+			xor esi, esi;
+
+			mov eax, [edi + 0x28]; // 文字列長さ
+			
+			lea ecx, [edi + 0x18]; // テキスト
+
+			cmp eax, 0x10;
+			jbe yy_2;
+
+			mov ecx, [ecx];
+
+		yy_2:
+			mov eax, [edi + 0x34]; // キャレット位置
+			sub eax, 3;
+			js yy_3;
+			mov al, [ecx + eax];
+
+			cmp al, ESCAPE_SEQ_1;
+			jz yy_4;
+
+			cmp al, ESCAPE_SEQ_2;
+			jz yy_4;
+
+			cmp al, ESCAPE_SEQ_3;
+			jz yy_4;
+
+			cmp al, ESCAPE_SEQ_4;
+			jnz yy_3;
+
+		yy_4:
+			mov esi, 2;
+
+		yy_3:
+			mov eax, [edi];
+			mov ecx, edi;
+
+			test bl, bl;
+			jnz yy_6;
+
+			call dword ptr[eax + 0xA0];
+			jmp yy_5;
+
+		yy_6:
+			call dword ptr[eax + 0x9C];
+
+		yy_5:
+			cmp esi, 0;
+			jz yy_7;
+
+			sub esi, 1;
+			jmp yy_3;
+
+		yy_7:
+			// restore reg / counter
+			pop esi;
+
+			pop ebx;
+
+			push loc_172DEE2;
+			ret;
+		}
+	}
+
+	uintptr_t zz_21;
+	uintptr_t loc_18AB507;
+	__declspec(naked) void zz_8() {
+		__asm {
+			add esp, 0x14;
+			test eax, eax;
+			jz loc_18AB507_jmp;
+
+			push zz_21;
+			ret;
+
+		loc_18AB507_jmp:
+			push loc_18AB507;
+			ret;
+		}
+	}
+
+	uintptr_t zz_4;
+	uintptr_t loc_18C8D09;
+	__declspec(naked) void SDL_SetTextInputRect_f1() {
+		__asm {
+			nop;
+			nop;
+			nop;
+			nop;
+			nop;
+		}
+	}
+	__declspec(naked) void zz_2() {
+		__asm {
+			jz zz_5;
+			
+			push zz_4;
+			ret;
+
+		zz_5:
+			sub esp, 8;
+			mov ecx, [ebp + 0x18];
+			mov edx, [ebp + 8];
+			mov[ecx + 0x38], edx;
+			mov dword ptr[ebp - 0x14], 0;
+			mov dword ptr[ebp - 0x10], 0;
+			lea eax, [ebp - 0x14];
+			push eax;
+			call SDL_SetTextInputRect_f1;
+			add esp, 0x0C;
+			
+			push loc_18C8D09;
 			ret;
 		}
 	}
@@ -2106,17 +2525,16 @@ namespace Test {
 		}
 		/* end sub_19BEB40 */
 
-		/* ヒープクリアフラグの修正 */
+		/* sub_16FEEFB ヒープクリアフラグの修正 */
 		byte_pattern::temp_instance().find_pattern("59 85 C0 74 15 56 6A 00");
 		if (byte_pattern::temp_instance().has_size(1)) {
 			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x7), 0x08, true);
 		}
-		/* ヒープクリアフラグの修正 */
+		/* sub_16FEEFB ヒープクリアフラグの修正 */
 
 		/* 日付 */
 		byte_pattern::temp_instance().find_pattern("64 20 77 20 6D 77 20 2C");
 		if (byte_pattern::temp_instance().has_size(1)) {
-
 			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0), 0x79, true);
 			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(1), 0x20, true);
 			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(2), 0x10, true);
@@ -2133,12 +2551,137 @@ namespace Test {
 			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(13), 0x65, true);
 		}
 		/* 日付 */
+		
+		/* sub_15AB8F0 入力 */
+		byte_pattern::temp_instance().find_pattern("55 8B EC 83 EC 70 53 56 57 8B F9 8B DA");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(5), 0x78, true);
+		}
+		byte_pattern::temp_instance().find_pattern("8A 4D 9C 33 F6 80 F9 80");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), xx_start);
+			xx_end = byte_pattern::temp_instance().get_first().address(5);
+		}
+		byte_pattern::temp_instance().find_pattern("FF 75 A0 E8 ? ? ? ? 83 C4 04 25");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			xx_end2 = byte_pattern::temp_instance().get_first().address();
+		}
+		// same as sub_16FEEFB
+		byte_pattern::temp_instance().find_pattern("8B FF 55 8B EC 56 8B 75 08 83 FE E0");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(heap_alloc_f1, byte_pattern::temp_instance().get_first().address());
+		}
+		byte_pattern::temp_instance().find_pattern("8B FF 55 8B EC 83 7D 08 00 74 2D FF 75");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(heap_free_f1, byte_pattern::temp_instance().get_first().address());
+		}
+		// PHYSFS_utf8ToUcs2
+		byte_pattern::temp_instance().find_pattern("55 8B EC 51 8B 4D 10 53");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(PHYSFS_utf8ToUcs2_f1, byte_pattern::temp_instance().get_first().address());
+		}
+		// struct init
+		byte_pattern::temp_instance().find_pattern("C7 41 08 01 00 00 00 C7 41 0C 00 00 00 00");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(sub_122FEC0_f1, byte_pattern::temp_instance().get_first().address(-0x12));
+		}
+		/* sub_15AB8F0 入力 */
 
+		/*  Backspace */
+		byte_pattern::temp_instance().find_pattern("8B 07 84 DB 5B 8B CF");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), yy_1);
+		}
+		byte_pattern::temp_instance().find_pattern("0F B7 47 36 8B CF 50 8D 45 DC 50");
+		if (byte_pattern::temp_instance().has_size(2)) { // select first !
+			loc_172DEE2 = byte_pattern::temp_instance().get_first().address();
+		}
+		/*  Backspace */
 
+		/* show candidate and composition window */
+		// see https://twitter.com/matanki_saito/status/1005093384946479104
+		//
+		// (SDL_windowskeyboard.c)
+		//
+		// skip
+		//if (*lParam & GCS_RESULTSTR) {
+		//    IME_GetCompositionString(videodata, himc, GCS_RESULTSTR);
+		//    IME_SendInputEvent(videodata);
+		//}
+		byte_pattern::temp_instance().find_pattern("B9 00 08 00 00 8B 45");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(
+				byte_pattern::temp_instance().get_first().address(0x8),
+				byte_pattern::temp_instance().get_first().address(0x37)
+			);
+		}
+		// remove
+		// *lParam = 0;
+		byte_pattern::temp_instance().find_pattern("8B 45 14 89 08 E9 83 00");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeNOP(
+				byte_pattern::temp_instance().get_first().address(),
+				5,
+				true
+			);
+		}
+		// skip
+		//if (!videodata->ime_initialized || !videodata->ime_available || !videodata->ime_enabled)
+		//    return SDL_FALSE;
+		byte_pattern::temp_instance().find_pattern("39 4E 28 0F 84 19 02");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(
+				byte_pattern::temp_instance().get_first().address(0),
+				byte_pattern::temp_instance().get_first().address(0x1B)
+			);
+		}
+		// insert 
+		//videodata->ime_hwnd_current = hwnd;
+		//rect.x = 0;
+		//rect.y = 0;
+		//SDL_SetTextInputRect(&rect);
+		byte_pattern::temp_instance().find_pattern("0F 84 FD 00 00 00 83 E8 01");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), zz_2);
+			zz_4 = byte_pattern::temp_instance().get_first().address(0x06);
+		}
+		byte_pattern::temp_instance().find_pattern("33 DB 43 E9 E5");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			loc_18C8D09 = byte_pattern::temp_instance().get_first().address();
+		}
+		byte_pattern::temp_instance().find_pattern("55 8B EC A1 ? ? ? ? 85 C0 74 12 8B");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(SDL_SetTextInputRect_f1, byte_pattern::temp_instance().get_first().address());
+		}
 
+		// SDL_keyborad.c
+		// skip
+		byte_pattern::temp_instance().find_pattern("85 F6 74 30 57 57 6A 0C");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(
+				byte_pattern::temp_instance().get_first().address(-0x6),
+				byte_pattern::temp_instance().get_first().address(0)
+			);
+		}
 
-
-
+		// SDL_windowevent.c
+		// insert goto
+		//if (IME_HandleMessage(hwnd, msg, wParam, &lParam, data->videodata)) {
+		//	goto A;
+		//}
+		byte_pattern::temp_instance().find_pattern("83 C4 14 85 C0 74 07 33");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), zz_8);
+		}
+		byte_pattern::temp_instance().find_pattern("FF 75 14 FF 75 10 FF 75 0C FF 75 08 E9 B0 0D 00");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			zz_21 = byte_pattern::temp_instance().get_first().address();
+		}
+		byte_pattern::temp_instance().find_pattern("8B 45 0C B9 01 01 00 00");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			loc_18AB507 = byte_pattern::temp_instance().get_first().address();
+		}
+		/* Candidate */
 
 	}
 }
