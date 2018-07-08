@@ -1730,7 +1730,7 @@ namespace Test {
 			jmp ii_4;
 
 		ii_3:
-			push 4;
+			push 3;
 
 		ii_4:
 			push eax;
@@ -1875,13 +1875,19 @@ namespace Test {
 			cmp ah, 0x40;
 			jz xx_4;
 
+			cmp ah, 0x3B;
+			jz xx_4;
+
 			cmp ah, 0x80;
 			jz xx_4;
 
 			cmp ah, 0x7E;
 			jz xx_4;
 
-			cmp ah, 0x2F;
+			cmp ah, 0xBD;
+			jz xx_4;
+
+			cmp ah, 0x5F;
 			jnz xx_3;
 
 		xx_4:
@@ -1930,13 +1936,19 @@ namespace Test {
 			cmp al, 0x40;
 			jz xx_5;
 
+			cmp al, 0x3B;
+			jz xx_5;
+
 			cmp al, 0x80;
 			jz xx_5;
 
 			cmp al, 0x7E;
 			jz xx_5;
 
-			cmp al, 0x2F;
+			cmp al, 0xBD;
+			jz xx_5;
+
+			cmp al, 0x5F;
 			jnz xx_6;
 
 		xx_5:
