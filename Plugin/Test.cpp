@@ -2728,5 +2728,16 @@ namespace Test {
 			loc_8858F2 = byte_pattern::temp_instance().get_first().address();
 		}
 
+		/* File容量の制限？ */
+		byte_pattern::temp_instance().find_pattern("81 FE 00 00 00 02");
+		if (byte_pattern::temp_instance().has_size(2)) {
+			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x5), 0x04, true);
+			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x5), 0x04, true);
+		}
+
+		byte_pattern::temp_instance().find_pattern("68 00 00 00 02 C7 87 8C");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x4), 0x04, true);
+		}
 	}
 }
