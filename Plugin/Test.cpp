@@ -2196,7 +2196,71 @@ namespace Test {
 			push issue_suffix_id_r;
 			ret;
 		}
+	}
 
+	uintptr_t issue_14_end_1;
+	__declspec(naked) void issue_14_start_1() {
+		__asm {
+			// Title
+			lea     eax, [ebp - 0x7C]; // joinedSrc
+			mov     byte ptr[ebp - 0x4], 0x11; // profile cnt ?
+			push    eax;
+			lea     eax, [ebp - 0xF8]; // dest
+			push    eax;
+			lea     ecx, [ebp - 0x34];  // orgSrc
+
+			push issue_14_end_1;
+			ret;
+		}
+	}
+
+	uintptr_t issue_14_end_2;
+	__declspec(naked) void issue_14_start_2() {
+		__asm {
+			// FirstName
+			lea     ecx, [ebp - 0x98]; // joinedSrc
+			mov     byte ptr[ebp - 0x4], 0x12; // profile cnt ?
+			push    ecx;
+			lea     ecx, [ebp - 0x4C]; // dest
+			push    ecx;
+			mov     ecx, eax; // orgSrc
+
+			push issue_14_end_2;
+			ret;
+		}
+	}
+
+	uintptr_t issue_14_end_3;
+	__declspec(naked) void issue_14_start_3() {
+		__asm {
+			// ?
+			lea     ecx, [ebp - 0xC8];  // joinedSrc
+			mov     byte ptr[ebp - 0x4], 0x13; // profile cnt ?
+			push    ecx;
+			lea     ecx, [ebp - 0x64]; // dest
+			push    ecx;
+			mov     ecx, eax;  // orgSrc
+
+			push issue_14_end_3;
+			ret;
+		}
+	}
+
+	uintptr_t issue_14_end_4;
+	__declspec(naked) void issue_14_start_4() {
+		__asm {
+			// あだ名
+			mov     esi, [ebp + 0x8]; // arg_0, dest
+			mov     byte ptr[ebp - 0x4], 0x14; // prifile cnt ?
+			mov     ecx, [edi + 0x9C];
+			add     ecx, 0xC;
+			push    ecx; // joinedSrc
+			push    esi;
+			mov     ecx, eax;  // orgSrc
+			
+			push issue_14_end_4;
+			ret;
+		}
 	}
 
 	void InitAndPatch() {
@@ -2728,16 +2792,31 @@ namespace Test {
 			loc_8858F2 = byte_pattern::temp_instance().get_first().address();
 		}
 
-		/* File容量の制限？ */
+		/* File容量の制限解除 */
 		byte_pattern::temp_instance().find_pattern("81 FE 00 00 00 02");
 		if (byte_pattern::temp_instance().has_size(2)) {
 			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x5), 0x04, true);
 			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x5), 0x04, true);
 		}
-
 		byte_pattern::temp_instance().find_pattern("68 00 00 00 02 C7 87 8C");
 		if (byte_pattern::temp_instance().has_size(1)) {
 			injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x4), 0x04, true);
+		}
+
+		/* [Title] [FirstName] [NickName]となるのを[NickName] [FirstName] [Title]にする issue-14 */
+		byte_pattern::temp_instance().find_pattern("8D 45 84 C6 45 FC 11 50 8D 85 08");
+		if (byte_pattern::temp_instance().has_size(1)) {
+			injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), issue_14_start_1);
+			issue_14_end_1 = byte_pattern::temp_instance().get_first().address(0x12);
+
+			injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x17), issue_14_start_2);
+			issue_14_end_2 = byte_pattern::temp_instance().get_first().address(0x28);
+
+			injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x2D), issue_14_start_3);
+			issue_14_end_3 = byte_pattern::temp_instance().get_first().address(0x3E);
+
+			injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x43), issue_14_start_4);
+			issue_14_end_4 = byte_pattern::temp_instance().get_first().address(0x57);
 		}
 	}
 }
