@@ -2834,13 +2834,14 @@ namespace Test {
 
 		// SDL_keyborad.c
 		// skip
-		byte_pattern::temp_instance().find_pattern("85 F6 74 30 57 57 6A 0C");
-		if (byte_pattern::temp_instance().has_size(1)) {
-			injector::MakeJMP(
-				byte_pattern::temp_instance().get_first().address(-0x6),
-				byte_pattern::temp_instance().get_first().address(0)
-			);
-		}
+		// issue-9
+		//byte_pattern::temp_instance().find_pattern("85 F6 74 30 57 57 6A 0C");
+		//if (byte_pattern::temp_instance().has_size(1)) {
+		//	injector::MakeJMP(
+		//		byte_pattern::temp_instance().get_first().address(-0x6),
+		//		byte_pattern::temp_instance().get_first().address(0)
+		//	);
+		//}
 
 		// SDL_windowevent.c
 		// insert goto
