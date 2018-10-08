@@ -30,6 +30,12 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		// 継承ダイアログの花文字
 		DecorativeLetterInheritDialog::init(version);
 
+		// Buttonとツールチップ
+		ButtonAndTooltip::init(version);
+
+		// メインテキスト
+		MainText::init(version);
+
 		if (success == NOERROR) {
 			//MessageBoxW(NULL, L"[OK]", L"Multibyte DLL", MB_OK);
 			byte_pattern::temp_instance().debug_output2("DLL [OK]");

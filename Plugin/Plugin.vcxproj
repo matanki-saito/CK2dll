@@ -88,12 +88,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ButtonAndTooltip.cpp" />
     <ClCompile Include="byte_pattern.cpp" />
     <ClCompile Include="DecorativeLetterDialog.cpp" />
     <ClCompile Include="DecorativeLetterEndDialog.cpp" />
     <ClCompile Include="DecorativeLetterInheritDialog.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="MainText.cpp" />
     <ClCompile Include="MapJustify.cpp" />
     <ClCompile Include="mapView.cpp" />
     <ClCompile Include="Test.cpp" />

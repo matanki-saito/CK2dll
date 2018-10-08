@@ -95,3 +95,13 @@ namespace DecorativeLetterInheritDialog
 {
 	errno_t init(CK2Version version);
 }
+
+namespace ButtonAndTooltip
+{
+	errno_t init(CK2Version version);
+}
+
+namespace MainText
+{
+	errno_t init(CK2Version version);
+}
