@@ -91,6 +91,7 @@
     <ClCompile Include="byte_pattern.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="byte_pattern.h" />

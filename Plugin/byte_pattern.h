@@ -77,9 +77,10 @@ class byte_pattern
     void debug_output() const;
 
 public:
+	static void debug_output2(const std::string message);
     static void start_log(const wchar_t *module_name);
     static void shutdown_log();
-
+	
     static byte_pattern &temp_instance();
 
     byte_pattern();

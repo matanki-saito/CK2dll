@@ -35,3 +35,31 @@ struct IncompleteClass
         return *(T *)(reinterpret_cast<std::uintptr_t>(this) + offset);
     }
 };
+
+#define ESCAPE_SEQ_1 0x10
+#define ESCAPE_SEQ_2 0x11
+#define ESCAPE_SEQ_3 0x12
+#define ESCAPE_SEQ_4 0x13
+
+#define LOW_SHIFT 0x0F
+#define HIGH_SHIFT 0x9
+
+#define SHIFT_2 LOW_SHIFT
+#define SHIFT_3 0x900
+#define SHIFT_4 0x8F1
+
+#define NO_FONT 0x98F
+#define NOT_DEF 0x2026
+
+enum CK2Version {
+	UNKNOWN = 0,
+	v2_7_X = 27,
+	v2_8_X = 28,
+	v2_9_X = 29
+};
+
+namespace Misc
+{
+	CK2Version getVersion();
+	std::string versionString(CK2Version version);
+}

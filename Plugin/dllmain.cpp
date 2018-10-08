@@ -1,5 +1,5 @@
+#include "stdinc.h"
 #include "byte_pattern.h"
-#include "Test.h"
 
 BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 {
@@ -7,7 +7,21 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
     {
         byte_pattern::start_log(L"ck2jps");
 
-		Test::InitAndPatch();
+		// version‚ð•¶Žš—ñ‚©‚çŽæ“¾
+		CK2Version version = Misc::getVersion();
+
+		errno_t success = NOERROR;
+
+		if (success == NOERROR) {
+			//MessageBoxW(NULL, L"[OK]", L"Multibyte DLL", MB_OK);
+			byte_pattern::temp_instance().debug_output2("DLL [OK]");
+		}
+		else {
+			MessageBoxW(NULL, L"[NG]", L"Multibyte DLL", MB_OK);
+			byte_pattern::temp_instance().debug_output2("DLL [NG]");
+			exit(-1);
+		}
+
     }
     else if (reason == DLL_PROCESS_DETACH)
     {

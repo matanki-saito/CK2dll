@@ -15,6 +15,16 @@ memory_pointer byte_pattern::get_first() const
     return this->get(0);
 }
 
+void byte_pattern::debug_output2(const std::string message)
+{
+	if (!log_stream().is_open())
+		return;
+
+	log_stream() << message << "\n";
+
+	log_stream() << "--------------------------------------------------------------------------------------" << '\n' << endl;
+}
+
 void byte_pattern::start_log(const wchar_t *module_name)
 {
     shutdown_log();
