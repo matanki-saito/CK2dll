@@ -89,14 +89,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="byte_pattern.cpp" />
+    <ClCompile Include="DecorativeLetterDialog.cpp" />
+    <ClCompile Include="DecorativeLetterEndDialog.cpp" />
+    <ClCompile Include="DecorativeLetterInheritDialog.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="MapJustify.cpp" />
+    <ClCompile Include="mapView.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="byte_pattern.h" />
     <ClInclude Include="stdinc.h" />
-    <ClInclude Include="Test.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Note.txt" />

@@ -9,21 +9,21 @@ namespace Misc {
 
 		// _ _ 2.7.
 		byte_pattern::temp_instance().find_pattern("00 00 32 2E 37 2E");
-		if (byte_pattern::temp_instance().has_size(1)) {
+		if (byte_pattern::temp_instance().has_size(1,"v2.7.X pattern Check")) {
 			version = v2_7_X;
 			goto A;
 		}
 
 		// _ _ 2.8.
 		byte_pattern::temp_instance().find_pattern("00 00 32 2E 38 2E");
-		if (byte_pattern::temp_instance().has_size(1)) {
+		if (byte_pattern::temp_instance().has_size(1,"v2.8.X pattern Check")) {
 			version = v2_8_X;
 			goto A;
 		}
 
 		// _ _ 2.9.
 		byte_pattern::temp_instance().find_pattern("00 00 32 2E 39 2E");
-		if (byte_pattern::temp_instance().has_size(1)) {
+		if (byte_pattern::temp_instance().has_size(1,"v2.9.X pattern Check")) {
 			version = v2_9_X;
 			goto A;
 		}

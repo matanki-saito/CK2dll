@@ -51,6 +51,8 @@ struct IncompleteClass
 #define NO_FONT 0x98F
 #define NOT_DEF 0x2026
 
+#define CK2ERROR1 0x10000
+
 enum CK2Version {
 	UNKNOWN = 0,
 	v2_7_X = 27,
@@ -62,4 +64,34 @@ namespace Misc
 {
 	CK2Version getVersion();
 	std::string versionString(CK2Version version);
+}
+
+namespace MapView
+{
+	errno_t init(CK2Version version);
+}
+
+namespace MapJustify
+{
+	errno_t init(CK2Version version);
+}
+
+namespace Font
+{
+	errno_t init(CK2Version version);
+}
+
+namespace DecorativeLetterEndDialog
+{
+	errno_t init(CK2Version version);
+}
+
+namespace DecorativeLetterDialog
+{
+	errno_t init(CK2Version version);
+}
+
+namespace DecorativeLetterInheritDialog
+{
+	errno_t init(CK2Version version);
 }

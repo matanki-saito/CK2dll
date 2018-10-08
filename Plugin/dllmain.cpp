@@ -12,6 +12,24 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 
 		errno_t success = NOERROR;
 
+		// マップフォント表示
+		MapView::init(version);
+
+		// マップフォントjustify
+		MapJustify::init(version);
+
+		// フォント
+		Font::init(version);
+
+		// 終了時のダイアログの花文字
+		DecorativeLetterEndDialog::init(version);
+
+		// ダイアログの花文字
+		DecorativeLetterDialog::init(version);
+
+		// 継承ダイアログの花文字
+		DecorativeLetterInheritDialog::init(version);
+
 		if (success == NOERROR) {
 			//MessageBoxW(NULL, L"[OK]", L"Multibyte DLL", MB_OK);
 			byte_pattern::temp_instance().debug_output2("DLL [OK]");
