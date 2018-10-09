@@ -126,3 +126,18 @@ namespace Input
 {
 	errno_t init(CK2Version version);
 }
+
+namespace MapAdj
+{
+	errno_t init(CK2Version version);
+}
+
+namespace Unk1
+{
+	errno_t init(CK2Version version);
+}
+
+namespace Unk2
+{
+	errno_t init(CK2Version version);
+}

@@ -98,12 +98,14 @@
     <ClCompile Include="IME.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="MainText.cpp" />
+    <ClCompile Include="MapAdj.cpp" />
     <ClCompile Include="MapJustify.cpp" />
     <ClCompile Include="mapView.cpp" />
     <ClCompile Include="Misc.cpp" />
     <ClCompile Include="NickNameFix.cpp" />
     <ClCompile Include="NoDynastyId.cpp" />
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="Unk1.cpp" />
     <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>
