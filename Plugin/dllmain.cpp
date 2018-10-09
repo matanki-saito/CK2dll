@@ -13,36 +13,44 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		errno_t success = NOERROR;
 
 		// マップフォント表示
-		MapView::init(version);
+		success |= MapView::init(version);
 
 		// マップフォントjustify
-		MapJustify::init(version);
+		success |= MapJustify::init(version);
 
 		// フォント
-		Font::init(version);
+		success |= Font::init(version);
 
 		// 終了時のダイアログの花文字
-		DecorativeLetterEndDialog::init(version);
+		success |= DecorativeLetterEndDialog::init(version);
 
 		// ダイアログの花文字
-		DecorativeLetterDialog::init(version);
+		success |= DecorativeLetterDialog::init(version);
 
 		// 継承ダイアログの花文字
-		DecorativeLetterInheritDialog::init(version);
+		success |= DecorativeLetterInheritDialog::init(version);
 
 		// Buttonとツールチップ
-		ButtonAndTooltip::init(version);
+		success |= ButtonAndTooltip::init(version);
 
 		// メインテキスト
-		MainText::init(version);
+		success |= MainText::init(version);
+
+		// ニックネーム修正
+		success |= NickNameFix::init(version);
+
+		// Dynastyに-idがつかないようにする
+		success |= NoDynastyId::init(version);
+
+		// IME
+		success |= IME::init(version);
 
 		if (success == NOERROR) {
-			//MessageBoxW(NULL, L"[OK]", L"Multibyte DLL", MB_OK);
-			byte_pattern::temp_instance().debug_output2("DLL [OK]");
+			byte_pattern::debug_output2("DLL [OK]");
 		}
 		else {
 			MessageBoxW(NULL, L"[NG]", L"Multibyte DLL", MB_OK);
-			byte_pattern::temp_instance().debug_output2("DLL [NG]");
+			byte_pattern::debug_output2("DLL [NG]");
 			exit(-1);
 		}
 

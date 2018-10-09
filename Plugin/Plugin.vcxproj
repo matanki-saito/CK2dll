@@ -95,18 +95,18 @@
     <ClCompile Include="DecorativeLetterInheritDialog.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="IME.cpp" />
     <ClCompile Include="MainText.cpp" />
     <ClCompile Include="MapJustify.cpp" />
     <ClCompile Include="mapView.cpp" />
+    <ClCompile Include="NickNameFix.cpp" />
+    <ClCompile Include="NoDynastyId.cpp" />
     <ClCompile Include="Test.cpp" />
     <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="byte_pattern.h" />
     <ClInclude Include="stdinc.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Note.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

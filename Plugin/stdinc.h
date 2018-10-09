@@ -105,3 +105,18 @@ namespace MainText
 {
 	errno_t init(CK2Version version);
 }
+
+namespace NickNameFix
+{
+	errno_t init(CK2Version version);
+}
+
+namespace NoDynastyId
+{
+	errno_t init(CK2Version version);
+}
+
+namespace IME
+{
+	errno_t init(CK2Version version);
+}

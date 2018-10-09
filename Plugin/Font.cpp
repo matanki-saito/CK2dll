@@ -59,6 +59,30 @@ namespace Font
 	}
 
 	/*-----------------------------------------------*/
+	errno_t maxFontSizeChange_hook(CK2Version version) {
+		std::string desc = "max font size change";
+
+		switch (version) {
+		case v2_8_X:
+			/* File容量の制限解除 */
+			byte_pattern::temp_instance().find_pattern("81 FE 00 00 00 02");
+			if (byte_pattern::temp_instance().has_size(2,desc)) {
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x5), 0x04, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x5), 0x04, true);
+			}
+			else return CK2ERROR1;
+
+			byte_pattern::temp_instance().find_pattern("68 00 00 00 02 C7 87 8C");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x4), 0x04, true);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+		}
+		return CK2ERROR1;
+	}
+
+	/*-----------------------------------------------*/
 
 	errno_t init(CK2Version version) {
 		errno_t result = NOERROR;
@@ -71,6 +95,8 @@ namespace Font
 		result |= buffSizeLauncher_hook(version);
 		// ヒープクリアフラグ
 		result |= heapAllocInitFlag_hook(version);
+		// 最大ファイルサイズを変更
+		result |= maxFontSizeChange_hook(version);
 
 		return result;
 	}

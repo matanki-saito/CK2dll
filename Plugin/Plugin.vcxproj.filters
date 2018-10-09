@@ -51,6 +51,15 @@
     <ClCompile Include="MainText.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="NickNameFix.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NoDynastyId.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IME.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="byte_pattern.h">
@@ -59,9 +68,6 @@
     <ClInclude Include="stdinc.h">
       <Filter>头文件</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Note.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

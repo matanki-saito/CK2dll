@@ -212,7 +212,7 @@ namespace MapView {
 	/*-----------------------------------------------*/
 
 	errno_t init(CK2Version version) {
-		errno_t result = 0;
+		errno_t result = NOERROR;
 
 		byte_pattern::debug_output2("map font view");
 

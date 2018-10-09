@@ -190,7 +190,7 @@ namespace MapJustify {
 				r_4 = byte_pattern::temp_instance().get_first().address(0x07);
 			}
 			else return CK2ERROR1;
-			return CK2ERROR1;
+			return NOERROR;
 		}
 
 		return CK2ERROR1;
