@@ -64,6 +64,7 @@ namespace Misc
 {
 	CK2Version getVersion();
 	std::string versionString(CK2Version version);
+	errno_t init(CK2Version version);
 }
 
 namespace MapView
