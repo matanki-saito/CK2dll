@@ -104,8 +104,11 @@
     <ClCompile Include="Misc.cpp" />
     <ClCompile Include="NickNameFix.cpp" />
     <ClCompile Include="NoDynastyId.cpp" />
-    <ClCompile Include="Test.cpp" />
     <ClCompile Include="Unk1.cpp" />
+    <ClCompile Include="Unk2.cpp" />
+    <ClCompile Include="Unk3.cpp" />
+    <ClCompile Include="Unk4.cpp" />
+    <ClCompile Include="Unk5.cpp" />
     <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>

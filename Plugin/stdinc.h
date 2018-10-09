@@ -141,3 +141,18 @@ namespace Unk2
 {
 	errno_t init(CK2Version version);
 }
+
+namespace Unk3
+{
+	errno_t init(CK2Version version);
+}
+
+namespace Unk4
+{
+	errno_t init(CK2Version version);
+}
+
+namespace Unk5
+{
+	errno_t init(CK2Version version);
+}
