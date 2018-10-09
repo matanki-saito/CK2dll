@@ -88,17 +88,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ButtonAndTooltip.cpp" />
     <ClCompile Include="byte_pattern.cpp" />
+    <ClCompile Include="DecorativeLetterDialog.cpp" />
+    <ClCompile Include="DecorativeLetterEndDialog.cpp" />
+    <ClCompile Include="DecorativeLetterInheritDialog.cpp" />
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="IME.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="MainText.cpp" />
+    <ClCompile Include="MapAdj.cpp" />
+    <ClCompile Include="MapJustify.cpp" />
+    <ClCompile Include="mapView.cpp" />
+    <ClCompile Include="Misc.cpp" />
+    <ClCompile Include="NickNameFix.cpp" />
+    <ClCompile Include="NoDynastyId.cpp" />
+    <ClCompile Include="Unk1.cpp" />
+    <ClCompile Include="Unk2.cpp" />
+    <ClCompile Include="Unk3.cpp" />
+    <ClCompile Include="Unk4.cpp" />
+    <ClCompile Include="Unk5.cpp" />
+    <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="byte_pattern.h" />
     <ClInclude Include="stdinc.h" />
-    <ClInclude Include="Test.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Note.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
