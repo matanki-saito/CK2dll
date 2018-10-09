@@ -96,6 +96,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="IME.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="MainText.cpp" />
     <ClCompile Include="MapJustify.cpp" />
     <ClCompile Include="mapView.cpp" />

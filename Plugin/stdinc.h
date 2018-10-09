@@ -121,3 +121,8 @@ namespace IME
 {
 	errno_t init(CK2Version version);
 }
+
+namespace Input
+{
+	errno_t init(CK2Version version);
+}

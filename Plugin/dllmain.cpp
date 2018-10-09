@@ -48,6 +48,9 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//‚»‚Ì‘¼
 		success |= Misc::init(version);
 
+		//Input
+		success |= Input::init(version);
+
 		if (success == NOERROR) {
 			byte_pattern::debug_output2("DLL [OK]");
 		}
