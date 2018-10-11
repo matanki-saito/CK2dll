@@ -15,6 +15,16 @@ memory_pointer byte_pattern::get_first() const
     return this->get(0);
 }
 
+void byte_pattern::debug_output2(const std::string message)
+{
+	if (!log_stream().is_open())
+		return;
+
+	log_stream() << message << "\n";
+
+	log_stream() << "--------------------------------------------------------------------------------------" << '\n' << endl;
+}
+
 void byte_pattern::start_log(const wchar_t *module_name)
 {
     shutdown_log();
@@ -229,9 +239,13 @@ size_t byte_pattern::count() const
     return this->_results.size();
 }
 
-bool byte_pattern::has_size(size_t expected) const
+bool byte_pattern::has_size(size_t expected, string desc) const
 {
-    return (this->_results.size() == expected);
+	const bool result = (this->_results.size() == expected);
+
+	debug_output2(desc + (result ? ":[OK]" : ":[NG]"));
+
+	return result;
 }
 
 bool byte_pattern::empty() const
@@ -333,5 +347,5 @@ void byte_pattern::debug_output() const
         log_stream() << "None\n";
     }
 
-    log_stream() << "--------------------------------------------------------------------------------------" << '\n' << endl;
+    log_stream() << "--------------------------------------------------------------------------------------" << endl;
 }
