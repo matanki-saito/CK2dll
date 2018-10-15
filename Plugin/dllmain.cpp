@@ -69,6 +69,9 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//Unknown 5
 		success |= Unk5::init(version);
 
+		// issue33
+		success |= Issue33::init(version);
+
 		if (success == NOERROR) {
 			byte_pattern::debug_output2("DLL [OK]");
 		}
