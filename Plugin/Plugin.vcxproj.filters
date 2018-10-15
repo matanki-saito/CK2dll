@@ -81,6 +81,9 @@
     <ClCompile Include="Unk5.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="issue33.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="byte_pattern.h">
