@@ -161,3 +161,8 @@ namespace Issue33
 {
 	errno_t init(CK2Version version);
 }
+
+namespace Issue32
+{
+	errno_t init(CK2Version version);
+}
