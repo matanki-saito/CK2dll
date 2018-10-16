@@ -40,7 +40,7 @@ namespace Issue33 {
 	/*-----------------------------------------------*/
 
 	errno_t fix1_hook(CK2Version version) {
-		std::string desc = "nickname order fix";
+		std::string desc = "fix 1";
 
 		switch (version) {
 		case v2_8_X:
@@ -76,7 +76,6 @@ namespace Issue33 {
 
 		byte_pattern::debug_output2("Fix Issue 33");
 
-		// input‚ÌC³
 		result |= fix1_hook(version);
 
 		return result;
