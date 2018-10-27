@@ -259,10 +259,56 @@ namespace IME
 				SDL_windowevent_v28_end2 = byte_pattern::temp_instance().get_first().address();
 			}
 			else return CK2ERROR1;
+
 			return NOERROR;
 		}
 		return CK2ERROR1;
+	} //
+
+	/*-----------------------------------------------*/
+
+	uintptr_t SDL_SendKeyboardKey_v28;
+	uintptr_t issue31_v28_end;
+	__declspec(naked) void issue31_v28_start() {
+		__asm {
+			cmp esi, 229;
+			jz issue31_x; // skip
+
+			call SDL_SendKeyboardKey_v28;
+
+		issue31_x:
+			pop ecx;
+			push issue31_v28_end;
+			ret;
+		}
 	}
+
+	/*-----------------------------------------------*/
+
+	errno_t SDL_windowevent_issue31_hook(CK2Version version) {
+		std::string desc = "SDL_windowevent issue31";
+
+		switch (version) {
+		case v2_8_X:
+			// ­‚µè‘O‚Éˆø‚ÁŠ|‚¯‚é
+			byte_pattern::temp_instance().find_pattern("8B 45 10 59 59 50 6A 00");
+			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(8), issue31_v28_start);
+				issue31_v28_end = byte_pattern::temp_instance().get_first().address(0xE);
+			}
+			else return CK2ERROR1;
+
+			// SDL_SendKeyboardKey‚ğŒ©‚Â‚¯‚é
+			byte_pattern::temp_instance().find_pattern("55 8B EC 83 EC 40 56 8B 75 0C 85 F6");
+			if (byte_pattern::temp_instance().has_size(1, desc + " SDL_SendKeyboardKey")) {
+				SDL_SendKeyboardKey_v28 = byte_pattern::temp_instance().get_first().address();
+			}
+			else return CK2ERROR1;
+
+			return NOERROR;
+		}
+		return CK2ERROR1;
+	} //
 
 	/*-----------------------------------------------*/
 
@@ -284,6 +330,8 @@ namespace IME
 		result |= SDL_keyborad_hook(version);
 		// SDL_windowevent.c‚ğ•ÏX
 		result |= SDL_windowevent_hook(version);
+		// SDL_windowsevent.c‚ğ•ÏX
+		result |= SDL_windowevent_issue31_hook(version);
 
 		return result;
 	}
