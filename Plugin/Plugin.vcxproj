@@ -99,6 +99,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="issue32.cpp" />
     <ClCompile Include="issue33.cpp" />
+    <ClCompile Include="issue38.cpp" />
     <ClCompile Include="MainText.cpp" />
     <ClCompile Include="MapAdj.cpp" />
     <ClCompile Include="MapJustify.cpp" />

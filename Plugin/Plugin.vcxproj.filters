@@ -87,6 +87,9 @@
     <ClCompile Include="issue32.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="issue38.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="byte_pattern.h">
