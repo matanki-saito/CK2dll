@@ -68,7 +68,6 @@ namespace Issue33 {
 		return CK2ERROR1;
 	}
 
-
 	/*-----------------------------------------------*/
 
 	errno_t init(CK2Version version) {

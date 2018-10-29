@@ -39,7 +39,7 @@ namespace Issue32 {
 			push eax;
 
 			lea ecx, [ebp - 0x78];
-			mov byte ptr[ebp - 0x4], 0xA;]
+			mov byte ptr[ebp - 0x4], 0xA;
 			push ecx;
 			
 			mov eax, esi;
