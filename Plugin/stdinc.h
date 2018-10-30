@@ -60,11 +60,17 @@ enum CK2Version {
 	v2_9_X = 29
 };
 
+typedef struct _runoption {
+	boolean MENU_DATE_FORAMT;
+} RunOptions;
+
 namespace Misc
 {
 	CK2Version getVersion();
 	std::string versionString(CK2Version version);
 	errno_t init(CK2Version version);
+
+	void getOptionsByINI(RunOptions *option);
 }
 
 namespace MapView

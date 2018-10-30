@@ -7,6 +7,10 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
     {
         byte_pattern::start_log(L"ck2jps");
 
+		// オプションをiniファイルから取得
+		RunOptions options = RunOptions();
+		Misc::getOptionsByINI(&options);
+
 		// versionを文字列から取得
 		CK2Version version = Misc::getVersion();
 
