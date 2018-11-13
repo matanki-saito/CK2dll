@@ -16,7 +16,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= MapView::init(version);
 
 		// マップフォントjustify
-		//success |= MapJustify::init(version);
+		success |= MapJustify::init(version);
 
 		// フォント
 		success |= Font::init(version);
