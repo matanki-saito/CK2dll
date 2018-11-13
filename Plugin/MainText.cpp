@@ -10,6 +10,8 @@ namespace MainText
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
+			// sub esp,428h
 			byte_pattern::temp_instance().find_pattern("81 EC 28 04 00 00 56 57 8B F9");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(2), 0x30, true);
@@ -31,6 +33,8 @@ namespace MainText
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
+			// mov al, byte_XXXXXX[esi]
 			byte_pattern::temp_instance().find_pattern("8A 86 ? ? ? ? 88 81 ? ? ? ? 41");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				char *pSRC = *byte_pattern::temp_instance().get_first().pointer<char *>(2);
@@ -155,6 +159,8 @@ namespace MainText
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
+			// inc ecx
 			byte_pattern::temp_instance().find_pattern("41 89 4D CC 84 E4 0F");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), b_1);
@@ -173,7 +179,18 @@ namespace MainText
 
 		switch (version) {
 		case v2_8_X:
+			// mov eax,[edi+eax*4+8Ch]
 			byte_pattern::temp_instance().find_pattern("8B 84 87 8C 00 00 00 89");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), b_6);
+				b_3 = byte_pattern::temp_instance().get_first().address(7);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+
+		case v3_0_X:
+			// mov eax,[edi+eax*4+0A4h]
+			byte_pattern::temp_instance().find_pattern("8B 84 87 A4 00 00 00 89");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), b_6);
 				b_3 = byte_pattern::temp_instance().get_first().address(7);
@@ -213,6 +230,8 @@ namespace MainText
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
+			// cmp dword ptr [ebp-2Ch],0
 			byte_pattern::temp_instance().find_pattern("83 7D D4 00 0F 85 FA 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc + "start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), c_1);
@@ -220,6 +239,7 @@ namespace MainText
 			}
 			else return CK2ERROR1;
 
+			// cmp byte_XXXXX, 0
 			byte_pattern::temp_instance().find_pattern("80 3D ? ? ? ? 00 0F 84 47");
 			if (byte_pattern::temp_instance().has_size(1, desc + " end2")) {
 				loc_1942AD2 = byte_pattern::temp_instance().get_first().address();
@@ -302,6 +322,8 @@ namespace MainText
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
+			// mov al, byte_XXXXXX[edx]
 			byte_pattern::temp_instance().find_pattern("8A 82 ? ? ? ? 88 45 A7 0F B6");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0), 0x8D, true);
@@ -326,13 +348,13 @@ namespace MainText
 		result |= stackSizeChange_hook(version);
 		// バッファアドレス取得
 		result |= prepareBuffCopy_hook(version);
-		// 
+		// バッファからバッファにテキストを１文字づつコピー
 		result |= func1_hook(version);
-		// 
+		// フォントデータからグリフを取り出して幅チェック処理？に渡す
 		result |= func2_hook(version);
-		// 
+		// 強制改行するかしないかの判断
 		result |= func3_hook(version);
-		// 
+		// フォントデータからグリフを取り出して表示処理に渡す
 		result |= func4_hook(version);
 
 		return result;

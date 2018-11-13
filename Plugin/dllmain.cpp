@@ -34,7 +34,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= ButtonAndTooltip::init(version);
 
 		// メインテキスト
-		//success |= MainText::init(version);
+		success |= MainText::init(version);
 
 		// ニックネーム修正
 		//success |= NickNameFix::init(version);
