@@ -23,7 +23,7 @@ namespace Misc {
 
 		// _ _ 3.0
 		byte_pattern::temp_instance().find_pattern("00 00 33 2E 30");
-		if (byte_pattern::temp_instance().has_size(1, "v3.0.X pattern Check")) {
+		if (byte_pattern::temp_instance().has_size(2, "v3.0.X pattern Check")) {
 			version = v3_0_X;
 			goto A;
 		}

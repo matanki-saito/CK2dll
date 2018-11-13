@@ -19,7 +19,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= MapJustify::init(version);
 
 		// フォント
-		//success |= Font::init(version);
+		success |= Font::init(version);
 
 		// 終了時のダイアログの花文字
 		//success |= DecorativeLetterEndDialog::init(version);
