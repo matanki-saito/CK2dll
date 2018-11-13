@@ -13,70 +13,70 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		errno_t success = NOERROR;
 
 		// マップフォント表示
-		success |= MapView::init(version);
+		//success |= MapView::init(version);
 
 		// マップフォントjustify
-		success |= MapJustify::init(version);
+		//success |= MapJustify::init(version);
 
 		// フォント
-		success |= Font::init(version);
+		//success |= Font::init(version);
 
 		// 終了時のダイアログの花文字
-		success |= DecorativeLetterEndDialog::init(version);
+		//success |= DecorativeLetterEndDialog::init(version);
 
 		// ダイアログの花文字
-		success |= DecorativeLetterDialog::init(version);
+		//success |= DecorativeLetterDialog::init(version);
 
 		// 継承ダイアログの花文字
-		success |= DecorativeLetterInheritDialog::init(version);
+		//success |= DecorativeLetterInheritDialog::init(version);
 
 		// Buttonとツールチップ
-		success |= ButtonAndTooltip::init(version);
+		//success |= ButtonAndTooltip::init(version);
 
 		// メインテキスト
-		success |= MainText::init(version);
+		//success |= MainText::init(version);
 
 		// ニックネーム修正
-		success |= NickNameFix::init(version);
+		//success |= NickNameFix::init(version);
 
 		// Dynastyに-idがつかないようにする
-		success |= NoDynastyId::init(version);
+		//success |= NoDynastyId::init(version);
 
 		// IME
-		success |= IME::init(version);
+		//success |= IME::init(version);
 
 		//その他
-		success |= Misc::init(version);
+		//success |= Misc::init(version);
 
 		//Input
-		success |= Input::init(version);
+		//success |= Input::init(version);
 
 		//Map adj
-		success |= MapAdj::init(version);
+		//success |= MapAdj::init(version);
 
 		//Unknown 1
-		success |= Unk1::init(version);
+		//success |= Unk1::init(version);
 
 		//Unknown 2
-		success |= Unk2::init(version);
+		//success |= Unk2::init(version);
 
 		//Unknown 3
-		success |= Unk3::init(version);
+		//success |= Unk3::init(version);
 
 		//Unknown 4
-		success |= Unk4::init(version);
+		//success |= Unk4::init(version);
 
 		//Unknown 5
-		success |= Unk5::init(version);
+		//success |= Unk5::init(version);
 
 		// issue33
-		success |= Issue33::init(version);
+		//success |= Issue33::init(version);
 
 		// issue32
-		success |= Issue32::init(version);
+		//success |= Issue32::init(version);
 
 		// issue38
-		success |= Issue38::init(version);
+		//success |= Issue38::init(version);
 
 		if (success == NOERROR) {
 			byte_pattern::debug_output2("DLL [OK]");

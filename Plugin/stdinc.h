@@ -57,7 +57,7 @@ enum CK2Version {
 	UNKNOWN = 0,
 	v2_7_X = 27,
 	v2_8_X = 28,
-	v2_9_X = 29
+	v3_0_X = 30
 };
 
 namespace Misc

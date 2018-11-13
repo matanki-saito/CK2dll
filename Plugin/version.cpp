@@ -21,10 +21,10 @@ namespace Misc {
 			goto A;
 		}
 
-		// _ _ 2.9.
-		byte_pattern::temp_instance().find_pattern("00 00 32 2E 39 2E");
-		if (byte_pattern::temp_instance().has_size(1,"v2.9.X pattern Check")) {
-			version = v2_9_X;
+		// _ _ 3.0
+		byte_pattern::temp_instance().find_pattern("00 00 33 2E 30");
+		if (byte_pattern::temp_instance().has_size(1, "v3.0.X pattern Check")) {
+			version = v3_0_X;
 			goto A;
 		}
 
@@ -39,8 +39,8 @@ namespace Misc {
 			return "v2_7_X";
 		case v2_8_X:
 			return "v2_8_X";
-		case v2_9_X:
-			return "v2_9_X";
+		case v3_0_X:
+			return "v3_0_X";
 		default:
 			return "UNKNOWN";
 		}
