@@ -12,8 +12,8 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 
 		errno_t success = NOERROR;
 
-		// マップフォント表示
-		//success |= MapView::init(version);
+		// マップフォント調整（これは表示処理ではないっぽい（表示調整）であとでMapViewの名前を変更する）
+		success |= MapView::init(version);
 
 		// マップフォントjustify
 		//success |= MapJustify::init(version);

@@ -9,6 +9,8 @@ namespace MapView {
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
+			// sub esp,178h
 			byte_pattern::temp_instance().find_pattern("81 EC 78 01 00 00 8B 43 18");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
 				injector::WriteMemory<uint8_t>(
@@ -102,6 +104,8 @@ namespace MapView {
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
+			// movzx eax,byte ptr [eax+edx]
 			byte_pattern::temp_instance().find_pattern("0F B6 04 10 8B 34 86");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), m_1);
@@ -143,6 +147,8 @@ namespace MapView {
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
+			//dec eax
 			byte_pattern::temp_instance().find_pattern("48 F3 0F 51 C9 66 0F 6E");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), kk_1);
@@ -178,6 +184,8 @@ namespace MapView {
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
+			// mov eax, [ebp-0B4h]
 			byte_pattern::temp_instance().find_pattern("8B 85 4C FF FF FF 8B 73");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(-0xE), 0x90, true);
@@ -198,7 +206,9 @@ namespace MapView {
 
 		switch (version){
 		case v2_8_X:
-			byte_pattern::temp_instance().find_pattern("8D A5 80 FE FF FF");
+		case v3_0_X:
+			// lea esp,[ebp-180h]
+			byte_pattern::temp_instance().find_pattern("8D A5 80 FE FF FF 5F");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(2), 0x7E, true);
 			}
