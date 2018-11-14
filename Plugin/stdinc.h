@@ -152,7 +152,7 @@ namespace Unk4
 	errno_t init(CK2Version version);
 }
 
-namespace Unk5
+namespace MapAdj2
 {
 	errno_t init(CK2Version version);
 }
