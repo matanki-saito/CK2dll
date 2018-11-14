@@ -24,6 +24,9 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		// マップフォント表示調整２
 		success |= MapAdj2::init(version);
 
+		// マップフォント表示調整３
+		success |= MapAdj3::init(version);
+
 		// フォントローディング処理
 		success |= Font::init(version);
 
@@ -57,8 +60,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//Unknown 1
 		//success |= Unk1::init(version);
 
-		//Unknown 2
-		//success |= Unk2::init(version);
+
 
 		//Unknown 3
 		success |= Unk3::init(version);

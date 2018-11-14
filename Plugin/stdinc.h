@@ -137,7 +137,7 @@ namespace Unk1
 	errno_t init(CK2Version version);
 }
 
-namespace Unk2
+namespace MapAdj3
 {
 	errno_t init(CK2Version version);
 }
