@@ -167,7 +167,18 @@ namespace Issue32
 	errno_t init(CK2Version version);
 }
 
-namespace Issue38
+namespace DateFormat
 {
 	errno_t init(CK2Version version);
 }
+
+union T {
+	char text[0x10];
+	char* p;
+};
+
+typedef struct {
+	union T t;
+	int len;
+	int len2;
+} V;

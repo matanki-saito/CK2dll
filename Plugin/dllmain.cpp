@@ -48,13 +48,8 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		// IME
 		//success |= IME::init(version);
 
-		//その他
-		//success |= Misc::init(version);
-
 		//Input
 		//success |= Input::init(version);
-
-
 
 		//Unknown 1
 		//success |= Unk1::init(version);
@@ -77,8 +72,8 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		// issue32
 		//success |= Issue32::init(version);
 
-		// issue38
-		//success |= Issue38::init(version);
+		// 日付表記の変更
+		success |= DateFormat::init(version);
 
 		if (success == NOERROR) {
 			byte_pattern::debug_output2("Multibyte DLL [OK]");

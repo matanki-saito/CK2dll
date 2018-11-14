@@ -99,12 +99,11 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="issue32.cpp" />
     <ClCompile Include="issue33.cpp" />
-    <ClCompile Include="issue38.cpp" />
+    <ClCompile Include="DateFormat.cpp" />
     <ClCompile Include="MainText.cpp" />
     <ClCompile Include="MapView.cpp" />
     <ClCompile Include="MapJustify.cpp" />
     <ClCompile Include="mapAdj.cpp" />
-    <ClCompile Include="Misc.cpp" />
     <ClCompile Include="NickNameFix.cpp" />
     <ClCompile Include="NoDynastyId.cpp" />
     <ClCompile Include="Unk1.cpp" />

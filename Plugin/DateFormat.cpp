@@ -1,7 +1,9 @@
 #include "stdinc.h"
 #include "byte_pattern.h"
 
-namespace Issue38 {
+// Menu bar date format
+// https://github.com/matanki-saito/CK2dll/issues/38
+namespace DateFormat {
 
 	/*-----------------------------------------------*/
 
@@ -14,6 +16,7 @@ namespace Issue38 {
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			// issue33と同じもの
 			// sub esp,20h
 			byte_pattern::temp_instance().find_pattern("83 EC 20 56 FF 75 0C 8D 45 D8");
@@ -27,17 +30,6 @@ namespace Issue38 {
 	}
 
 	/*-----------------------------------------------*/
-
-	union T {
-		char text[0x10];
-		char* p;
-	};
-
-	typedef struct V {
-		union T t;
-		int len;
-		int len2;
-	} Vs;
 
 	V *year;
 	V *day;
@@ -109,6 +101,7 @@ namespace Issue38 {
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("8D 4D D4 C6 45 FC 08 51 8D 8D 58");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// lea ecx,[ebp+var_2C]
@@ -124,15 +117,49 @@ namespace Issue38 {
 
 	/*-----------------------------------------------*/
 
+	errno_t dateOrder_hook(CK2Version version) {
+		std::string desc = "date order fix";
+
+		switch (version) {
+		case v2_8_X:
+		case v3_0_X:
+			byte_pattern::temp_instance().find_pattern("64 20 77 20 6D 77 20 2C");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0), 0x79, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(1), 0x20, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(2), 0x10, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(3), 0x74, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(4), 0x5E, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(5), 0x20, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(6), 0x6D, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(7), 0x77, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(8), 0x20, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(9), 0x64, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(10), 0x20, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(11), 0x10, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(12), 0xE5, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(13), 0x65, true);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+		}
+		return CK2ERROR1;
+	}
+
+	/*-----------------------------------------------*/
+
 	errno_t init(CK2Version version) {
 		errno_t result = NOERROR;
 
-		/* issue-32  「DD MON, YYYY」を「YYYY年MONDD日」にしたい */
-		byte_pattern::debug_output2("Fix Issue 38");
+		byte_pattern::debug_output2("Date Format");
 
-		// 関数フック
+		/* 右上のツールバーの日付表記の修正 */
+		result |= dateOrder_hook(version);
+
+		/* 関数フック */
 		result |= copyBufFunc_hook(version);
 
+		/* issue-38  「DD MON, YYYY」を「YYYY年MONDD日」にしたい */
 		result |= fix1_hook(version);
 
 		return result;

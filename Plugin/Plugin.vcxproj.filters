@@ -54,9 +54,6 @@
     <ClCompile Include="IME.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Misc.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -81,13 +78,13 @@
     <ClCompile Include="issue32.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="issue38.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="MapView.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="mapAdj.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DateFormat.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
