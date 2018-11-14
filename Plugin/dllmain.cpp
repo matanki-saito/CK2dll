@@ -45,20 +45,20 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		// メインテキスト
 		success |= MainText::init(version);
 
-		// メインテキスト改行処理
+		// メインテキスト改行処理（ダイアログ）
 		success |= MainTextLineBreak::init(version);
 
 		// ニックネーム修正
 		//success |= NickNameFix::init(version);
 
 		// Dynastyに-idがつかないようにする
-		//success |= NoDynastyId::init(version);
+		success |= NoDynastyId::init(version);
 
 		// IME
-		//success |= IME::init(version);
+		success |= IME::init(version);
 
 		//Input
-		//success |= Input::init(version);
+		success |= Input::init(version);
 
 		//Unknown 3
 		success |= Unk3::init(version);

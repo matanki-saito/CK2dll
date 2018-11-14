@@ -44,6 +44,7 @@ namespace Issue33 {
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			/* issue-33 「に忠誠を誓っている 王 ロスラン」を「王 ロスランに忠誠を誓っているにする」 */
 			byte_pattern::temp_instance().find_pattern("8D 8D 30 FF FF FF C6 45 FC 43 51 8D 8D");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {

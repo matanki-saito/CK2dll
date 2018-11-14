@@ -164,6 +164,7 @@ namespace NickNameFix
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			/* [Title] [FirstName] [NickName]‚Æ‚È‚é‚Ì‚ð[NickName] [FirstName] [Title] ‚É‚·‚é issue-14 */
 			byte_pattern::temp_instance().find_pattern("8D 45 84 C6 45 FC 11 50 8D 85 08");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {

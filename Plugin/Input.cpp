@@ -314,6 +314,7 @@ namespace Input {
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("55 8B EC 83 EC 70 53 56 57 8B F9 8B DA");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(5), 0x78, true);
@@ -441,6 +442,7 @@ namespace Input {
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("8B 07 84 DB 5B 8B CF");
 			if (byte_pattern::temp_instance().has_size(1,desc + " start" )) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), yy_1);

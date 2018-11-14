@@ -56,6 +56,7 @@ namespace Issue32 {
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("56 8D 4D 88 C6 45 FC 0A 51");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// mov esi,eax
@@ -104,6 +105,7 @@ namespace Issue32 {
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("56 8D 4D DC C6 45 FC 08");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// mov esi,eax
