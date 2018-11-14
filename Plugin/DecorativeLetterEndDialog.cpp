@@ -52,6 +52,7 @@ namespace DecorativeLetterEndDialog
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("6A 01 8B F0 8D 8D 2C");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), aa_1);
@@ -114,6 +115,7 @@ namespace DecorativeLetterEndDialog
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("E8 ? ? ? ? FF B5 3C FF FF FF 8D 45");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0xE), bb_1);
@@ -174,6 +176,7 @@ namespace DecorativeLetterEndDialog
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("6A 01 6A 00 8D 85 98");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), ll_1);
@@ -233,6 +236,7 @@ namespace DecorativeLetterEndDialog
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("6A 01 50 8D 8D 78 FF FF FF E8");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), mm_1);

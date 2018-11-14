@@ -54,6 +54,7 @@ namespace DecorativeLetterDialog
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("6A 01 6A 00 8D 85 5C F5 FF");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), y_8);
@@ -117,6 +118,7 @@ namespace DecorativeLetterDialog
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("8D 8D 98 FE FF FF 6A 01 8D");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), z_8);

@@ -9,3 +9,5 @@ event 94016
 event 94016
 event RIP.10006
 event RIP.10006
+event RIP.10006
+die

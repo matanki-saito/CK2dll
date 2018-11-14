@@ -37,7 +37,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= DecorativeLetterDialog::init(version);
 
 		// 継承ダイアログの花文字
-		//success |= DecorativeLetterInheritDialog::init(version);
+		success |= DecorativeLetterInheritDialog::init(version);
 
 		// Buttonとツールチップ
 		success |= ButtonAndTooltip::init(version);
