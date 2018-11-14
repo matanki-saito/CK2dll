@@ -56,12 +56,17 @@ namespace MainText
 
 	/*-----------------------------------------------*/
 
+	int fontOffset = 0;
+
 	uintptr_t b_3;
 	__declspec(naked) void b_2()
 	{
 		__asm {
 			mov[ebp - 0x43C], eax;
-			mov eax, [edi + eax * 4 + 0x8C];
+
+			lea eax, [edi + eax * 4];
+			add eax,fontOffset; //edi + eax * 4 + OFFSET
+			mov eax, [eax];
 			mov[ebp - 0x3C], esi;
 
 			push b_3;
@@ -179,18 +184,9 @@ namespace MainText
 
 		switch (version) {
 		case v2_8_X:
-			// mov eax,[edi+eax*4+8Ch]
-			byte_pattern::temp_instance().find_pattern("8B 84 87 8C 00 00 00 89");
-			if (byte_pattern::temp_instance().has_size(1, desc)) {
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), b_6);
-				b_3 = byte_pattern::temp_instance().get_first().address(7);
-			}
-			else return CK2ERROR1;
-			return NOERROR;
-
 		case v3_0_X:
-			// mov eax,[edi+eax*4+0A4h]
-			byte_pattern::temp_instance().find_pattern("8B 84 87 A4 00 00 00 89");
+			// mov eax,[edi+eax*4+OFFSET]
+			byte_pattern::temp_instance().find_pattern("8B 84 87 ? 00 00 00 89");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), b_6);
 				b_3 = byte_pattern::temp_instance().get_first().address(7);
@@ -343,6 +339,16 @@ namespace MainText
 		errno_t result = NOERROR;
 
 		byte_pattern::debug_output2("main text");
+
+		// fontOffset
+		switch (version) {
+		case v2_8_X:
+			fontOffset = 0x8C;
+			break;
+		case v3_0_X:
+			fontOffset = 0xA4;
+			break;
+		}
 
 		// スタックサイズ変更
 		result |= stackSizeChange_hook(version);
