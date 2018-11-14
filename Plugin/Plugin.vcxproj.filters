@@ -57,9 +57,6 @@
     <ClCompile Include="Input.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Unk1.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Unk3.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -85,6 +82,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MapAdj3.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MainTextLineBreak.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

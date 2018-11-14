@@ -132,7 +132,7 @@ namespace MapAdj
 	errno_t init(CK2Version version);
 }
 
-namespace Unk1
+namespace MainTextLineBreak
 {
 	errno_t init(CK2Version version);
 }

@@ -45,6 +45,9 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		// メインテキスト
 		success |= MainText::init(version);
 
+		// メインテキスト改行処理
+		success |= MainTextLineBreak::init(version);
+
 		// ニックネーム修正
 		//success |= NickNameFix::init(version);
 
@@ -56,11 +59,6 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 
 		//Input
 		//success |= Input::init(version);
-
-		//Unknown 1
-		//success |= Unk1::init(version);
-
-
 
 		//Unknown 3
 		success |= Unk3::init(version);
