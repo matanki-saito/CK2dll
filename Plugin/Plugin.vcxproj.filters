@@ -21,9 +21,6 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="mapView.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="version.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -63,9 +60,6 @@
     <ClCompile Include="Input.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MapAdj.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Unk1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -88,6 +82,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="issue38.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MapView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mapAdj.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

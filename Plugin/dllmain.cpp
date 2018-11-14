@@ -12,13 +12,16 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 
 		errno_t success = NOERROR;
 
-		// マップフォント調整（これは表示処理ではないっぽい（表示調整）であとでMapViewの名前を変更する）
+		// マップフォント表示処理
 		success |= MapView::init(version);
 
 		// マップフォントjustify
 		success |= MapJustify::init(version);
 
-		// フォント
+		// マップフォント調整処理
+		success |= MapAdj::init(version);
+
+		// フォントローディング処理
 		success |= Font::init(version);
 
 		// 終了時のダイアログの花文字
@@ -51,8 +54,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//Input
 		//success |= Input::init(version);
 
-		//Map adj
-		//success |= MapAdj::init(version);
+
 
 		//Unknown 1
 		//success |= Unk1::init(version);
@@ -79,11 +81,11 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= Issue38::init(version);
 
 		if (success == NOERROR) {
-			byte_pattern::debug_output2("DLL [OK]");
+			byte_pattern::debug_output2("Multibyte DLL [OK]");
 		}
 		else {
-			MessageBoxW(NULL, L"[NG]", L"Multibyte DLL", MB_OK);
-			byte_pattern::debug_output2("DLL [NG]");
+			MessageBoxW(NULL, L"[Multibyte DLL ERROR]\nThis game version is not supported by Multibyte DLL.\nPlease delete d3d9.dll and restart game.\nOr check new version dll.\n\nhttps://github.com/matanki-saito/CK2Dll", L"Multibyte DLL", MB_OK);
+			byte_pattern::debug_output2("Multibyte DLL [NG]");
 			exit(-1);
 		}
 

@@ -101,9 +101,9 @@
     <ClCompile Include="issue33.cpp" />
     <ClCompile Include="issue38.cpp" />
     <ClCompile Include="MainText.cpp" />
-    <ClCompile Include="MapAdj.cpp" />
+    <ClCompile Include="MapView.cpp" />
     <ClCompile Include="MapJustify.cpp" />
-    <ClCompile Include="mapView.cpp" />
+    <ClCompile Include="mapAdj.cpp" />
     <ClCompile Include="Misc.cpp" />
     <ClCompile Include="NickNameFix.cpp" />
     <ClCompile Include="NoDynastyId.cpp" />
