@@ -62,7 +62,7 @@ namespace MainTextLineBreak {
 			mov eax, esi;
 
 		dd_2:
-			mov[ebp - 0x1C], eax;
+			mov [ebp - 0x1C], eax;
 			xor eax, eax;
 			
 			cmp cl, ESCAPE_SEQ_1;
@@ -112,7 +112,7 @@ namespace MainTextLineBreak {
 			mov eax, esi;
 
 		dd_2:
-			mov[ebp - 0x18], eax; // ここの値だけ違う
+			mov dword ptr [ebp - 0x18], eax; // ここの値だけ違う
 			xor eax, eax;
 
 			cmp cl, ESCAPE_SEQ_1;
@@ -278,7 +278,7 @@ namespace MainTextLineBreak {
 		switch (version) {
 		case v2_8_X:
 		case v3_0_X:
-			//スタック修正
+			//スタック修正 OK
 			// sub esp,7Ch
 			byte_pattern::temp_instance().find_pattern("83 EC 7C 53 8B 5D 0C 56 57 8B F1");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -286,7 +286,7 @@ namespace MainTextLineBreak {
 			}
 			else return CK2ERROR1;
 
-			// mov al,[eax+esi]
+			// mov al,[eax+esi] OK
 			byte_pattern::temp_instance().find_pattern("8A 04 30 8B 4D");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), k_1);
@@ -295,7 +295,7 @@ namespace MainTextLineBreak {
 			}
 			else return CK2ERROR1;
 
-			// mov eax,[ebp+arg_10]
+			// mov eax,[ebp+arg_10] OK
 			byte_pattern::temp_instance().find_pattern("8B 45 18 03 45 DC 89 55");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), w_1);
@@ -304,7 +304,7 @@ namespace MainTextLineBreak {
 			}
 			else return CK2ERROR1;
 
-			// 結合するブロックの飛び先
+			// 結合するブロックの飛び先 OK
 			// cmp eax,[ebp+arc_C]
 			byte_pattern::temp_instance().find_pattern("3B 45 14 0F 8F ? 01 00 00 C7");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -342,16 +342,18 @@ namespace MainTextLineBreak {
 		}
 	}
 
+
+	// ブロックの表示がv28と逆になっているので注意
 	uintptr_t ee_2_v30;
 	uintptr_t ee_3_v30;
 	__declspec(naked) void ee_1_1_v30()
 	{
 		__asm {
 			cmp word ptr[ebp - 0x8C + 2], 9;
-			jz ee_2_jmp;
+			jz ee_3_jmp;
 
 			cmp word ptr[ebp - 0x8C + 2], 0x100;
-			ja ee_2_jmp;
+			ja ee_3_jmp;
 
 			mov ecx, dword ptr [ebp - 0x1C];
 			cmp dword ptr [ebp - 0x18], ecx;
@@ -464,7 +466,7 @@ namespace MainTextLineBreak {
 			mov[eax + 0x10], ecx;
 
 		x_4:
-			lea ecx, [ebp - 0x70];
+			lea ecx, [ebp - 0x88];
 
 			call func1_v30;
 
@@ -493,10 +495,10 @@ namespace MainTextLineBreak {
 
 		case v3_0_X:
 			// lea ecx,[ebp+var_70]
-			byte_pattern::temp_instance().find_pattern("8D 4D 90 E8 28 63 64 FF"); // このパターン検出は微妙 call sub_XXXを含んでいる
+			byte_pattern::temp_instance().find_pattern("8D 8D 78 FF FF FF E8 92 62"); // このパターン検出は微妙 call sub_XXXを含んでいる
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), x_1_v30);
-				x_2_v30 = byte_pattern::temp_instance().get_first().address(0x8);
+				x_2_v30 = byte_pattern::temp_instance().get_first().address(0xB);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -549,9 +551,9 @@ namespace MainTextLineBreak {
 			return NOERROR;
 
 		case v3_0_X:
-			// 左側ブロックの終端先を変更する
-			// mov eax,[ebp+arg_10]
-			byte_pattern::temp_instance().find_pattern("8B 45 18 E9 99 00 00 00");
+			// ブロックの終端先を変更する
+			// mov eax,[ebp+arg_14],0
+			byte_pattern::temp_instance().find_pattern("C7 45 EC 00 00 00 00 EB 03");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), x_5_v30);
 			}
@@ -569,20 +571,20 @@ namespace MainTextLineBreak {
 
 		byte_pattern::debug_output2("main text line break routine");
 
-		result |= func_hook(version);
+		result |= func_hook(version); // OK
 
-		result |= fix0_hook(version);
+		result |= fix0_hook(version); // OK
 
-		result |= fixA_hook(version);
+		result |= fixA_hook(version); // OK
 
 		// ブロックの分岐判定処理
-		result |= fix1_hook(version);
+		result |= fix1_hook(version); // NG
 
 		// 左側の分岐ブロックの処理の途中１
-		result |= fix2_hook(version);
+		result |= fix2_hook(version); // OK
 
 		// 左側の分岐ブロックの処理の途中２
-		result |= fix3_hook(version);
+		result |= fix3_hook(version); // OK
 
 		return result;
 	}
