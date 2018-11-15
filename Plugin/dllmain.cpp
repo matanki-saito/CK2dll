@@ -67,7 +67,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= Unk4::init(version);
 
 		// issue33
-		//success |= Issue33::init(version);
+		success |= Issue33::init(version);
 
 		// issue32
 		success |= Issue32::init(version);
