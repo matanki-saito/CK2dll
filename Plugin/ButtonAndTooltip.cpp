@@ -10,6 +10,7 @@ namespace ButtonAndTooltip
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("81 EC 70 03 00 00 8B");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(2), 0x78, true);
@@ -123,6 +124,7 @@ namespace ButtonAndTooltip
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("8A 04 30 88 85 3C FF FF");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), e_1);
@@ -205,6 +207,7 @@ namespace ButtonAndTooltip
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("0F 43 C2 0F B6 04 30 8B 84 83");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), g_1);
@@ -244,6 +247,7 @@ namespace ButtonAndTooltip
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("83 7D A4 00 0F 85 9B");
 			if (byte_pattern::temp_instance().has_size(1,desc + " start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), h_1);
@@ -269,6 +273,7 @@ namespace ButtonAndTooltip
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("8D A5 78 FC FF FF");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(2), 0x70, true);
@@ -342,6 +347,7 @@ namespace ButtonAndTooltip
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("0F 43 C7 0F B6 04 18 8B");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), i_1);

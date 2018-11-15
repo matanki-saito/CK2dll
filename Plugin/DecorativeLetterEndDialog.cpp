@@ -52,6 +52,7 @@ namespace DecorativeLetterEndDialog
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("6A 01 8B F0 8D 8D 2C");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), aa_1);
@@ -114,6 +115,7 @@ namespace DecorativeLetterEndDialog
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("E8 ? ? ? ? FF B5 3C FF FF FF 8D 45");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0xE), bb_1);
@@ -127,8 +129,8 @@ namespace DecorativeLetterEndDialog
 
 	/*-----------------------------------------------*/
 
-	uintptr_t ll_5;
-	__declspec(naked) void ll_1()
+	uintptr_t ll_5_v28;
+	__declspec(naked) void ll_1_v28()
 	{
 		__asm {
 			lea ecx, [ebp - 0x88];
@@ -162,7 +164,47 @@ namespace DecorativeLetterEndDialog
 			lea eax, [ebp - 0x168];
 			push 0;
 
-			push ll_5;
+			push ll_5_v28;
+			ret;
+		}
+	}
+
+	uintptr_t ll_5_v30;
+	__declspec(naked) void ll_1_v30()
+	{
+		__asm {
+			lea ecx, [ebp - 0x8C]; // ïœçXÇ≥ÇÍÇΩ
+			mov eax, ecx;
+			cmp dword ptr[eax + 0x14], 0x10;
+			jb ll_4;
+			mov eax, [eax];
+
+		ll_4:
+			mov al, [eax];
+
+			cmp al, ESCAPE_SEQ_1;
+			jz ll_3;
+
+			cmp al, ESCAPE_SEQ_2;
+			jz ll_3;
+
+			cmp al, ESCAPE_SEQ_3;
+			jz ll_3;
+
+			cmp al, ESCAPE_SEQ_4;
+			jz ll_3;
+
+			push 1;
+			jmp ll_2;
+
+		ll_3:
+			push 3;
+
+		ll_2:
+			lea eax, [ebp - 0x16C]; // ïœçXÇ≥ÇÍÇΩ
+			push 0;
+
+			push ll_5_v30;
 			ret;
 		}
 	}
@@ -174,10 +216,21 @@ namespace DecorativeLetterEndDialog
 
 		switch (version) {
 		case v2_8_X:
+			// push 1
 			byte_pattern::temp_instance().find_pattern("6A 01 6A 00 8D 85 98");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), ll_1);
-				ll_5 = byte_pattern::temp_instance().get_first().address(10);
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), ll_1_v28);
+				ll_5_v28 = byte_pattern::temp_instance().get_first().address(10);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+
+		case v3_0_X:
+			// push 1
+			byte_pattern::temp_instance().find_pattern("6A 01 6A 00 8D 85 94 FE FF FF");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), ll_1_v30);
+				ll_5_v30 = byte_pattern::temp_instance().get_first().address(10);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -188,8 +241,8 @@ namespace DecorativeLetterEndDialog
 
 	/*-----------------------------------------------*/
 
-	uintptr_t mm_5;
-	__declspec(naked) void mm_1()
+	uintptr_t mm_5_v28;
+	__declspec(naked) void mm_1_v28()
 	{
 		__asm {
 			lea ecx, [ebp - 0x88];
@@ -221,7 +274,45 @@ namespace DecorativeLetterEndDialog
 			push eax;
 			lea ecx, [ebp - 0x88];
 
-			push mm_5;
+			push mm_5_v28;
+			ret;
+		}
+	}
+
+	uintptr_t mm_5_v30;
+	__declspec(naked) void mm_1_v30()
+	{
+		__asm {
+			lea ecx, [ebp - 0x8C];
+			cmp dword ptr[ecx + 0x14], 0x10;
+			jb mm_3;
+			mov ecx, [ecx];
+
+		mm_3:
+			mov cl, [ecx];
+			cmp cl, ESCAPE_SEQ_1;
+			jz mm_2;
+
+			cmp cl, ESCAPE_SEQ_2;
+			jz mm_2;
+
+			cmp cl, ESCAPE_SEQ_3;
+			jz mm_2;
+
+			cmp cl, ESCAPE_SEQ_4;
+			jz mm_2;
+
+			push 1;
+			jmp mm_4;
+
+		mm_2:
+			push 3;
+
+		mm_4:
+			push eax;
+			lea ecx, [ebp - 0x8C];
+
+			push mm_5_v30;
 			ret;
 		}
 	}
@@ -233,10 +324,21 @@ namespace DecorativeLetterEndDialog
 
 		switch (version) {
 		case v2_8_X:
+			// push 1
 			byte_pattern::temp_instance().find_pattern("6A 01 50 8D 8D 78 FF FF FF E8");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), mm_1);
-				mm_5 = byte_pattern::temp_instance().get_first().address(9);
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), mm_1_v28);
+				mm_5_v28 = byte_pattern::temp_instance().get_first().address(9);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+
+		case v3_0_X:
+			// push 1
+			byte_pattern::temp_instance().find_pattern("6A 01 50 8D 8D 74 FF FF FF");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), mm_1_v30);
+				mm_5_v30 = byte_pattern::temp_instance().get_first().address(9);
 			}
 			else return CK2ERROR1;
 			return NOERROR;

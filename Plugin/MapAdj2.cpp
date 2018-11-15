@@ -1,7 +1,7 @@
 #include "stdinc.h"
 #include "byte_pattern.h"
 
-namespace Unk5
+namespace MapAdj2
 {
 	/*-----------------------------------------------*/
 
@@ -64,6 +64,7 @@ namespace Unk5
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("8B 55 F4 0F B6 04 30");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), l_1);
@@ -80,9 +81,9 @@ namespace Unk5
 	errno_t init(CK2Version version) {
 		errno_t result = NOERROR;
 
-		byte_pattern::debug_output2("unk5");
+		byte_pattern::debug_output2("map adj 2");
 
-		//
+		// マップ表示の調整　その２
 		result |= fix1_hook(version);
 
 		return result;

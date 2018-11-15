@@ -10,17 +10,18 @@ namespace IME
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			// skip
 			//IME_Init(videodata, hwnd);
 			//IME_Enable(videodata, hwnd);
-			byte_pattern::temp_instance().find_pattern("8B 8A 90 00 00 00");
+			byte_pattern::temp_instance().find_pattern("8B 4D 08 8B B1 9C 02 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc + " skip code")) {
 				injector::MakeJMP(
-					byte_pattern::temp_instance().get_first().address(0x28),// push edi
-					byte_pattern::temp_instance().get_first().address(0x36) // add esp 1Ch
+					byte_pattern::temp_instance().get_first().address(0x1D),// push edi
+					byte_pattern::temp_instance().get_first().address(0x2B) // add esp 1Ch
 				);
 				// ŠÖ”‚ğ‚Q‚ÂÁ‚·‚Ì‚ÅAadd esp 1Ch -> 0C
-				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x36 + 2), 0x0C, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x2B + 2), 0x0C, true);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -35,6 +36,7 @@ namespace IME
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			// skip
 			//IME_Init(videodata, hwnd);
 			//IME_Enable(videodata, hwnd);
@@ -62,6 +64,7 @@ namespace IME
 		/* show candidate and composition window */
 		// see https://twitter.com/matanki_saito/status/1005093384946479104
 		case v2_8_X:
+		case v3_0_X:
 			// skip
 			// if (!videodata->ime_initialized || !videodata->ime_available || !videodata->ime_enabled)
 			//    return SDL_FALSE;
@@ -166,6 +169,7 @@ namespace IME
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("0F 84 FD 00 00 00 83 E8 01");
 			if (byte_pattern::temp_instance().has_size(1, desc + " insert code start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), settingInputRect_v28_start);
@@ -196,6 +200,7 @@ namespace IME
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			// SDL_keyborad.c
 			// skip
 			// issue-9
@@ -242,6 +247,7 @@ namespace IME
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("83 C4 14 85 C0 74 07 33");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), SDL_windowevent_v28_start);
@@ -290,6 +296,7 @@ namespace IME
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			// ­‚µè‘O‚Éˆø‚ÁŠ|‚¯‚é
 			byte_pattern::temp_instance().find_pattern("8B 45 10 59 59 50 6A 00");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {

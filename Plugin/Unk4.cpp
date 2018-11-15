@@ -66,6 +66,7 @@ namespace Unk4
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("0F B6 04 30 8B 4C 24");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), cc_1);
