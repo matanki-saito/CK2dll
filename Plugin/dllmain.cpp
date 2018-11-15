@@ -70,7 +70,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= Issue33::init(version);
 
 		// issue32
-		//success |= Issue32::init(version);
+		success |= Issue32::init(version);
 
 		// 日付表記の変更
 		success |= DateFormat::init(version);
