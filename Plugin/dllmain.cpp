@@ -31,7 +31,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= Font::init(version);
 
 		// 終了時のダイアログの花文字
-		//success |= DecorativeLetterEndDialog::init(version);
+		success |= DecorativeLetterEndDialog::init(version);
 
 		// ダイアログの花文字
 		//success |= DecorativeLetterDialog::init(version);
