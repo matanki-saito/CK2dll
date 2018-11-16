@@ -181,6 +181,26 @@ namespace NickNameFix
 			}
 			else return CK2ERROR1;
 			return NOERROR;
+
+		case v3_0_X:
+			/* [Title] [FirstName] [NickName]‚Æ‚È‚é‚Ì‚ð[NickName] [FirstName] [Title] ‚É‚·‚é issue-14 */
+			byte_pattern::temp_instance().find_pattern("8D 45 84 C6 45 FC 11 50 8D 85 08");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), issue_14_start_1);
+				issue_14_end_1 = byte_pattern::temp_instance().get_first().address(0x12);
+
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x17), issue_14_start_2);
+				issue_14_end_2 = byte_pattern::temp_instance().get_first().address(0x28);
+
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x2D), issue_14_start_3);
+				issue_14_end_3 = byte_pattern::temp_instance().get_first().address(0x3E);
+
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x43), issue_14_start_4);
+				issue_14_end_4 = byte_pattern::temp_instance().get_first().address(0x57);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+
 		}
 		return CK2ERROR1;
 	}

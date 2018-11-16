@@ -99,19 +99,18 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="issue32.cpp" />
     <ClCompile Include="issue33.cpp" />
-    <ClCompile Include="issue38.cpp" />
+    <ClCompile Include="DateFormat.cpp" />
     <ClCompile Include="MainText.cpp" />
-    <ClCompile Include="MapAdj.cpp" />
+    <ClCompile Include="MapView.cpp" />
     <ClCompile Include="MapJustify.cpp" />
-    <ClCompile Include="mapView.cpp" />
-    <ClCompile Include="Misc.cpp" />
+    <ClCompile Include="mapAdj.cpp" />
     <ClCompile Include="NickNameFix.cpp" />
     <ClCompile Include="NoDynastyId.cpp" />
-    <ClCompile Include="Unk1.cpp" />
-    <ClCompile Include="Unk2.cpp" />
+    <ClCompile Include="MainTextLineBreak.cpp" />
+    <ClCompile Include="MapAdj3.cpp" />
     <ClCompile Include="Unk3.cpp" />
     <ClCompile Include="Unk4.cpp" />
-    <ClCompile Include="Unk5.cpp" />
+    <ClCompile Include="MapAdj2.cpp" />
     <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 #include "stdinc.h"
 #include "byte_pattern.h"
 
-namespace Unk2 {
+namespace MapAdj3 {
 	/*-----------------------------------------------*/
 
 	uintptr_t u_4;
@@ -43,6 +43,7 @@ namespace Unk2 {
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("83 FB 01 72 34 56 33 F6");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x15), u_1);
@@ -100,6 +101,7 @@ namespace Unk2 {
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("33 F6 80 3F 00 74 28 83 FE 01");
 			if (byte_pattern::temp_instance().has_size(1,desc +" start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0xC), v_2);
@@ -122,9 +124,9 @@ namespace Unk2 {
 	errno_t init(CK2Version version) {
 		errno_t result = NOERROR;
 
-		byte_pattern::debug_output2("unk2");
+		byte_pattern::debug_output2("map adj 3");
 
-		//
+		// ‚¨‚»‚ç‚­‹­§‘å•¶š‚Ì‰ğœ
 		result |= fix1_hook(version);
 		//
 		result |= fix2_hook(version);

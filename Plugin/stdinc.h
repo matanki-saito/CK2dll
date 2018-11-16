@@ -57,7 +57,7 @@ enum CK2Version {
 	UNKNOWN = 0,
 	v2_7_X = 27,
 	v2_8_X = 28,
-	v2_9_X = 29
+	v3_0_X = 30
 };
 
 typedef struct _runoption {
@@ -138,12 +138,12 @@ namespace MapAdj
 	errno_t init(CK2Version version);
 }
 
-namespace Unk1
+namespace MainTextLineBreak
 {
 	errno_t init(CK2Version version);
 }
 
-namespace Unk2
+namespace MapAdj3
 {
 	errno_t init(CK2Version version);
 }
@@ -158,7 +158,7 @@ namespace Unk4
 	errno_t init(CK2Version version);
 }
 
-namespace Unk5
+namespace MapAdj2
 {
 	errno_t init(CK2Version version);
 }
@@ -173,7 +173,18 @@ namespace Issue32
 	errno_t init(CK2Version version);
 }
 
-namespace Issue38
+namespace DateFormat
 {
 	errno_t init(CK2Version version);
 }
+
+union T {
+	char text[0x10];
+	char* p;
+};
+
+typedef struct {
+	union T t;
+	int len;
+	int len2;
+} V;
