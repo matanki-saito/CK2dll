@@ -27,14 +27,31 @@ namespace Misc {
 
 		ret = GetPrivateProfileString(
 			L"options",
-			L"MenuDateFormat",
+			L"DATE_FORMAT",
 			L"no",
 			buf,
 			64,
 			ini_path
 		);
+		options->dateFormat = lstrcmpW(buf, L"yes") == 0 ? true : false;
 
-		options->MENU_DATE_FORAMT = lstrcmpW(buf, L"yes") == 0 ? true : false;
+		ret = GetPrivateProfileString(
+			L"options",
+			L"NICKNAME_FORMAT",
+			L"disable",
+			buf,
+			64,
+			ini_path
+		);
+		if(lstrcmpW(buf, L"FIRSTNAME_NICKNAME_TITLE") == 0){
+			options->nickNameOrder = NickNameOrder::FIRSTNAME_NICKNAME_TITLE;
+		}
+		else if (lstrcmpW(buf, L"NICKNAME_FIRSTNAME_TITLE") == 0) {
+			options->nickNameOrder = NickNameOrder::NICKNAME_FIRSTNAME_TITLE;
+		}
+		else{
+			options->nickNameOrder = NickNameOrder::DISABLE;
+		}
 	}
 
 	CK2Version getVersion() {

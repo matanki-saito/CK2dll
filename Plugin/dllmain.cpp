@@ -14,6 +14,9 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		// versionを文字列から取得
 		CK2Version version = Misc::getVersion();
 
+		// version設定
+		options.version = version;
+
 		errno_t success = NOERROR;
 
 		// マップフォント表示処理
@@ -53,7 +56,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= MainTextLineBreak::init(version);
 
 		// ニックネーム修正
-		//success |= NickNameFix::init(version);
+		success |= NickNameFix::init(&options);
 
 		// Dynastyに-idがつかないようにする
 		success |= NoDynastyId::init(version);
@@ -77,7 +80,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= Issue32::init(version);
 
 		// 日付表記の変更
-		success |= DateFormat::init(version);
+		success |= DateFormat::init(&options);
 
 		if (success == NOERROR) {
 			byte_pattern::debug_output2("Multibyte DLL [OK]");
