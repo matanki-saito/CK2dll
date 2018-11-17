@@ -7,18 +7,34 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
     {
         byte_pattern::start_log(L"ck2jps");
 
+		// オプションをiniファイルから取得
+		RunOptions options = RunOptions();
+		Misc::getOptionsByINI(&options);
+
 		// versionを文字列から取得
 		CK2Version version = Misc::getVersion();
 
+		// version設定
+		options.version = version;
+
 		errno_t success = NOERROR;
 
-		// マップフォント表示
+		// マップフォント表示処理
 		success |= MapView::init(version);
 
 		// マップフォントjustify
 		success |= MapJustify::init(version);
 
-		// フォント
+		// マップフォント調整処理１
+		success |= MapAdj::init(version);
+
+		// マップフォント表示調整２
+		success |= MapAdj2::init(version);
+
+		// マップフォント表示調整３
+		success |= MapAdj3::init(version);
+
+		// フォントローディング処理
 		success |= Font::init(version);
 
 		// 終了時のダイアログの花文字
@@ -36,8 +52,11 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		// メインテキスト
 		success |= MainText::init(version);
 
+		// メインテキスト改行処理（ダイアログ）
+		success |= MainTextLineBreak::init(version);
+
 		// ニックネーム修正
-		success |= NickNameFix::init(version);
+		success |= NickNameFix::init(&options);
 
 		// Dynastyに-idがつかないようにする
 		success |= NoDynastyId::init(version);
@@ -45,20 +64,8 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		// IME
 		success |= IME::init(version);
 
-		//その他
-		success |= Misc::init(version);
-
 		//Input
 		success |= Input::init(version);
-
-		//Map adj
-		success |= MapAdj::init(version);
-
-		//Unknown 1
-		success |= Unk1::init(version);
-
-		//Unknown 2
-		success |= Unk2::init(version);
 
 		//Unknown 3
 		success |= Unk3::init(version);
@@ -66,15 +73,21 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//Unknown 4
 		success |= Unk4::init(version);
 
-		//Unknown 5
-		success |= Unk5::init(version);
+		// issue33
+		success |= Issue33::init(version);
+
+		// issue32
+		success |= Issue32::init(version);
+
+		// 日付表記の変更
+		success |= DateFormat::init(&options);
 
 		if (success == NOERROR) {
-			byte_pattern::debug_output2("DLL [OK]");
+			byte_pattern::debug_output2("Multibyte DLL [OK]");
 		}
 		else {
-			MessageBoxW(NULL, L"[NG]", L"Multibyte DLL", MB_OK);
-			byte_pattern::debug_output2("DLL [NG]");
+			MessageBoxW(NULL, L"[Multibyte DLL ERROR]\nThis game version is not supported by Multibyte DLL.\nPlease delete d3d9.dll and restart game.\nOr check new version dll.\n\nhttps://github.com/matanki-saito/CK2Dll", L"Multibyte DLL", MB_OK);
+			byte_pattern::debug_output2("Multibyte DLL [NG]");
 			exit(-1);
 		}
 

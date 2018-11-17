@@ -10,17 +10,18 @@ namespace IME
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			// skip
 			//IME_Init(videodata, hwnd);
 			//IME_Enable(videodata, hwnd);
-			byte_pattern::temp_instance().find_pattern("8B 8A 90 00 00 00");
+			byte_pattern::temp_instance().find_pattern("8B 4D 08 8B B1 9C 02 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc + " skip code")) {
 				injector::MakeJMP(
-					byte_pattern::temp_instance().get_first().address(0x28),// push edi
-					byte_pattern::temp_instance().get_first().address(0x36) // add esp 1Ch
+					byte_pattern::temp_instance().get_first().address(0x1D),// push edi
+					byte_pattern::temp_instance().get_first().address(0x2B) // add esp 1Ch
 				);
 				// 関数を２つ消すので、add esp 1Ch -> 0C
-				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x36 + 2), 0x0C, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x2B + 2), 0x0C, true);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -35,6 +36,7 @@ namespace IME
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			// skip
 			//IME_Init(videodata, hwnd);
 			//IME_Enable(videodata, hwnd);
@@ -62,6 +64,7 @@ namespace IME
 		/* show candidate and composition window */
 		// see https://twitter.com/matanki_saito/status/1005093384946479104
 		case v2_8_X:
+		case v3_0_X:
 			// skip
 			// if (!videodata->ime_initialized || !videodata->ime_available || !videodata->ime_enabled)
 			//    return SDL_FALSE;
@@ -166,6 +169,7 @@ namespace IME
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("0F 84 FD 00 00 00 83 E8 01");
 			if (byte_pattern::temp_instance().has_size(1, desc + " insert code start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), settingInputRect_v28_start);
@@ -196,6 +200,7 @@ namespace IME
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			// SDL_keyborad.c
 			// skip
 			// issue-9
@@ -242,6 +247,7 @@ namespace IME
 
 		switch (version) {
 		case v2_8_X:
+		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("83 C4 14 85 C0 74 07 33");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), SDL_windowevent_v28_start);
@@ -259,10 +265,57 @@ namespace IME
 				SDL_windowevent_v28_end2 = byte_pattern::temp_instance().get_first().address();
 			}
 			else return CK2ERROR1;
+
 			return NOERROR;
 		}
 		return CK2ERROR1;
+	} //
+
+	/*-----------------------------------------------*/
+
+	uintptr_t SDL_SendKeyboardKey_v28;
+	uintptr_t issue31_v28_end;
+	__declspec(naked) void issue31_v28_start() {
+		__asm {
+			cmp esi, 229;
+			jz issue31_x; // skip
+
+			call SDL_SendKeyboardKey_v28;
+
+		issue31_x:
+			pop ecx;
+			push issue31_v28_end;
+			ret;
+		}
 	}
+
+	/*-----------------------------------------------*/
+
+	errno_t SDL_windowevent_issue31_hook(CK2Version version) {
+		std::string desc = "SDL_windowevent issue31";
+
+		switch (version) {
+		case v2_8_X:
+		case v3_0_X:
+			// 少し手前に引っ掛ける
+			byte_pattern::temp_instance().find_pattern("8B 45 10 59 59 50 6A 00");
+			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(8), issue31_v28_start);
+				issue31_v28_end = byte_pattern::temp_instance().get_first().address(0xE);
+			}
+			else return CK2ERROR1;
+
+			// SDL_SendKeyboardKeyを見つける
+			byte_pattern::temp_instance().find_pattern("55 8B EC 83 EC 40 56 8B 75 0C 85 F6");
+			if (byte_pattern::temp_instance().has_size(1, desc + " SDL_SendKeyboardKey")) {
+				SDL_SendKeyboardKey_v28 = byte_pattern::temp_instance().get_first().address();
+			}
+			else return CK2ERROR1;
+
+			return NOERROR;
+		}
+		return CK2ERROR1;
+	} //
 
 	/*-----------------------------------------------*/
 
@@ -284,6 +337,8 @@ namespace IME
 		result |= SDL_keyborad_hook(version);
 		// SDL_windowevent.cを変更
 		result |= SDL_windowevent_hook(version);
+		// SDL_windowsevent.cを変更
+		result |= SDL_windowevent_issue31_hook(version);
 
 		return result;
 	}

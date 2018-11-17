@@ -57,14 +57,37 @@ enum CK2Version {
 	UNKNOWN = 0,
 	v2_7_X = 27,
 	v2_8_X = 28,
-	v2_9_X = 29
+	v3_0_X = 30
 };
+
+enum NickNameOrder {
+	DISABLE, // original
+	NICKNAME_FIRSTNAME_TITLE,
+	FIRSTNAME_NICKNAME_TITLE,
+	TITLE_NICKNAME_FIRSTNAME
+};
+
+typedef struct _runoption {
+	// プログラムバージョン
+	CK2Version version;
+
+	// 日付の表記変更を有効にするか
+	boolean dateFormat;
+	// ニックネームの種別
+	// 0 : 無効
+	// 1 : [FirstName] [Nickname] [Title]
+	// 2 : [Nickname] [FirstName] [Title]
+	NickNameOrder nickNameOrder;
+
+} RunOptions;
 
 namespace Misc
 {
 	CK2Version getVersion();
 	std::string versionString(CK2Version version);
 	errno_t init(CK2Version version);
+
+	void getOptionsByINI(RunOptions *option);
 }
 
 namespace MapView
@@ -109,7 +132,7 @@ namespace MainText
 
 namespace NickNameFix
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace NoDynastyId
@@ -132,12 +155,12 @@ namespace MapAdj
 	errno_t init(CK2Version version);
 }
 
-namespace Unk1
+namespace MainTextLineBreak
 {
 	errno_t init(CK2Version version);
 }
 
-namespace Unk2
+namespace MapAdj3
 {
 	errno_t init(CK2Version version);
 }
@@ -152,7 +175,33 @@ namespace Unk4
 	errno_t init(CK2Version version);
 }
 
-namespace Unk5
+namespace MapAdj2
 {
 	errno_t init(CK2Version version);
 }
+
+namespace Issue33
+{
+	errno_t init(CK2Version version);
+}
+
+namespace Issue32
+{
+	errno_t init(CK2Version version);
+}
+
+namespace DateFormat
+{
+	errno_t init(RunOptions *options);
+}
+
+union T {
+	char text[0x10];
+	char* p;
+};
+
+typedef struct {
+	union T t;
+	int len;
+	int len2;
+} V;
