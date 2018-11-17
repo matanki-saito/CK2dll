@@ -148,19 +148,23 @@ namespace DateFormat {
 
 	/*-----------------------------------------------*/
 
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
-		byte_pattern::debug_output2("Date Format");
+		if (options->dateFormat) {
 
-		/* 右上のツールバーの日付表記の修正 */
-		result |= dateOrder_hook(version);
+			byte_pattern::debug_output2("Date Format");
 
-		/* 関数フック */
-		result |= copyBufFunc_hook(version);
+			/* 右上のツールバーの日付表記の修正 */
+			result |= dateOrder_hook(options->version);
 
-		/* issue-38  「DD MON, YYYY」を「YYYY年MONDD日」にしたい */
-		result |= fix1_hook(version);
+			/* 関数フック */
+			result |= copyBufFunc_hook(options->version);
+
+			/* issue-38  「DD MON, YYYY」を「YYYY年MONDD日」にしたい */
+			result |= fix1_hook(options->version);
+
+		}
 
 		return result;
 	}

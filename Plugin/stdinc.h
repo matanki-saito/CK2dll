@@ -60,11 +60,34 @@ enum CK2Version {
 	v3_0_X = 30
 };
 
+enum NickNameOrder {
+	DISABLE, // original
+	NICKNAME_FIRSTNAME_TITLE,
+	FIRSTNAME_NICKNAME_TITLE,
+	TITLE_NICKNAME_FIRSTNAME
+};
+
+typedef struct _runoption {
+	// プログラムバージョン
+	CK2Version version;
+
+	// 日付の表記変更を有効にするか
+	boolean dateFormat;
+	// ニックネームの種別
+	// 0 : 無効
+	// 1 : [FirstName] [Nickname] [Title]
+	// 2 : [Nickname] [FirstName] [Title]
+	NickNameOrder nickNameOrder;
+
+} RunOptions;
+
 namespace Misc
 {
 	CK2Version getVersion();
 	std::string versionString(CK2Version version);
 	errno_t init(CK2Version version);
+
+	void getOptionsByINI(RunOptions *option);
 }
 
 namespace MapView
@@ -109,7 +132,7 @@ namespace MainText
 
 namespace NickNameFix
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace NoDynastyId
@@ -169,7 +192,7 @@ namespace Issue32
 
 namespace DateFormat
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 union T {

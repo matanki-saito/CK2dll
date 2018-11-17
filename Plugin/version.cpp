@@ -2,6 +2,57 @@
 #include "byte_pattern.h"
 
 namespace Misc {
+	void getOptionsByINI(RunOptions *options) {
+
+		// exe‚ÌƒpƒX‚ðŒ©‚Â‚¯‚é
+		wchar_t exe_path[1024];
+		wchar_t drive[8];
+		wchar_t dir[1024];
+		wchar_t fname[128];
+		wchar_t ext[128];
+
+		GetModuleFileName(NULL, exe_path, 1024);
+
+		_wsplitpath_s(exe_path, drive, dir, fname, ext);
+
+		std::wstring newDir = std::wstring();
+		newDir.append(dir);
+		newDir.append(L"plugins");
+
+		wchar_t ini_path[1024];
+		_wmakepath_s(ini_path, drive, newDir.c_str(),L"plugin",L"ini");
+
+		wchar_t *buf = new wchar_t[64];
+		DWORD  ret;
+
+		ret = GetPrivateProfileString(
+			L"options",
+			L"DATE_FORMAT",
+			L"no",
+			buf,
+			64,
+			ini_path
+		);
+		options->dateFormat = lstrcmpW(buf, L"yes") == 0 ? true : false;
+
+		ret = GetPrivateProfileString(
+			L"options",
+			L"NICKNAME_FORMAT",
+			L"disable",
+			buf,
+			64,
+			ini_path
+		);
+		if(lstrcmpW(buf, L"FIRSTNAME_NICKNAME_TITLE") == 0){
+			options->nickNameOrder = NickNameOrder::FIRSTNAME_NICKNAME_TITLE;
+		}
+		else if (lstrcmpW(buf, L"NICKNAME_FIRSTNAME_TITLE") == 0) {
+			options->nickNameOrder = NickNameOrder::NICKNAME_FIRSTNAME_TITLE;
+		}
+		else{
+			options->nickNameOrder = NickNameOrder::DISABLE;
+		}
+	}
 
 	CK2Version getVersion() {
 
