@@ -335,7 +335,7 @@ namespace DecorativeLetterEndDialog
 
 		case v3_0_X:
 			// push 1
-			byte_pattern::temp_instance().find_pattern("6A 01 50 8D 8D 74 FF FF FF");
+			byte_pattern::temp_instance().find_pattern("6A 01 50 8D 8D 74 FF FF FF E8"); // call : E8
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), mm_1_v30);
 				mm_5_v30 = byte_pattern::temp_instance().get_first().address(9);
