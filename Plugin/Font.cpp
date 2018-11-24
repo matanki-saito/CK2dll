@@ -91,8 +91,8 @@ namespace Font
 			/* File—e—Ê‚Ì§ŒÀ‰ğœ */
 			byte_pattern::temp_instance().find_pattern("81 FE 00 00 00 02");
 			if (byte_pattern::temp_instance().has_size(2,desc)) {
-				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x5), 0x04, true);
-				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x5), 0x04, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get(0).address(0x5), 0x04, true);
+				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get(1).address(0x5), 0x04, true);
 			}
 			else return CK2ERROR1;
 

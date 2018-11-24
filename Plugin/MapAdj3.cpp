@@ -44,13 +44,17 @@ namespace MapAdj3 {
 		switch (version) {
 		case v2_8_X:
 		case v3_0_X:
+			// cmp ebx,1
 			byte_pattern::temp_instance().find_pattern("83 FB 01 72 34 56 33 F6");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
+				// mov al,[edi+esi]
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x15), u_1);
+				// jnz xxxxxx
 				u_4 = byte_pattern::temp_instance().get_first().address(0x1A);
 			}
 			else return CK2ERROR1;
 
+			// cmp byte ptr [edi+esi],0
 			byte_pattern::temp_instance().find_pattern("80 3C 37 00 75 D9 5E 5F");
 			if (byte_pattern::temp_instance().has_size(1, desc + " end2")) {
 				u_2 = byte_pattern::temp_instance().get_first().address();
@@ -102,13 +106,17 @@ namespace MapAdj3 {
 		switch (version) {
 		case v2_8_X:
 		case v3_0_X:
+			// xor esi,esi
 			byte_pattern::temp_instance().find_pattern("33 F6 80 3F 00 74 28 83 FE 01");
 			if (byte_pattern::temp_instance().has_size(1,desc +" start")) {
+				// mov al,[edi+esi]
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0xC), v_2);
+				// jnz xxxxxx
 				v_4 = byte_pattern::temp_instance().get_first().address(0x11);
 			}
 			else return CK2ERROR1;
 
+			// cmp byte ptr [edi+esi],0
 			byte_pattern::temp_instance().find_pattern("80 3C 37 00 75 D8 5F 5E");
 			if (byte_pattern::temp_instance().has_size(1,desc +" end")) {
 				v_1 = byte_pattern::temp_instance().get_first().address();
@@ -121,14 +129,13 @@ namespace MapAdj3 {
 
 	/*-----------------------------------------------*/
 
+	// ‚¨‚»‚ç‚­‹­§‘å•¶š‚Ì‰ğœ
 	errno_t init(CK2Version version) {
 		errno_t result = NOERROR;
 
 		byte_pattern::debug_output2("map adj 3");
 
-		// ‚¨‚»‚ç‚­‹­§‘å•¶š‚Ì‰ğœ
 		result |= fix1_hook(version);
-		//
 		result |= fix2_hook(version);
 
 		return result;
