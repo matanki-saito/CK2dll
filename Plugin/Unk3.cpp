@@ -81,13 +81,16 @@ namespace Unk3 {
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("8A 04 16 8B 4D F0 88");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
+				// mov al, [esi+edx]
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), j_1);
+				// mov ecx, [ecx+eax*4+OFFSET]
 				j_7 = byte_pattern::temp_instance().get_first().address(12);
 			}
 			else return CK2ERROR1;
 
 			byte_pattern::temp_instance().find_pattern("3B F9 0F 4F CF 5F 5E 8B");
 			if (byte_pattern::temp_instance().has_size(1, desc + " end2")) {
+				// cmp edi,ecx
 				j_8 = byte_pattern::temp_instance().get_first().address();
 			}
 			else return CK2ERROR1;

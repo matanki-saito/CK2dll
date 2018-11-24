@@ -65,9 +65,11 @@ namespace MapAdj2
 		switch (version) {
 		case v2_8_X:
 		case v3_0_X:
+			// mov edx,[ebp+var_C]
 			byte_pattern::temp_instance().find_pattern("8B 55 F4 0F B6 04 30");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), l_1);
+				// mov eax,[edx+eax*4+OFFSET]
 				l_5 = byte_pattern::temp_instance().get_first().address(7);
 			}
 			else return CK2ERROR1;

@@ -58,8 +58,8 @@ namespace MapJustify {
 			cmp al, ESCAPE_SEQ_4;
 			jz s_2;
 
-			lea ecx, [ebp - 0x10]; // 1C -> 10
-			lea edx, [ecx + 1];
+			lea ecx, dword ptr [ebp - 0x10]; // 1C -> 10
+			lea edx, dword ptr [ecx + 1];
 
 			push loc_12CDF48_v30;
 			ret;
@@ -67,8 +67,8 @@ namespace MapJustify {
 		s_2:
 			mov ecx, 3;
 			cmp byte ptr[ebp - 0xC4], 0x10; // CC -> C4
-			lea eax, [ebp - 0xD8]; // E0 -> D8
-			cmovnb eax, [ebp - 0xD8]; // E0 -> D8
+			lea eax, dword ptr [ebp - 0xD8]; // E0 -> D8
+			cmovnb eax, dword ptr [ebp - 0xD8]; // E0 -> D8
 			movzx ax, word ptr[eax + esi + 1];
 			mov word ptr[ebp - 0x10 + 1], ax; // 1C -> 10
 			add esi, 2;
@@ -109,18 +109,21 @@ namespace MapJustify {
 			return NOERROR;
 
 		case v3_0_X:
+			// lea ecx,[ebp+var_10]
 			byte_pattern::temp_instance().find_pattern("8D 4D F0 8D 51 01 8A 01 41");
 			if (byte_pattern::temp_instance().has_size(1, desc + "start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), s_1_v30);
 			}
 			else return CK2ERROR1;
 
+			// mov al,[ecx]
 			byte_pattern::temp_instance().find_pattern("8A 01 41 84 C0 75 F9 2B CA 51 8D 45 F0 50");
 			if (byte_pattern::temp_instance().has_size(2, desc + " end1")) {
 				loc_12CDF48_v30 = byte_pattern::temp_instance().get_first().address();
 			}
 			else return CK2ERROR1;
 
+			// push ecx
 			byte_pattern::temp_instance().find_pattern("51 8D 45 F0 50 8D 8D 50");
 			if (byte_pattern::temp_instance().has_size(2, desc + " end2")) {
 				loc_12CDF51_v30 = byte_pattern::temp_instance().get_first().address();
@@ -160,7 +163,7 @@ namespace MapJustify {
 	__declspec(naked) void t_1_v30()
 	{
 		__asm {
-			cmp esi, ebx;
+			cmp esi, edi; // ebx -> edi
 			jz t_3_jmp;
 
 			push 0xFFFFFFFF;
@@ -187,6 +190,7 @@ namespace MapJustify {
 			byte_pattern::temp_instance().find_pattern("6A FF 6A 00 8D 85 88 FE FF FF 50");
 			if (byte_pattern::temp_instance().has_size(1,desc + " start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), t_1_v28);
+				// push eax
 				t_2_v28 = byte_pattern::temp_instance().get_first().address(10);
 			}
 			else return CK2ERROR1;
@@ -205,6 +209,7 @@ namespace MapJustify {
 			byte_pattern::temp_instance().find_pattern("6A FF 6A 00 8D 85 94 FE FF FF 50");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), t_1_v30);
+				// push eax
 				t_2_v30 = byte_pattern::temp_instance().get_first().address(10);
 			}
 			else return CK2ERROR1;
@@ -212,7 +217,7 @@ namespace MapJustify {
 			// mov esi,[ebp+arg_0]
 			byte_pattern::temp_instance().find_pattern("8B 75 08 8D 45 E8 50 8D");
 			if (byte_pattern::temp_instance().has_size(1, desc + " end2")) {
-				t_3_v30 = byte_pattern::temp_instance().get_first().address(0);
+				t_3_v30 = byte_pattern::temp_instance().get_first().address();
 			}
 			else return CK2ERROR1;
 
@@ -345,6 +350,7 @@ namespace MapJustify {
 			byte_pattern::temp_instance().find_pattern("0F B6 04 01 8B 04 87 85");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), r_1_v28);
+				// test eax,eax
 				r_4_v28 = byte_pattern::temp_instance().get_first().address(0x07);
 			}
 			else return CK2ERROR1;
@@ -355,6 +361,7 @@ namespace MapJustify {
 			byte_pattern::temp_instance().find_pattern("0F B6 04 01 8B 04 86 85 C0");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), r_1_v30);
+				// test eax,eax
 				r_4_v30 = byte_pattern::temp_instance().get_first().address(0x07);
 			}
 			else return CK2ERROR1;

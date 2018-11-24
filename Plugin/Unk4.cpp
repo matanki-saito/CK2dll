@@ -69,7 +69,9 @@ namespace Unk4
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("0F B6 04 30 8B 4C 24");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				// movzx eax,byte ptr [eax+esi]
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), cc_1);
+				// mov ecx,[ecx + eax*4+0xA4]
 				cc_4 = byte_pattern::temp_instance().get_first().address(8);
 			}
 			else return CK2ERROR1;
