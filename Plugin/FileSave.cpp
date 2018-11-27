@@ -391,18 +391,7 @@ namespace FileSave {
 		return success;
 	}
 
-	union T {
-		char text[0x10];
-		char* p;
-	};
-
-	typedef struct V {
-		union T t;
-		int len;
-		int len2;
-	} Vs;
-
-	Vs* tmpZV = NULL;
+	V* tmpZV = NULL;
 	char*  utf8ToEscapedStr(char *from) {
 
 		if (tmpZV != NULL) {
@@ -412,7 +401,7 @@ namespace FileSave {
 			delete tmpZV;
 		}
 
-		tmpZV = new Vs();
+		tmpZV = new V();
 
 		wchar_t *tmp = NULL;
 		char *tmp2 = NULL;
@@ -448,48 +437,26 @@ namespace FileSave {
 		return (char*)tmpZV;
 	}
 
+
 	char titleUtf8tmp[200] = {};
 	char titleMytmp[200] = {};
 	uintptr_t issue_7_2_end;
-	__declspec(naked) void issue_7_2_start() {
-		__asm {
-			lea eax, [ebx + 0x304];
-
-			push ecx;
-
-			push eax;
-			call utf8ToEscapedStr;
-			add esp, 4;
-
-			pop ecx;
-
-			push eax;
-			mov eax, [ecx];
-
-
-			push issue_7_2_end;
-			ret;
-
-		}
-	}
-
-	char *save_game_title = "save_game_title";
 	uintptr_t issue_7_2_end_126;
 	__declspec(naked) void issue_7_2_start_126() {
 		__asm {
 			push ecx;
+			push edx;
 
-			push edi;
+			lea eax, [ebp-0x2C];
+			push eax;
 			call utf8ToEscapedStr;
 			add esp, 4;
 
+			pop edx;
 			pop ecx;
 
+			push 0;
 			push eax;
-			push save_game_title;
-
-			mov     eax, dword ptr[ecx];
-			call dword ptr[eax + 0x4C];
 
 			push issue_7_2_end_126;
 			ret;
@@ -505,10 +472,13 @@ namespace FileSave {
 
 		switch (options->version) {
 		case v3_0_X:
-			byte_pattern::temp_instance().find_pattern("57 68 ? ? ? ? FF 50 4C 8B C8");
+			// push ecx
+			byte_pattern::temp_instance().find_pattern("51 52 8D 8E C0 00 00 00 E8 97 FC 88 FF");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), issue_7_2_start_126);
-				issue_7_2_end_126 = byte_pattern::temp_instance().get_first().address(0x9);
+				// cmovnb lea eax, [ebp+var_2C]
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x13), issue_7_2_start_126);
+				// call xxxxx
+				issue_7_2_end_126 = byte_pattern::temp_instance().get_first().address(0x19);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -595,7 +565,7 @@ namespace FileSave {
 		result |= PHYSFS_utf8FromUcs2_hook(options); // OK
 
 		/* タイトルを表示できるようにする */
-		//result |= showTitle_hook(options);
+		result |= showTitle_hook(options);
 
 		/* UTF-8ファイルを列挙できるようにする jz(74) -> jmp(EB) */
 		result |= fileEnumSkip_hook(options); // OK
