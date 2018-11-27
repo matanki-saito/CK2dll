@@ -161,8 +161,8 @@ namespace FileSave {
 			add esp, 0x10;
 
 			lea ecx, dword ptr[ebp - 0x88];
-			mov dword ptr[ecx + 0x10], esi;
-			mov dword ptr[ecx + 0x14], 0x10;
+			//mov dword ptr[ecx + 0x10], esi;
+			//mov dword ptr[ecx + 0x14], 0x10;
 
 			pop esi;
 			pop ebx;
@@ -586,7 +586,7 @@ namespace FileSave {
 		byte_pattern::temp_instance().debug_output2("file save etc");
 
 		/* ファイル名を安全にしている場所を短絡する jmp [address] */
-		result |= fileNameSaftySkip_hook(options); // OK
+		//result |= fileNameSaftySkip_hook(options); // OK
 
 		/* ファイル名を変換する */
 		result |= filenameEncode_hook(options);
@@ -604,7 +604,7 @@ namespace FileSave {
 		result |= fileNameSaftySkip2_hook(options); // OK
 
 		/* ファイル名チェック？ */
-		result |= issue_15_checkskip_hook(options);
+		//result |= issue_15_checkskip_hook(options);
 
 		return result;
 	}
