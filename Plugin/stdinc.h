@@ -195,6 +195,11 @@ namespace DateFormat
 	errno_t init(RunOptions *options);
 }
 
+namespace FileSave
+{
+	errno_t init(RunOptions *options);
+}
+
 union T {
 	char text[0x10];
 	char* p;
