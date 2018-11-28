@@ -391,6 +391,8 @@ namespace FileSave {
 		return success;
 	}
 
+	/*-----------------------------------------------*/
+
 	V* tmpZV = NULL;
 	char*  utf8ToEscapedStr(char *from) {
 
@@ -437,12 +439,13 @@ namespace FileSave {
 		return (char*)tmpZV;
 	}
 
-
 	char titleUtf8tmp[200] = {};
 	char titleMytmp[200] = {};
-	uintptr_t issue_7_2_end;
-	uintptr_t issue_7_2_end_126;
-	__declspec(naked) void issue_7_2_start_126() {
+
+	/*-----------------------------------------------*/
+
+	uintptr_t issue_15_loadgame_end_v300;
+	__declspec(naked) void issue_15_loadgame_start_v300() {
 		__asm {
 			push ecx;
 			push edx;
@@ -458,7 +461,7 @@ namespace FileSave {
 			push 0;
 			push eax;
 
-			push issue_7_2_end_126;
+			push issue_15_loadgame_end_v300;
 			ret;
 
 		}
@@ -466,7 +469,7 @@ namespace FileSave {
 
 	/*-----------------------------------------------*/
 
-	errno_t showTitle_hook(RunOptions *options) {
+	errno_t loadgame_showTitle_hook(RunOptions *options) {
 
 		std::string desc = "show title";
 
@@ -476,9 +479,9 @@ namespace FileSave {
 			byte_pattern::temp_instance().find_pattern("51 52 8D 8E C0 00 00 00 E8 97 FC 88 FF");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// cmovnb lea eax, [ebp+var_2C]
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x13), issue_7_2_start_126);
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x13), issue_15_loadgame_start_v300);
 				// call xxxxx
-				issue_7_2_end_126 = byte_pattern::temp_instance().get_first().address(0x19);
+				issue_15_loadgame_end_v300 = byte_pattern::temp_instance().get_first().address(0x19);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -512,51 +515,17 @@ namespace FileSave {
 
 	/*-----------------------------------------------*/
 
-	uintptr_t issue_15_checkskip_v300_end;
-	__declspec(naked) void issue_15_checkskip_v300_start() {
-		__asm {
-			mov esi, [ecx];
-			lea edx, [ebx + 0xBC];
-			push edx;
-			mov eax, [esi + 0x11C];
-			call eax;
-			mov al, 0x1;
-
-			push issue_15_checkskip_v300_end;
-			ret;
-		}
-	}
-
-	/*-----------------------------------------------*/
-
-	errno_t issue_15_checkskip_hook(RunOptions *options) {
-		std::string desc = "file enum";
-
-		switch (options->version) {
-		case v3_0_X:
-			// mov esi,[ecx]
-			byte_pattern::temp_instance().find_pattern("8B 31 8D 93 BC 00 00 00 52");
-			if (byte_pattern::temp_instance().has_size(1, desc)) {
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), issue_15_checkskip_v300_start);
-				// 
-				issue_15_checkskip_v300_end = byte_pattern::temp_instance().get_first().address(0x11);
-			}
-			else return CK2ERROR1;
-			return NOERROR;
-		}
-
-		return CK2ERROR1;
-	}
-
-	/*-----------------------------------------------*/
-
 	errno_t init(RunOptions *options) {
 		errno_t result = 0;
 
 		byte_pattern::temp_instance().debug_output2("file save etc");
 
 		/* ファイル名を安全にしている場所を短絡する jmp [address] */
+		// EU4はこれだけで大丈夫だった
 		//result |= fileNameSaftySkip_hook(options); // OK
+
+		/* ファイル名を安全にしている場所を短絡する２ jmp [address] */
+		result |= fileNameSaftySkip2_hook(options); // OK
 
 		/* ファイル名を変換する */
 		result |= filenameEncode_hook(options);
@@ -565,16 +534,10 @@ namespace FileSave {
 		result |= PHYSFS_utf8FromUcs2_hook(options); // OK
 
 		/* タイトルを表示できるようにする */
-		result |= showTitle_hook(options);
+		result |= loadgame_showTitle_hook(options);
 
 		/* UTF-8ファイルを列挙できるようにする jz(74) -> jmp(EB) */
 		result |= fileEnumSkip_hook(options); // OK
-
-		/* ファイル名を安全にしている場所を短絡する２ jmp [address] */
-		result |= fileNameSaftySkip2_hook(options); // OK
-
-		/* ファイル名チェック？ */
-		//result |= issue_15_checkskip_hook(options);
 
 		return result;
 	}
