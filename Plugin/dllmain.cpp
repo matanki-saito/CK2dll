@@ -19,22 +19,22 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 
 		errno_t success = NOERROR;
 
-		// マップフォント表示処理
+		// マップフォント表示処理 : OK
 		success |= MapView::init(version);
 
-		// マップフォントjustify
+		// マップフォントjustify : OK
 		success |= MapJustify::init(version);
 
-		// マップフォント調整処理１
+		// マップフォント調整処理１ : OK
 		success |= MapAdj::init(version);
 
-		// マップフォント表示調整２
+		// マップフォント表示調整２ : OK
 		success |= MapAdj2::init(version);
 
-		// マップフォント表示調整３
+		// マップフォント表示調整３ : OK
 		success |= MapAdj3::init(version);
 
-		// フォントローディング処理
+		// フォントローディング処理 : OK
 		success |= Font::init(version);
 
 		// 終了時のダイアログの花文字
@@ -67,10 +67,10 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//Input
 		success |= Input::init(version);
 
-		//Unknown 3
+		//Unknown 3 : OK
 		success |= Unk3::init(version);
-
-		//Unknown 4
+		
+		//Unknown 4 : OK
 		success |= Unk4::init(version);
 
 		// issue33
@@ -81,6 +81,9 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 
 		// 日付表記の変更
 		success |= DateFormat::init(&options);
+
+		// ファイル保存
+		success |= FileSave::init(&options);
 
 		if (success == NOERROR) {
 			byte_pattern::debug_output2("Multibyte DLL [OK]");

@@ -109,6 +109,7 @@ namespace MapAdj {
 			byte_pattern::temp_instance().find_pattern("0F B6 04 10 8B 34 86");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), m_1);
+				// test esi,esi
 				m_5 = byte_pattern::temp_instance().get_first().address(7);
 			}
 			else return CK2ERROR1;
@@ -188,8 +189,10 @@ namespace MapAdj {
 			// mov eax, [ebp-0B4h]
 			byte_pattern::temp_instance().find_pattern("8B 85 4C FF FF FF 8B 73");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				// inc edx
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(-0xE), 0x90, true);
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), jj_1);
+				// mov edx,ecx
 				jj_2 = byte_pattern::temp_instance().get_first().address(9);
 			}
 			else return CK2ERROR1;

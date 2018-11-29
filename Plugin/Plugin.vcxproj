@@ -94,6 +94,7 @@
     <ClCompile Include="DecorativeLetterEndDialog.cpp" />
     <ClCompile Include="DecorativeLetterInheritDialog.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="FileSave.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="IME.cpp" />
     <ClCompile Include="Input.cpp" />

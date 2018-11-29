@@ -109,9 +109,12 @@ namespace MapView
 			byte_pattern::temp_instance().find_pattern("8A 04 18 8D 8D 04 FF");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), p_1);
+				// push [ebp+var_34]
 				p_5 = byte_pattern::temp_instance().get_first().address(12);
 	
+				// 0xFFFFFFFF
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x14), q_1);
+				// lea ecx, [ebp+var_B4]
 				q_4 = byte_pattern::temp_instance().get_first().address(0x19);
 			}
 			else return CK2ERROR1;
@@ -191,6 +194,7 @@ namespace MapView
 			byte_pattern::temp_instance().find_pattern("0F B6 04 18 8B 55 E0");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), o_1);
+				// mov edx,[edx+eax*4+OFFSET]
 				o_5 = byte_pattern::temp_instance().get_first().address(7);
 			}
 			else return CK2ERROR1;
@@ -316,8 +320,6 @@ namespace MapView
 			ret;
 		}
 	}
-
-
 	/*-----------------------------------------------*/
 
 	errno_t func4_hook(CK2Version version) {
@@ -325,18 +327,22 @@ namespace MapView
 
 		switch (version) {
 		case v2_8_X:
+			// movzx eax, byte ptr [eax+ecx]
 			byte_pattern::temp_instance().find_pattern("0F B6 04 08 8B 94 82 8C");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), n_1_v28);
+				// mov [ebp+var_34],edx
 				n_4_v28 = byte_pattern::temp_instance().get_first().address(11);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
 
 		case v3_0_X:
+			// movzx eax, byte ptr [eax+ecx]
 			byte_pattern::temp_instance().find_pattern("0F B6 04 08 8B 94 82 A4");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), n_1_v30);
+				// mov [ebp+var_34],edx
 				n_4_v30 = byte_pattern::temp_instance().get_first().address(11);
 			}
 			else return CK2ERROR1;

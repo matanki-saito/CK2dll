@@ -334,11 +334,11 @@ namespace DecorativeLetterEndDialog
 			return NOERROR;
 
 		case v3_0_X:
-			// push 1
-			byte_pattern::temp_instance().find_pattern("6A 01 50 8D 8D 74 FF FF FF");
+			//lea ecx, [ebp+var_200]
+			byte_pattern::temp_instance().find_pattern("8D 85 00 FE FF FF 6A 01 50 8D 8D 74 FF FF FF");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), mm_1_v30);
-				mm_5_v30 = byte_pattern::temp_instance().get_first().address(9);
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x6), mm_1_v30);
+				mm_5_v30 = byte_pattern::temp_instance().get_first().address(0x6 + 9);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
