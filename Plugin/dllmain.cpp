@@ -59,7 +59,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= NickNameFix::init(&options);
 
 		// Dynasty‚É-id‚ª‚Â‚©‚È‚¢‚æ‚¤‚É‚·‚é
-		//success |= NoDynastyId::init(version);
+		success |= NoDynastyId::init(version);
 
 		// IME
 		success |= IME::init(version);
