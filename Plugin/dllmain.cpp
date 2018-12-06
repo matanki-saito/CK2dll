@@ -35,7 +35,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= MapAdj3::init(version);
 
 		// フォントローディング処理
-		//success |= Font::init(version);
+		success |= Font::init(version);
 
 		// 終了時のダイアログの花文字
 		success |= DecorativeLetterEndDialog::init(version);
