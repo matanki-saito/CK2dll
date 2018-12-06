@@ -86,7 +86,6 @@ namespace Misc
 {
 	CK2Version getVersion();
 	std::string versionString(CK2Version version);
-	errno_t init(CK2Version version);
 
 	void getOptionsByINI(RunOptions *option);
 }
@@ -158,7 +157,7 @@ namespace MapAdj
 
 namespace MainTextLineBreak
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace MapAdj3
