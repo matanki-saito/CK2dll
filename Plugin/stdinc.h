@@ -123,7 +123,7 @@ namespace DecorativeLetterInheritDialog
 
 namespace ButtonAndTooltip
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace MainText
