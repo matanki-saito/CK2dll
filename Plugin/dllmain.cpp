@@ -62,10 +62,10 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= NoDynastyId::init(version);
 
 		// IME
-		//success |= IME::init(version);
+		success |= IME::init(version);
 
 		//Input
-		//success |= Input::init(version);
+		success |= Input::init(version);
 
 		//Unknown 3 : OK
 		//success |= Unk3::init(version);
