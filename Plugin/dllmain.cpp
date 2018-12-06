@@ -76,8 +76,8 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		// issue33
 		//success |= Issue33::init(version);
 
-		// issue32
-		//success |= Issue32::init(version);
+		// issue32 家 名前になっているので、日本語のときのみ名前 家にしたい
+		success |= Issue32::init(version);
 
 		// 日付表記の変更
 		success |= DateFormat::init(&options);
