@@ -73,10 +73,12 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//Unknown 4 : OK
 		//success |= Unk4::init(version);
 
-		// issue33
-		//success |= Issue33::init(version);
+		// issue33 「XXXに忠誠を誓っている」にしたい
+		// https://github.com/matanki-saito/CK2dll/issues/33
+		success |= Issue33::init(version);
 
 		// issue32 家 名前になっているので、日本語のときのみ名前 家にしたい
+		// https://github.com/matanki-saito/CK2dll/issues/32
 		success |= Issue32::init(version);
 
 		// 日付表記の変更
