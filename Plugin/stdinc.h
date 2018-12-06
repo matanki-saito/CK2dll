@@ -93,7 +93,7 @@ namespace Misc
 
 namespace MapView
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace MapJustify

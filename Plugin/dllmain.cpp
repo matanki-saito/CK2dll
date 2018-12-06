@@ -20,7 +20,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		errno_t success = NOERROR;
 
 		// マップフォント表示処理
-		//success |= MapView::init(version);
+		success |= MapView::init(&options);
 
 		// マップフォントjustify
 		//success |= MapJustify::init(version);
