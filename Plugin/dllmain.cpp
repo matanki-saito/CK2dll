@@ -80,7 +80,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= Issue32::init(version);
 
 		// 日付表記の変更
-		//success |= DateFormat::init(&options);
+		success |= DateFormat::init(&options);
 
 		// ファイル保存
 		success |= FileSave::init(&options);
