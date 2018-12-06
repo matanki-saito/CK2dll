@@ -475,13 +475,13 @@ namespace FileSave {
 
 		switch (options->version) {
 		case v3_0_X:
-			// push ecx
-			byte_pattern::temp_instance().find_pattern("51 52 8D 8E C0 00 00 00 E8 97 FC 88 FF");
+			// push 1
+			byte_pattern::temp_instance().find_pattern("6A 01 40 50 FF 75 D4 EB 3A");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// cmovnb lea eax, [ebp+var_2C]
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0x13), issue_15_loadgame_start_v300);
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(-0x2E), issue_15_loadgame_start_v300);
 				// call xxxxx
-				issue_15_loadgame_end_v300 = byte_pattern::temp_instance().get_first().address(0x19);
+				issue_15_loadgame_end_v300 = byte_pattern::temp_instance().get_first().address(-0x2E + 6);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
