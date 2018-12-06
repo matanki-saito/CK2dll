@@ -178,7 +178,7 @@ namespace Unk4
 
 namespace MapAdj2
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace Issue33

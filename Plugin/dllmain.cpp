@@ -29,7 +29,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= MapAdj::init(&options);
 
 		// マップフォント表示調整２
-		//success |= MapAdj2::init(version);
+		success |= MapAdj2::init(&options);
 
 		// マップフォント表示調整３ おそらく強制大文字の解除
 		success |= MapAdj3::init(&options);
