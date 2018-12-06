@@ -38,11 +38,12 @@ namespace MapAdj3 {
 
 	/*-----------------------------------------------*/
 
-	errno_t fix1_hook(CK2Version version) {
+	errno_t fix1_hook(RunOptions *options) {
 		std::string desc = "fix1";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			// cmp ebx,1
 			byte_pattern::temp_instance().find_pattern("83 FB 01 72 34 56 33 F6");
@@ -100,11 +101,12 @@ namespace MapAdj3 {
 
 	/*-----------------------------------------------*/
 
-	errno_t fix2_hook(CK2Version version) {
+	errno_t fix2_hook(RunOptions *options) {
 		std::string desc = "fix2";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			// xor esi,esi
 			byte_pattern::temp_instance().find_pattern("33 F6 80 3F 00 74 28 83 FE 01");
@@ -130,13 +132,13 @@ namespace MapAdj3 {
 	/*-----------------------------------------------*/
 
 	// ‚¨‚»‚ç‚­‹­§‘å•¶š‚Ì‰ğœ
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
 		byte_pattern::debug_output2("map adj 3");
 
-		result |= fix1_hook(version);
-		result |= fix2_hook(version);
+		result |= fix1_hook(options);
+		result |= fix2_hook(options);
 
 		return result;
 	}

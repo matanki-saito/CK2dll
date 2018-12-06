@@ -98,7 +98,7 @@ namespace MapView
 
 namespace MapJustify
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace Font
@@ -163,7 +163,7 @@ namespace MainTextLineBreak
 
 namespace MapAdj3
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace Unk3

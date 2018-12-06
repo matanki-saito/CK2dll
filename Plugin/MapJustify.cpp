@@ -80,10 +80,10 @@ namespace MapJustify {
 
 	/*-----------------------------------------------*/
 
-	errno_t func1_hook(CK2Version version) {
+	errno_t func1_hook(RunOptions *options) {
 		std::string desc = "func1";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			// lea ecx,[ebp+var_1C]
 			byte_pattern::temp_instance().find_pattern("8D 4D E4 8D 51 01 8A 01 41");
@@ -107,7 +107,7 @@ namespace MapJustify {
 			else return CK2ERROR1;
 
 			return NOERROR;
-
+		case v3_0_0:
 		case v3_0_X:
 			// lea ecx,[ebp+var_10]
 			byte_pattern::temp_instance().find_pattern("8D 4D F0 8D 51 01 8A 01 41");
@@ -181,10 +181,10 @@ namespace MapJustify {
 
 	/*-----------------------------------------------*/
 
-	errno_t func2_hook(CK2Version version) {
+	errno_t func2_hook(RunOptions *options) {
 		std::string desc = "func2";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			// push 0xFFFFFFFF
 			byte_pattern::temp_instance().find_pattern("6A FF 6A 00 8D 85 88 FE FF FF 50");
@@ -203,7 +203,7 @@ namespace MapJustify {
 			else return CK2ERROR1;
 
 			return NOERROR;
-
+		case v3_0_0:
 		case v3_0_X:
 			// push 0xFFFFFFFF
 			byte_pattern::temp_instance().find_pattern("6A FF 6A 00 8D 85 94 FE FF FF 50");
@@ -341,10 +341,10 @@ namespace MapJustify {
 
 	/*-----------------------------------------------*/
 
-	errno_t func3_hook(CK2Version version) {
+	errno_t func3_hook(RunOptions *options) {
 		std::string desc = "func3";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			// movzx eax,byte ptr [ecx+eax]
 			byte_pattern::temp_instance().find_pattern("0F B6 04 01 8B 04 87 85");
@@ -355,7 +355,7 @@ namespace MapJustify {
 			}
 			else return CK2ERROR1;
 			return NOERROR;
-
+		case v3_0_0:
 		case v3_0_X:
 			// movzx eax,byte ptr [ecx+eax]
 			byte_pattern::temp_instance().find_pattern("0F B6 04 01 8B 04 86 85 C0");
@@ -373,17 +373,17 @@ namespace MapJustify {
 
 	/*-----------------------------------------------*/
 
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
 		byte_pattern::debug_output2("map font justify");
 
 		// 1
-		result |= func1_hook(version);
+		result |= func1_hook(options);
 		// 2
-		result |= func2_hook(version);
+		result |= func2_hook(options);
 		// 3
-		result |= func3_hook(version);
+		result |= func3_hook(options);
 
 		return result;
 	}
