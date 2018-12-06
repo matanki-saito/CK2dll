@@ -67,8 +67,8 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//Input
 		success |= Input::init(&options);
 
-		//Unknown 3 : OK
-		//success |= Unk3::init(version);
+		//Unknown 3
+		success |= Unk3::init(&options);
 		
 		//Unknown 4 : OK
 		//success |= Unk4::init(version);

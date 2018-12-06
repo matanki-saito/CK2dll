@@ -168,7 +168,7 @@ namespace MapAdj3
 
 namespace Unk3
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace Unk4
