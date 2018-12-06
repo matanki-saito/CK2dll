@@ -153,7 +153,7 @@ namespace Input
 
 namespace MapAdj
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace MainTextLineBreak

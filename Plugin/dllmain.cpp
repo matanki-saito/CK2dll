@@ -26,7 +26,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= MapJustify::init(&options);
 
 		// マップフォント調整処理１
-		//success |= MapAdj::init(version);
+		success |= MapAdj::init(&options);
 
 		// マップフォント表示調整２
 		//success |= MapAdj2::init(version);

@@ -4,11 +4,12 @@
 namespace MapAdj {
 	/*-----------------------------------------------*/
 
-	errno_t stackSizeChange_hook(CK2Version version) {
+	errno_t stackSizeChange_hook(RunOptions *options) {
 		std::string desc = "stack size change";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			// sub esp,178h
 			byte_pattern::temp_instance().find_pattern("81 EC 78 01 00 00 8B 43 18");
@@ -99,11 +100,12 @@ namespace MapAdj {
 
 	/*-----------------------------------------------*/
 
-	errno_t view_hook(CK2Version version) {
+	errno_t view_hook(RunOptions *options) {
 		std::string desc = "map view";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			// movzx eax,byte ptr [eax+edx]
 			byte_pattern::temp_instance().find_pattern("0F B6 04 10 8B 34 86");
@@ -143,11 +145,12 @@ namespace MapAdj {
 
 	/*-----------------------------------------------*/
 
-	errno_t mapAdj1_hook(CK2Version version) {
+	errno_t mapAdj1_hook(RunOptions *options) {
 		std::string desc = "map adj 1";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			//dec eax
 			byte_pattern::temp_instance().find_pattern("48 F3 0F 51 C9 66 0F 6E");
@@ -180,11 +183,12 @@ namespace MapAdj {
 
 	/*-----------------------------------------------*/
 
-	errno_t mapAdj2_hook(CK2Version version) {
+	errno_t mapAdj2_hook(RunOptions *options) {
 		std::string desc = "map adj 2";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			// mov eax, [ebp-0B4h]
 			byte_pattern::temp_instance().find_pattern("8B 85 4C FF FF FF 8B 73");
@@ -204,11 +208,12 @@ namespace MapAdj {
 
 	/*-----------------------------------------------*/
 
-	errno_t stackClear_hook(CK2Version version) {
+	errno_t stackClear_hook(RunOptions *options) {
 		std::string desc = "stack clear";
 
-		switch (version){
+		switch (options->version){
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			// lea esp,[ebp-180h]
 			byte_pattern::temp_instance().find_pattern("8D A5 80 FE FF FF 5F");
@@ -224,21 +229,21 @@ namespace MapAdj {
 
 	/*-----------------------------------------------*/
 
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
-		byte_pattern::debug_output2("map font view");
+		byte_pattern::debug_output2("map font adjust 1");
 
 		// M用にスタック修正
-		result |= stackSizeChange_hook(version);
+		result |= stackSizeChange_hook(options);
 		// マップフォント表示処理
-		result |= view_hook(version);
+		result |= view_hook(options);
 		//マップテキストの表示位置調整
-		result |= mapAdj1_hook(version);
+		result |= mapAdj1_hook(options);
 		//マップフォントの位置調整
-		result |= mapAdj2_hook(version);
+		result |= mapAdj2_hook(options);
 		// スタック後始末
-		result |= stackClear_hook(version);
+		result |= stackClear_hook(options);
 
 		return result;
 	}
