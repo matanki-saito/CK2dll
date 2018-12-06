@@ -32,7 +32,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= MapAdj2::init(version);
 
 		// マップフォント表示調整３
-		//success |= MapAdj3::init(version);
+		success |= MapAdj3::init(version);
 
 		// フォントローディング処理
 		success |= Font::init(version);
