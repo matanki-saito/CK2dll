@@ -19,68 +19,68 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 
 		errno_t success = NOERROR;
 
-		// マップフォント表示処理 : OK
-		success |= MapView::init(version);
+		// マップフォント表示処理
+		//success |= MapView::init(version);
 
-		// マップフォントjustify : OK
-		success |= MapJustify::init(version);
+		// マップフォントjustify
+		//success |= MapJustify::init(version);
 
-		// マップフォント調整処理１ : OK
-		success |= MapAdj::init(version);
+		// マップフォント調整処理１
+		//success |= MapAdj::init(version);
 
-		// マップフォント表示調整２ : OK
-		success |= MapAdj2::init(version);
+		// マップフォント表示調整２
+		//success |= MapAdj2::init(version);
 
-		// マップフォント表示調整３ : OK
-		success |= MapAdj3::init(version);
+		// マップフォント表示調整３
+		//success |= MapAdj3::init(version);
 
-		// フォントローディング処理 : OK
-		success |= Font::init(version);
+		// フォントローディング処理
+		//success |= Font::init(version);
 
 		// 終了時のダイアログの花文字
-		success |= DecorativeLetterEndDialog::init(version);
+		//success |= DecorativeLetterEndDialog::init(version);
 
 		// ダイアログの花文字
-		success |= DecorativeLetterDialog::init(version);
+		//success |= DecorativeLetterDialog::init(version);
 
 		// 継承ダイアログの花文字
-		success |= DecorativeLetterInheritDialog::init(version);
+		//success |= DecorativeLetterInheritDialog::init(version);
 
 		// Buttonとツールチップ
-		success |= ButtonAndTooltip::init(version);
+		//success |= ButtonAndTooltip::init(version);
 
 		// メインテキスト
-		success |= MainText::init(version);
+		//success |= MainText::init(version);
 
 		// メインテキスト改行処理（ダイアログ）
-		success |= MainTextLineBreak::init(version);
+		//success |= MainTextLineBreak::init(version);
 
 		// ニックネーム修正
-		success |= NickNameFix::init(&options);
+		//success |= NickNameFix::init(&options);
 
 		// Dynastyに-idがつかないようにする
-		success |= NoDynastyId::init(version);
+		//success |= NoDynastyId::init(version);
 
 		// IME
-		success |= IME::init(version);
+		//success |= IME::init(version);
 
 		//Input
-		success |= Input::init(version);
+		//success |= Input::init(version);
 
 		//Unknown 3 : OK
-		success |= Unk3::init(version);
+		//success |= Unk3::init(version);
 		
 		//Unknown 4 : OK
-		success |= Unk4::init(version);
+		//success |= Unk4::init(version);
 
 		// issue33
-		success |= Issue33::init(version);
+		//success |= Issue33::init(version);
 
 		// issue32
-		success |= Issue32::init(version);
+		//success |= Issue32::init(version);
 
 		// 日付表記の変更
-		success |= DateFormat::init(&options);
+		//success |= DateFormat::init(&options);
 
 		// ファイル保存
 		success |= FileSave::init(&options);
