@@ -91,10 +91,10 @@ namespace DecorativeLetterDialog
 
 	/*-----------------------------------------------*/
 
-	errno_t func1_hook(CK2Version version) {
+	errno_t func1_hook(RunOptions *options) {
 		std::string desc = "func1";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			byte_pattern::temp_instance().find_pattern("6A 01 6A 00 8D 85 5C F5 FF");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -104,6 +104,7 @@ namespace DecorativeLetterDialog
 			else return CK2ERROR1;
 			return NOERROR;
 
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("6A 01 6A 00 8D 85 88 F4 FF FF");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -206,10 +207,10 @@ namespace DecorativeLetterDialog
 
 	/*-----------------------------------------------*/
 
-	errno_t func2_hook(CK2Version version) {
+	errno_t func2_hook(RunOptions *options) {
 		std::string desc = "func2";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			byte_pattern::temp_instance().find_pattern("8D 8D 98 FE FF FF 6A 01 8D");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
@@ -219,6 +220,7 @@ namespace DecorativeLetterDialog
 			else return CK2ERROR1;
 			return NOERROR;
 
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("8D 8D 80 FE FF FF 6A 01 8D");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -233,15 +235,15 @@ namespace DecorativeLetterDialog
 
 	/*-----------------------------------------------*/
 
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
 		byte_pattern::debug_output2("decorative letter dialog");
 
 		// 1
-		result |= func1_hook(version);
+		result |= func1_hook(options);
 		// 2
-		result |= func2_hook(version);
+		result |= func2_hook(options);
 
 		return result;
 	}

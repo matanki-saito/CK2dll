@@ -5,6 +5,7 @@ namespace Input {
 
 	/*-----------------------------------------------*/
 
+	// TODO: これらダミー関数は必要なかった（直接callして呼べる）
 	uintptr_t xx_end;
 	uintptr_t xx_end2;
 	__declspec(naked) void heap_alloc_f1() {
@@ -309,11 +310,12 @@ namespace Input {
 
 	/*-----------------------------------------------*/
 
-	errno_t input_hook(CK2Version version) {
+	errno_t input_hook(RunOptions *options) {
 		std::string desc = "input";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("55 8B EC 83 EC 70 53 56 57 8B F9 8B DA");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -437,11 +439,12 @@ namespace Input {
 
 	/*-----------------------------------------------*/
 
-	errno_t backSpace_hook(CK2Version version) {
+	errno_t backSpace_hook(RunOptions *options) {
 		std::string desc = "backspace";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("8B 07 84 DB 5B 8B CF");
 			if (byte_pattern::temp_instance().has_size(1,desc + " start" )) {
@@ -461,16 +464,16 @@ namespace Input {
 
 	/*-----------------------------------------------*/
 
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
 		byte_pattern::debug_output2("input");
 
 		// inputの修正
-		result |= input_hook(version);
+		result |= input_hook(options);
 
 		// backspaceの修正
-		result |= backSpace_hook(version);
+		result |= backSpace_hook(options);
 
 		return result;
 	}

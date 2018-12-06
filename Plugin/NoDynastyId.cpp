@@ -43,11 +43,12 @@ namespace NoDynastyId
 
 	/*-----------------------------------------------*/
 
-	errno_t fix_hook(CK2Version version) {
+	errno_t fix_hook(RunOptions *options) {
 		std::string desc = "func1";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("8B 55 E8 8B 75 D4 83 F9");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
@@ -69,13 +70,13 @@ namespace NoDynastyId
 
 	/*-----------------------------------------------*/
 
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
 		byte_pattern::debug_output2("no dynasty -id");
 
 		/* dynasty‚É-id‚ª‚Â‚¢‚Ä‚µ‚Ü‚¤–â‘è */
-		result |= fix_hook(version);
+		result |= fix_hook(options);
 
 		return result;
 	}

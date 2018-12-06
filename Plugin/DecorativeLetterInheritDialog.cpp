@@ -45,11 +45,12 @@ namespace DecorativeLetterInheritDialog
 
 	/*-----------------------------------------------*/
 
-	errno_t func1A_hook(CK2Version version) {
+	errno_t func1A_hook(RunOptions *options) {
 		std::string desc = "func1A";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("6A 01 8B F8 8D 4D CC");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
@@ -104,15 +105,16 @@ namespace DecorativeLetterInheritDialog
 
 	/*-----------------------------------------------*/
 
-	errno_t func1B_hook(CK2Version version) {
+	errno_t func1B_hook(RunOptions *options) {
 		std::string desc = "func1B";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("6A 01 50 8D 4D CC E8");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), gg_1);
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), gg_1);
 				gg_4 = byte_pattern::temp_instance().get_first().address(6);
 			}
 			else return CK2ERROR1;
@@ -162,11 +164,12 @@ namespace DecorativeLetterInheritDialog
 
 	/*-----------------------------------------------*/
 
-	errno_t func2A_hook(CK2Version version) {
+	errno_t func2A_hook(RunOptions *options) {
 		std::string desc = "func2A";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("6A 01 8B F8 8D 4D 90 6A");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -221,11 +224,12 @@ namespace DecorativeLetterInheritDialog
 
 	/*-----------------------------------------------*/
 
-	errno_t func2B_hook(CK2Version version) {
+	errno_t func2B_hook(RunOptions *options) {
 		std::string desc = "func2B";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("6A 01 50 8D 4D 90 E8");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -240,19 +244,19 @@ namespace DecorativeLetterInheritDialog
 
 	/*-----------------------------------------------*/
 
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
-		byte_pattern::debug_output2("map font view");
+		byte_pattern::debug_output2("decorative letter inherit dialog");
 
 		// 1A
-		result |= func1A_hook(version);
+		result |= func1A_hook(options);
 		// 1B
-		result |= func1B_hook(version);
+		result |= func1B_hook(options);
 		// 2A
-		result |= func2A_hook(version);
+		result |= func2A_hook(options);
 		// 2B
-		result |= func2B_hook(version);
+		result |= func2B_hook(options);
 
 		return result;
 	}

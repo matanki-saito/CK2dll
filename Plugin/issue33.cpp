@@ -10,11 +10,12 @@ namespace Issue33 {
 
 	/*-----------------------------------------------*/
 
-	errno_t func_hook(CK2Version version) {
+	errno_t func_hook(RunOptions *options) {
 		std::string desc = "func hook";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			/* コピー関数 */
 			byte_pattern::temp_instance().find_pattern("83 EC 20 56 FF 75 0C 8D 45 D8");
@@ -97,10 +98,10 @@ namespace Issue33 {
 
 	/*-----------------------------------------------*/
 
-	errno_t fix1_hook(CK2Version version) {
+	errno_t fix1_hook(RunOptions *options) {
 		std::string desc = "fix 1";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			/* issue-33 「に忠誠を誓っている 王 ロスラン」を「王 ロスランに忠誠を誓っているにする」 */
 			byte_pattern::temp_instance().find_pattern("8D 8D 30 FF FF FF C6 45 FC 43 51 8D 8D");
@@ -114,6 +115,7 @@ namespace Issue33 {
 			else return CK2ERROR1;
 			return NOERROR;
 
+		case v3_0_0:
 		case v3_0_X:
 			/* issue-33 「に忠誠を誓っている 王 ロスラン」を「王 ロスランに忠誠を誓っているにする」 */
 			byte_pattern::temp_instance().find_pattern("8D 8D 2C FF FF FF C6 45 FC 43");
@@ -132,14 +134,14 @@ namespace Issue33 {
 
 	/*-----------------------------------------------*/
 
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
 		byte_pattern::debug_output2("Fix Issue 33");
 
-		result |= func_hook(version);
+		result |= func_hook(options);
 
-		result |= fix1_hook(version);
+		result |= fix1_hook(options);
 
 		return result;
 	}

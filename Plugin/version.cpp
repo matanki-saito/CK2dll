@@ -72,10 +72,16 @@ namespace Misc {
 			goto A;
 		}
 
-		// _ _ 3.0
+		// _ _ 3.0.0
+		byte_pattern::temp_instance().find_pattern("00 00 33 2E 30 00");
+		if (byte_pattern::temp_instance().has_size(1, "v3.0.0 pattern Check")) {
+			version = v3_0_0;
+			goto A;
+		}
+
+		// _ _ 3.0.X
 		byte_pattern::temp_instance().find_pattern("00 00 33 2E 30");
-		if (byte_pattern::temp_instance().has_size(2, "v3.0.0 pattern Check") ||
-			byte_pattern::temp_instance().has_size(1, "v3.0.1 pattern Check")) {
+		if (byte_pattern::temp_instance().has_size(1, "v3.0.X pattern Check")) {
 			version = v3_0_X;
 			goto A;
 		}
@@ -91,6 +97,8 @@ namespace Misc {
 			return "v2_7_X";
 		case v2_8_X:
 			return "v2_8_X";
+		case v3_0_0:
+			return "v3_0_0";
 		case v3_0_X:
 			return "v3_0_X";
 		default:

@@ -9,6 +9,7 @@ namespace FileSave {
 		std::string desc = "file name safty skip";
 
 		switch (options->version) {
+		case v3_0_0:
 		case v3_0_X:
 			// xor edx,edx (33 D2)
 			byte_pattern::temp_instance().find_pattern("33 D2 85 FF 0F 8E EE 00 00 00");
@@ -34,6 +35,7 @@ namespace FileSave {
 		std::string desc = "file name safty skip 2";
 
 		switch (options->version) {
+		case v3_0_0:
 		case v3_0_X:
 			// push ebx
 			byte_pattern::temp_instance().find_pattern("53 8B 59 10 56 33 F6 85 DB");
@@ -56,19 +58,17 @@ namespace FileSave {
 	/*-----------------------------------------------*/
 
 	uintptr_t PHYSFS_utf8FromUcs2;
-
-	/*-----------------------------------------------*/
-
 	errno_t PHYSFS_utf8FromUcs2_hook(RunOptions *options) {
 		std::string desc = "get PHYSFS_utf8FromUcs2 addr";
 
 		switch (options->version) {
+		case v3_0_0:
 		case v3_0_X:
 			// 0: latin1
 			// 1: ucs2
 			// 2: ucs4
 			byte_pattern::temp_instance().find_pattern("55 8B EC 56 8B 75 10 8B C6 57 8B 7D");
-			if (byte_pattern::temp_instance().has_size(3, "")) {
+			if (byte_pattern::temp_instance().has_size(3, desc)) {
 				PHYSFS_utf8FromUcs2 = byte_pattern::temp_instance().get(1).address();
 			}
 			else return CK2ERROR1;
@@ -180,6 +180,7 @@ namespace FileSave {
 		std::string desc = "file name encode";
 
 		switch (options->version) {
+		case v3_0_0:
 		case v3_0_X:
 			// push eax
 			byte_pattern::temp_instance().find_pattern("50 8D 8D 78 FF FF FF C7 45 D0 00 00 00 00");
@@ -474,6 +475,7 @@ namespace FileSave {
 		std::string desc = "show title";
 
 		switch (options->version) {
+		case v3_0_0:
 		case v3_0_X:
 			// push 1
 			byte_pattern::temp_instance().find_pattern("6A 01 40 50 FF 75 D4 EB 3A");
@@ -498,6 +500,7 @@ namespace FileSave {
 		std::string desc = "file enum";
 
 		switch (options->version) {
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("74 0E 78 0A 8A 41 01 41");
 			if (byte_pattern::temp_instance().has_size(2, desc)) {
