@@ -38,13 +38,13 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= Font::init(version);
 
 		// 終了時のダイアログの花文字
-		//success |= DecorativeLetterEndDialog::init(version);
+		success |= DecorativeLetterEndDialog::init(version);
 
 		// ダイアログの花文字
-		//success |= DecorativeLetterDialog::init(version);
+		success |= DecorativeLetterDialog::init(version);
 
 		// 継承ダイアログの花文字
-		//success |= DecorativeLetterInheritDialog::init(version);
+		success |= DecorativeLetterInheritDialog::init(version);
 
 		// Buttonとツールチップ
 		//success |= ButtonAndTooltip::init(version);
