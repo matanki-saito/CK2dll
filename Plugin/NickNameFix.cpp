@@ -202,6 +202,7 @@ namespace NickNameFix
 			}
 			else return CK2ERROR1;
 			return NOERROR;
+		case v3_0_0:
 		case v3_0_X:
 			return NOERROR;
 		}
@@ -325,12 +326,24 @@ namespace NickNameFix
 		switch (options->version) {
 		case v2_8_X:
 			return NOERROR;
-		case v3_0_X:
-			// lea eax,[ebp+var_C4]
+		case v3_0_0:
+			// lea ecx,[ebp+var_DC]
 			byte_pattern::temp_instance().find_pattern("8D 8D 24 FF FF FF E8 11 86 EF FF");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				// lea eax,[ebp+var_C4]
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(-0x59), start);
-				// lea ecx,[ebp+var_DC]
+				
+				issue_14_end_R_v30 = byte_pattern::temp_instance().get_first().address();
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+		case v3_0_X:
+			// lea ecx,[ebp+var_DC]
+			byte_pattern::temp_instance().find_pattern("8D 8D 24 FF FF FF E8 F1 8A EF FF");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				// lea eax,[ebp+var_C4]
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(-0x59), start);
+				
 				issue_14_end_R_v30 = byte_pattern::temp_instance().get_first().address();
 			}
 			else return CK2ERROR1;

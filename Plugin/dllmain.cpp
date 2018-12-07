@@ -56,7 +56,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= MainTextLineBreak::init(&options);
 
 		// ニックネーム修正
-		//success |= NickNameFix::init(&options);
+		success |= NickNameFix::init(&options);
 
 		// Dynastyに-idがつかないようにする
 		success |= NoDynastyId::init(&options);
