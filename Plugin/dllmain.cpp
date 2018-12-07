@@ -71,7 +71,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= Unk3::init(&options);
 		
 		//Unknown 4 : OK
-		//success |= Unk4::init(version);
+		success |= Unk4::init(&options);
 
 		// issue33 uXXX‚É’‰½‚ğ¾‚Á‚Ä‚¢‚év‚É‚µ‚½‚¢
 		// https://github.com/matanki-saito/CK2dll/issues/33

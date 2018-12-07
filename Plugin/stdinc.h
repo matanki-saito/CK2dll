@@ -172,7 +172,7 @@ namespace Unk3
 
 namespace Unk4
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace MapAdj2
