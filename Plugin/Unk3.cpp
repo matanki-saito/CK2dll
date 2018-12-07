@@ -73,11 +73,12 @@ namespace Unk3 {
 
 	/*-----------------------------------------------*/
 
-	errno_t fix1_hook(CK2Version version) {
+	errno_t fix1_hook(RunOptions *options) {
 		std::string desc = "fix1";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("8A 04 16 8B 4D F0 88");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
@@ -101,13 +102,13 @@ namespace Unk3 {
 
 	/*-----------------------------------------------*/
 
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
 		byte_pattern::debug_output2("unk3");
 
 		//
-		result |= fix1_hook(version);
+		result |= fix1_hook(options);
 
 		return result;
 	}

@@ -47,11 +47,12 @@ namespace DecorativeLetterEndDialog
 
 	/*-----------------------------------------------*/
 
-	errno_t func1A_hook(CK2Version version) {
+	errno_t func1A_hook(RunOptions *options) {
 		std::string desc = "func1_A";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("6A 01 8B F0 8D 8D 2C");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -110,11 +111,12 @@ namespace DecorativeLetterEndDialog
 
 	/*-----------------------------------------------*/
 
-	errno_t func1B_hook(CK2Version version) {
+	errno_t func1B_hook(RunOptions *options) {
 		std::string desc = "func1_B";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("E8 ? ? ? ? FF B5 3C FF FF FF 8D 45");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -211,10 +213,10 @@ namespace DecorativeLetterEndDialog
 
 	/*-----------------------------------------------*/
 
-	errno_t func2A_hook(CK2Version version) {
+	errno_t func2A_hook(RunOptions *options) {
 		std::string desc = "func2_A";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			// push 1
 			byte_pattern::temp_instance().find_pattern("6A 01 6A 00 8D 85 98");
@@ -225,6 +227,7 @@ namespace DecorativeLetterEndDialog
 			else return CK2ERROR1;
 			return NOERROR;
 
+		case v3_0_0:
 		case v3_0_X:
 			// push 1
 			byte_pattern::temp_instance().find_pattern("6A 01 6A 00 8D 85 94 FE FF FF");
@@ -319,10 +322,10 @@ namespace DecorativeLetterEndDialog
 
 	/*-----------------------------------------------*/
 
-	errno_t func2B_hook(CK2Version version) {
+	errno_t func2B_hook(RunOptions *options) {
 		std::string desc = "func2_B";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			// push 1
 			byte_pattern::temp_instance().find_pattern("6A 01 50 8D 8D 78 FF FF FF E8");
@@ -333,6 +336,7 @@ namespace DecorativeLetterEndDialog
 			else return CK2ERROR1;
 			return NOERROR;
 
+		case v3_0_0:
 		case v3_0_X:
 			//lea ecx, [ebp+var_200]
 			byte_pattern::temp_instance().find_pattern("8D 85 00 FE FF FF 6A 01 50 8D 8D 74 FF FF FF");
@@ -349,19 +353,19 @@ namespace DecorativeLetterEndDialog
 
 	/*-----------------------------------------------*/
 
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
 		byte_pattern::debug_output2("decorative letter end dialog");
 
 		// 1A
-		result |= func1A_hook(version);
+		result |= func1A_hook(options);
 		// 1B
-		result |= func1B_hook(version);
+		result |= func1B_hook(options);
 		// 2A
-		result |= func2A_hook(version);
+		result |= func2A_hook(options);
 		// 2B
-		result |= func2B_hook(version);
+		result |= func2B_hook(options);
 
 		return result;
 	}

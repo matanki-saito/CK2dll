@@ -55,9 +55,10 @@ struct IncompleteClass
 
 enum CK2Version {
 	UNKNOWN = 0,
-	v2_7_X = 27,
-	v2_8_X = 28,
-	v3_0_X = 30
+	v2_7_X = 270,
+	v2_8_X = 280,
+	v3_0_0 = 300,
+	v3_0_X = 301
 };
 
 enum NickNameOrder {
@@ -85,49 +86,48 @@ namespace Misc
 {
 	CK2Version getVersion();
 	std::string versionString(CK2Version version);
-	errno_t init(CK2Version version);
 
 	void getOptionsByINI(RunOptions *option);
 }
 
 namespace MapView
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace MapJustify
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace Font
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace DecorativeLetterEndDialog
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace DecorativeLetterDialog
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace DecorativeLetterInheritDialog
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace ButtonAndTooltip
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace MainText
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace NickNameFix
@@ -137,57 +137,57 @@ namespace NickNameFix
 
 namespace NoDynastyId
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace IME
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace Input
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace MapAdj
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace MainTextLineBreak
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace MapAdj3
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace Unk3
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace Unk4
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace MapAdj2
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace Issue33
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace Issue32
 {
-	errno_t init(CK2Version version);
+	errno_t init(RunOptions *options);
 }
 
 namespace DateFormat

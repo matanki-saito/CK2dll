@@ -5,11 +5,12 @@ namespace IME
 {
 	/*-----------------------------------------------*/
 
-	errno_t SDL_windowskeyboard_Win_StartTextInput_hook(CK2Version version) {
+	errno_t SDL_windowskeyboard_Win_StartTextInput_hook(RunOptions *options) {
 		std::string desc = "SDL_windowskeyboard Win_StartTextInput";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			// skip
 			//IME_Init(videodata, hwnd);
@@ -31,11 +32,12 @@ namespace IME
 
 	/*-----------------------------------------------*/
 
-	errno_t SDL_windowskeyboard_Win_StopTextInput_hook(CK2Version version) {
+	errno_t SDL_windowskeyboard_Win_StopTextInput_hook(RunOptions *options) {
 		std::string desc = "SDL_windowskeyboard Win_StopTextInput";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			// skip
 			//IME_Init(videodata, hwnd);
@@ -57,13 +59,14 @@ namespace IME
 
 	/*-----------------------------------------------*/
 
-	errno_t SDL_windowskeyboard_Win_IME_HandleMessage_hook(CK2Version version) {
+	errno_t SDL_windowskeyboard_Win_IME_HandleMessage_hook(RunOptions *options) {
 		std::string desc = "SDL_windowskeyboard Win_IME_HandleMessage";
 
-		switch (version) {
+		switch (options->version) {
 		/* show candidate and composition window */
 		// see https://twitter.com/matanki_saito/status/1005093384946479104
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			// skip
 			// if (!videodata->ime_initialized || !videodata->ime_available || !videodata->ime_enabled)
@@ -164,11 +167,12 @@ namespace IME
 
 	/*-----------------------------------------------*/
 	
-	errno_t SDL_windowskeyboard_Win_IME_HandleMessage_WM_IME_STARTCOMPOSITION_hook(CK2Version version) {
+	errno_t SDL_windowskeyboard_Win_IME_HandleMessage_WM_IME_STARTCOMPOSITION_hook(RunOptions *options) {
 		std::string desc = "SDL_windowskeyboard Win_IME_HandleMessage WM_IME_STARTCOMPOSITION";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("0F 84 FD 00 00 00 83 E8 01");
 			if (byte_pattern::temp_instance().has_size(1, desc + " insert code start")) {
@@ -195,11 +199,12 @@ namespace IME
 
 	/*-----------------------------------------------*/
 
-	errno_t SDL_keyborad_hook(CK2Version version) {
+	errno_t SDL_keyborad_hook(RunOptions *options) {
 		std::string desc = "SDL_keyborad";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			// SDL_keyborad.c
 			// skip
@@ -242,11 +247,12 @@ namespace IME
 
 	/*-----------------------------------------------*/
 	
-	errno_t SDL_windowevent_hook(CK2Version version) {
+	errno_t SDL_windowevent_hook(RunOptions *options) {
 		std::string desc = "SDL_windowevent";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("83 C4 14 85 C0 74 07 33");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
@@ -291,11 +297,12 @@ namespace IME
 
 	/*-----------------------------------------------*/
 
-	errno_t SDL_windowevent_issue31_hook(CK2Version version) {
+	errno_t SDL_windowevent_issue31_hook(RunOptions *options) {
 		std::string desc = "SDL_windowevent issue31";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			// ­‚µè‘O‚Éˆø‚ÁŠ|‚¯‚é
 			byte_pattern::temp_instance().find_pattern("8B 45 10 59 59 50 6A 00");
@@ -319,26 +326,26 @@ namespace IME
 
 	/*-----------------------------------------------*/
 
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
 		byte_pattern::debug_output2("IME fix");
 
 		// SDL_windowskeyboard.c Win_StartTextInput‚ğC³
-		result |= SDL_windowskeyboard_Win_StartTextInput_hook(version);
+		result |= SDL_windowskeyboard_Win_StartTextInput_hook(options);
 		// SDL_windowskeyboard.c Win_StopTextInput‚ğC³
-		result |= SDL_windowskeyboard_Win_StopTextInput_hook(version);
+		result |= SDL_windowskeyboard_Win_StopTextInput_hook(options);
 		// SDL_windowskeyboard Win_IME_HandleMessage‚ğC³
-		result |= SDL_windowskeyboard_Win_IME_HandleMessage_hook(version);
+		result |= SDL_windowskeyboard_Win_IME_HandleMessage_hook(options);
 		// SDL_windowsevent.c‚ÉInputRect‚ğİ’è‚·‚éƒR[ƒh‚ğ’Ç‰Á‚·‚é
-		result |= SDL_windowskeyboard_Win_IME_HandleMessage_WM_IME_STARTCOMPOSITION_hook(version);
+		result |= SDL_windowskeyboard_Win_IME_HandleMessage_WM_IME_STARTCOMPOSITION_hook(options);
 
 		// SDL_keyborad.c‚ğC³
-		result |= SDL_keyborad_hook(version);
+		result |= SDL_keyborad_hook(options);
 		// SDL_windowevent.c‚ğ•ÏX
-		result |= SDL_windowevent_hook(version);
+		result |= SDL_windowevent_hook(options);
 		// SDL_windowsevent.c‚ğ•ÏX
-		result |= SDL_windowevent_issue31_hook(version);
+		result |= SDL_windowevent_issue31_hook(options);
 
 		return result;
 	}

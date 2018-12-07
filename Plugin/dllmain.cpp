@@ -19,65 +19,67 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 
 		errno_t success = NOERROR;
 
-		// マップフォント表示処理 : OK
-		success |= MapView::init(version);
+		// マップフォント表示処理
+		success |= MapView::init(&options);
 
-		// マップフォントjustify : OK
-		success |= MapJustify::init(version);
+		// マップフォントjustify
+		success |= MapJustify::init(&options);
 
-		// マップフォント調整処理１ : OK
-		success |= MapAdj::init(version);
+		// マップフォント調整処理１
+		success |= MapAdj::init(&options);
 
-		// マップフォント表示調整２ : OK
-		success |= MapAdj2::init(version);
+		// マップフォント表示調整２
+		success |= MapAdj2::init(&options);
 
-		// マップフォント表示調整３ : OK
-		success |= MapAdj3::init(version);
+		// マップフォント表示調整３ おそらく強制大文字の解除
+		success |= MapAdj3::init(&options);
 
-		// フォントローディング処理 : OK
-		success |= Font::init(version);
+		// フォントローディング処理
+		success |= Font::init(&options);
 
 		// 終了時のダイアログの花文字
-		success |= DecorativeLetterEndDialog::init(version);
+		success |= DecorativeLetterEndDialog::init(&options);
 
 		// ダイアログの花文字
-		success |= DecorativeLetterDialog::init(version);
+		success |= DecorativeLetterDialog::init(&options);
 
 		// 継承ダイアログの花文字
-		success |= DecorativeLetterInheritDialog::init(version);
+		success |= DecorativeLetterInheritDialog::init(&options);
 
 		// Buttonとツールチップ
-		success |= ButtonAndTooltip::init(version);
+		success |= ButtonAndTooltip::init(&options);
 
 		// メインテキスト
-		success |= MainText::init(version);
+		success |= MainText::init(&options);
 
 		// メインテキスト改行処理（ダイアログ）
-		success |= MainTextLineBreak::init(version);
+		success |= MainTextLineBreak::init(&options);
 
 		// ニックネーム修正
 		success |= NickNameFix::init(&options);
 
 		// Dynastyに-idがつかないようにする
-		success |= NoDynastyId::init(version);
+		success |= NoDynastyId::init(&options);
 
 		// IME
-		success |= IME::init(version);
+		success |= IME::init(&options);
 
 		//Input
-		success |= Input::init(version);
+		success |= Input::init(&options);
 
-		//Unknown 3 : OK
-		success |= Unk3::init(version);
+		//Unknown 3
+		success |= Unk3::init(&options);
 		
 		//Unknown 4 : OK
-		success |= Unk4::init(version);
+		success |= Unk4::init(&options);
 
-		// issue33
-		success |= Issue33::init(version);
+		// issue33 「XXXに忠誠を誓っている」にしたい
+		// https://github.com/matanki-saito/CK2dll/issues/33
+		success |= Issue33::init(&options);
 
-		// issue32
-		success |= Issue32::init(version);
+		// issue32 家 名前になっているので、日本語のときのみ名前 家にしたい
+		// https://github.com/matanki-saito/CK2dll/issues/32
+		success |= Issue32::init(&options);
 
 		// 日付表記の変更
 		success |= DateFormat::init(&options);

@@ -11,11 +11,12 @@ namespace DateFormat {
 
 	/*-----------------------------------------------*/
 
-	errno_t copyBufFunc_hook(CK2Version version) {
+	errno_t copyBufFunc_hook(RunOptions *options) {
 		std::string desc = "copy buf func";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			// issue33と同じもの
 			// sub esp,20h
@@ -84,7 +85,7 @@ namespace DateFormat {
 
 	/*-----------------------------------------------*/
 
-	errno_t fix1_hook(CK2Version version) {
+	errno_t fix1_hook(RunOptions *options) {
 		std::string desc = "fix 1";
 
 		year = new V();
@@ -99,8 +100,9 @@ namespace DateFormat {
 		day->len = 1;
 		day->len2 = 1;
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("8D 4D D4 C6 45 FC 08 51 8D 8D 58");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -117,11 +119,12 @@ namespace DateFormat {
 
 	/*-----------------------------------------------*/
 
-	errno_t dateOrder_hook(CK2Version version) {
+	errno_t dateOrder_hook(RunOptions *options) {
 		std::string desc = "date order fix";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
 			byte_pattern::temp_instance().find_pattern("64 20 77 20 6D 77 20 2C");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -156,13 +159,13 @@ namespace DateFormat {
 			byte_pattern::debug_output2("Date Format");
 
 			/* 右上のツールバーの日付表記の修正 */
-			result |= dateOrder_hook(options->version);
+			result |= dateOrder_hook(options);
 
 			/* 関数フック */
-			result |= copyBufFunc_hook(options->version);
+			result |= copyBufFunc_hook(options);
 
 			/* issue-38  「DD MON, YYYY」を「YYYY年MONDD日」にしたい */
-			result |= fix1_hook(options->version);
+			result |= fix1_hook(options);
 
 		}
 
