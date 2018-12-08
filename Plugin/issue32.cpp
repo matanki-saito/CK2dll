@@ -10,10 +10,10 @@ namespace Issue32 {
 
 	/*-----------------------------------------------*/
 
-	errno_t copyBufFunc_hook(CK2Version version) {
+	errno_t copyBufFunc_hook(RunOptions *options) {
 		std::string desc = "copy buf func";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			byte_pattern::temp_instance().find_pattern("8B D9 89 5D EC C7 45 E8 00 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -22,6 +22,7 @@ namespace Issue32 {
 			else return CK2ERROR1;
 			return NOERROR;
 
+		case v3_0_0:
 		case v3_0_X:
 			// sub esp,38h
 			byte_pattern::temp_instance().find_pattern("83 EC 38 53 56 57 8B F9 C7 45 E8");
@@ -85,10 +86,10 @@ namespace Issue32 {
 
 	/*-----------------------------------------------*/
 
-	errno_t fix1_hook(CK2Version version) {
+	errno_t fix1_hook(RunOptions *options) {
 		std::string desc = "fix 1";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			byte_pattern::temp_instance().find_pattern("56 8D 4D 88 C6 45 FC 0A 51");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -104,6 +105,7 @@ namespace Issue32 {
 			}
 			else return CK2ERROR1;
 			return NOERROR;
+		case v3_0_0:
 		case v3_0_X:
 			// この処理は大きなブロックから単一の関数に切り出されるようになった
 			// sub esp,0F8h
@@ -171,10 +173,10 @@ namespace Issue32 {
 
 	/*-----------------------------------------------*/
 
-	errno_t fix2_hook(CK2Version version) {
+	errno_t fix2_hook(RunOptions *options) {
 		std::string desc = "fix 2";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			// push esi
 			byte_pattern::temp_instance().find_pattern("56 8D 4D DC C6 45 FC 08");
@@ -192,6 +194,7 @@ namespace Issue32 {
 			else return CK2ERROR1;
 			return NOERROR;
 
+		case v3_0_0:
 		case v3_0_X:
 			// push esi
 			byte_pattern::temp_instance().find_pattern("56 8D 4D A8 C6 45 FC 08 51");
@@ -215,22 +218,22 @@ namespace Issue32 {
 
 	/*-----------------------------------------------*/
 
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
 		/* issue-32 「家 XXX」を「XXX家」にしたい */
 		byte_pattern::debug_output2("Fix Issue 32");
 
 		// 関数フック
-		result |= copyBufFunc_hook(version);
+		result |= copyBufFunc_hook(options);
 
 		// １箇所目。
 		// https://github.com/matanki-saito/CK2dll/issues/32#issuecomment-430287085
-		result |= fix1_hook(version);
+		result |= fix1_hook(options);
 
 		// ２箇所目
 		// https://github.com/matanki-saito/CK2dll/issues/32#issuecomment-430313354
-		result |= fix2_hook(version);
+		result |= fix2_hook(options);
 
 		return result;
 	}

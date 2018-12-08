@@ -7,13 +7,14 @@ namespace MainTextLineBreak {
 
 	uintptr_t func1_v28;
 	uintptr_t func1_v30;
+	uintptr_t func1_v301;
 
 	/*-----------------------------------------------*/
 
-	errno_t func_hook(CK2Version version) {
+	errno_t func_hook(RunOptions *options) {
 		std::string desc = "func hook";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			// push esi
 			byte_pattern::temp_instance().find_pattern("56 8B F1 8B 46 14 83 F8 10 72 0E");
@@ -22,12 +23,19 @@ namespace MainTextLineBreak {
 			}
 			else return CK2ERROR1;
 			return NOERROR;
-
-		case v3_0_X:
+		case v3_0_0:
 			// push esi
 			byte_pattern::temp_instance().find_pattern("56 8B F1 8B 46 14 83 F8 10 72 0E");
 			if (byte_pattern::temp_instance().has_size(3, desc)) {
 				func1_v30 = byte_pattern::temp_instance().get_first().address();
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+		case v3_0_X:
+			// push esi
+			byte_pattern::temp_instance().find_pattern("56 8B F1 8B 46 14 83 F8 10 72 0E");
+			if (byte_pattern::temp_instance().has_size(5, desc)) {
+				func1_v301 = byte_pattern::temp_instance().get_first().address();
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -139,12 +147,62 @@ namespace MainTextLineBreak {
 		}
 	}
 
+	__declspec(naked) void dd_1_v301()
+	{
+		__asm {
+			cmp cl, ESCAPE_SEQ_1;
+			jz dd_3;
+
+			cmp cl, ESCAPE_SEQ_2;
+			jz dd_3;
+
+			cmp cl, ESCAPE_SEQ_3;
+			jz dd_3;
+
+			cmp cl, ESCAPE_SEQ_4;
+			jz dd_3;
+
+			cmp cl, 0x20;
+			jz dd_3;
+			jmp dd_2;
+
+		dd_3:
+			mov eax, esi;
+
+		dd_2:
+			mov dword ptr[ebp - 0x1C], eax; // ここの値だけ違う
+			xor eax, eax;
+
+			cmp cl, ESCAPE_SEQ_1;
+			jz dd_6;
+
+			cmp cl, ESCAPE_SEQ_2;
+			jz dd_6;
+
+			cmp cl, ESCAPE_SEQ_3;
+			jz dd_6;
+
+			cmp cl, ESCAPE_SEQ_4;
+			jz dd_6;
+
+			cmp cl, 0x20;
+			jz dd_6;
+
+			push dd_5;
+			ret;
+
+		dd_6:
+			push dd_4;
+			ret;
+		}
+	}
+
 	/*-----------------------------------------------*/
 
-	errno_t fixA_hook(CK2Version version) {
+	errno_t fixA_hook(RunOptions *options) {
 		std::string desc = "fixA";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			// cmp cl,20h
 			byte_pattern::temp_instance().find_pattern("80 F9 20 0F 44 C6 89 45");
@@ -157,11 +215,25 @@ namespace MainTextLineBreak {
 			}
 			else return CK2ERROR1;
 			return NOERROR;
-		case v3_0_X:
+
+		case v3_0_0:
 			// cmp cl,20h
 			byte_pattern::temp_instance().find_pattern("80 F9 20 0F 44 C6 89 45");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), dd_1_v30);
+				// cmovnz eax,[ebp+var_10]
+				dd_5 = byte_pattern::temp_instance().get_first().address(14);
+				// mov [ebp+var_10],eax
+				dd_4 = byte_pattern::temp_instance().get_first().address(0x12);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+
+		case v3_0_X:
+			// cmp cl,20h
+			byte_pattern::temp_instance().find_pattern("80 F9 20 0F 44 C6 89 45");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), dd_1_v301);
 				// cmovnz eax,[ebp+var_10]
 				dd_5 = byte_pattern::temp_instance().get_first().address(14);
 				// mov [ebp+var_10],eax
@@ -250,8 +322,8 @@ namespace MainTextLineBreak {
 		}
 	}
 
-	uintptr_t w_2;
-	__declspec(naked) void w_1()
+	uintptr_t w_2_end_v28;
+	__declspec(naked) void w_1_start_v28()
 	{
 		__asm {
 			cmp word ptr[ebp - 0x8C + 2], 0x100;
@@ -263,7 +335,7 @@ namespace MainTextLineBreak {
 			mov eax, [ebp + 0x18];//arg_10
 			add eax, [ebp - 0x24];
 
-			push w_2;
+			push w_2_end_v28;
 			ret;
 		}
 	}
@@ -272,13 +344,14 @@ namespace MainTextLineBreak {
 
 	/*-----------------------------------------------*/
 
-	errno_t fix0_hook(CK2Version version) {
+	errno_t fix0_hook(RunOptions *options) {
 		std::string desc = "fix0";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
+		case v3_0_0:
 		case v3_0_X:
-			//スタック修正 OK
+			//スタック修正
 			// sub esp,7Ch
 			byte_pattern::temp_instance().find_pattern("83 EC 7C 53 8B 5D 0C 56 57 8B F1");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -286,7 +359,7 @@ namespace MainTextLineBreak {
 			}
 			else return CK2ERROR1;
 
-			// mov al,[eax+esi] OK
+			// mov al,[eax+esi]
 			byte_pattern::temp_instance().find_pattern("8A 04 30 8B 4D");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), k_1);
@@ -295,16 +368,28 @@ namespace MainTextLineBreak {
 			}
 			else return CK2ERROR1;
 
-			// mov eax,[ebp+arg_10] OK
-			byte_pattern::temp_instance().find_pattern("8B 45 18 03 45 DC 89 55");
-			if (byte_pattern::temp_instance().has_size(1, desc)) {
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), w_1);
-				// mov [ebp+var_14],edx
-				w_2 = byte_pattern::temp_instance().get_first().address(6);
-			}
-			else return CK2ERROR1;
+			if (options->version == v3_0_X) {
+				// mov eax,[ebp+arg_10]
+				byte_pattern::temp_instance().find_pattern("8B 45 18 03 45 DC 8A 55 20");
+				if (byte_pattern::temp_instance().has_size(1, desc)) {
+					injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), w_1_start_v28);
+					// mov dl,[ebp+arg_18]
+					w_2_end_v28 = byte_pattern::temp_instance().get_first().address(6);
+				}
+				else return CK2ERROR1;
 
-			// 結合するブロックの飛び先 OK
+			}else{
+				// mov eax,[ebp+arg_10] 
+				byte_pattern::temp_instance().find_pattern("8B 45 18 03 45 DC 89 55");
+				if (byte_pattern::temp_instance().has_size(1, desc)) {
+					injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), w_1_start_v28);
+					// mov [ebp+var_14],edx
+					w_2_end_v28 = byte_pattern::temp_instance().get_first().address(6);
+				}
+				else return CK2ERROR1;
+			}
+
+			// 結合するブロックの飛び先
 			// cmp eax,[ebp+arc_C]
 			byte_pattern::temp_instance().find_pattern("3B 45 14 0F 8F ? 01 00 00 C7");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -342,7 +427,6 @@ namespace MainTextLineBreak {
 		}
 	}
 
-
 	// ブロックの表示がv28と逆になっているので注意
 	uintptr_t ee_2_v30;
 	uintptr_t ee_3_v30;
@@ -375,12 +459,44 @@ namespace MainTextLineBreak {
 		}
 	}
 
+	// ブロックの表示がv28と逆になっているので注意
+	uintptr_t ee_2_v301;
+	uintptr_t ee_3_v301;
+	__declspec(naked) void ee_1_1_v301()
+	{
+		__asm {
+			cmp word ptr[ebp - 0x8C + 2], 9;
+			jz ee_3_jmp;
+
+			cmp word ptr[ebp - 0x8C + 2], 0x100;
+			ja ee_3_jmp;
+
+			mov ebx, dword ptr[ebp - 0x1C];
+			cmp ebx, dword ptr [ebp - 0x18];
+			jle ee_3_jmp;
+
+			cmp eax, dword ptr[ebp + 0x14]; // arg_C
+			jle ee_2_jmp;
+
+			cmp dword ptr[ebp + 0x24], 0; // arg_1C
+			jnz ee_3_jmp;
+
+		ee_2_jmp: //　左
+			push ee_2_v301;
+			ret;
+
+		ee_3_jmp: // 右
+			push ee_3_v301;
+			ret;
+		}
+	}
+
 	/*-----------------------------------------------*/
 
-	errno_t fix1_hook(CK2Version version) {
+	errno_t fix1_hook(RunOptions *options) {
 		std::string desc = "fix1";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			// cmp ebx,[ebp+var_18]
 			byte_pattern::temp_instance().find_pattern("3B 5D E8 0F 8F");
@@ -401,9 +517,8 @@ namespace MainTextLineBreak {
 			else return CK2ERROR1;
 			
 			return NOERROR;
-
-		case v3_0_X:
-			// cmp ebx,[ebp+var_18]
+		case v3_0_0:
+			// cmp ebx,[ebp+var_1C]
 			byte_pattern::temp_instance().find_pattern("8B 4D E4 39 4D E8 0F 8E A4 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), ee_1_1_v30);
@@ -427,6 +542,33 @@ namespace MainTextLineBreak {
 			else return CK2ERROR1;
 
 			return NOERROR;
+
+		case v3_0_X:
+			// cmp ebx,[ebp+var_1C]
+			byte_pattern::temp_instance().find_pattern("8B 5D E4 3B 5D E8 0F 8E A6 00 00 00");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), ee_1_1_v301);
+			}
+			else return CK2ERROR1;
+
+			//左側のブロックの開始位置
+			// push offset asc_XXXXXX
+			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D 4D C0 E8 71 24 07 00");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				ee_2_v301 = byte_pattern::temp_instance().get_first().address();
+			}
+			else return CK2ERROR1;
+
+			//右側のブロックの開始位置
+			// push offset asc_XXXXXX
+			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D 4D C0 E8 DA 23 07 00");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				ee_3_v301 = byte_pattern::temp_instance().get_first().address();
+			}
+			else return CK2ERROR1;
+
+			return NOERROR;
+
 		}
 		return CK2ERROR1;
 	}
@@ -475,12 +617,33 @@ namespace MainTextLineBreak {
 		}
 	}
 
+	uintptr_t x_2_v301;
+	__declspec(naked) void x_1_v301()
+	{
+		__asm {
+			cmp word ptr[ebp - 0x8C + 2], 0x100;
+			jb x_4;
+
+			mov ecx, [eax + 0x10];
+			sub ecx, 1;
+			mov[eax + 0x10], ecx;
+
+		x_4:
+			lea ecx, [ebp - 0x88];
+
+			call func1_v301;
+
+			push x_2_v301;
+			ret;
+		}
+	}
+
 	/*-----------------------------------------------*/
 
-	errno_t fix2_hook(CK2Version version) {
+	errno_t fix2_hook(RunOptions *options) {
 		std::string desc = "fix2";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			// mov ebx,[ebp+arg_4]
 			byte_pattern::temp_instance().find_pattern("8B 5D 0C 8B CB 6A FF 6A 00 50 C6 45 FC 02 E8");
@@ -493,12 +656,22 @@ namespace MainTextLineBreak {
 			else return CK2ERROR1;
 			return NOERROR;
 
-		case v3_0_X:
-			// lea ecx,[ebp+var_70]
-			byte_pattern::temp_instance().find_pattern("8D 8D 78 FF FF FF E8 92 62"); // このパターン検出は微妙 call sub_XXXを含んでいる
+		case v3_0_0:
+			// lea ecx,[ebp+var_88]
+			byte_pattern::temp_instance().find_pattern("8D 8D 78 FF FF FF E8 92 62");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), x_1_v30);
 				x_2_v30 = byte_pattern::temp_instance().get_first().address(0xB);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+
+		case v3_0_X:
+			// lea ecx,[ebp+var_88]
+			byte_pattern::temp_instance().find_pattern("8D 8D 78 FF FF FF E8 60 C5 62 FF");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), x_1_v301);
+				x_2_v301 = byte_pattern::temp_instance().get_first().address(0xB);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -534,12 +707,25 @@ namespace MainTextLineBreak {
 		}
 	}
 
+	__declspec(naked) void x_5_v301()
+	{
+		__asm {
+			cmp word ptr[ebp - 0x8C + 2], 0x100;
+			jb x_6;
+			sub esi, 1;
+		x_6:
+			mov[ebp - 0x10], 0;
+			push loc_194690F;
+			ret;
+		}
+	}
+
 	/*-----------------------------------------------*/
 
-	errno_t fix3_hook(CK2Version version) {
+	errno_t fix3_hook(RunOptions *options) {
 		std::string desc = "fix3";
 
-		switch (version) {
+		switch (options->version) {
 		case v2_8_X:
 			// mov dl,[ebp+arg_18]
 			byte_pattern::temp_instance().find_pattern("8A 55 20 89 4D E4 89 75 E8");
@@ -550,12 +736,22 @@ namespace MainTextLineBreak {
 			else return CK2ERROR1;
 			return NOERROR;
 
-		case v3_0_X:
+		case v3_0_0:
 			// ブロックの終端先を変更する
-			// mov eax,[ebp+arg_14],0
+			// mov [ebp+arg_14],0
 			byte_pattern::temp_instance().find_pattern("C7 45 EC 00 00 00 00 EB 03");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), x_5_v30);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+
+		case v3_0_X:
+			// ブロックの終端先を変更する
+			// mov [ebp+arg_14],0
+			byte_pattern::temp_instance().find_pattern("C7 45 EC 00 00 00 00 EB 06 8B 5D 0C");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), x_5_v301);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -566,25 +762,25 @@ namespace MainTextLineBreak {
 
 	/*-----------------------------------------------*/
 
-	errno_t init(CK2Version version) {
+	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
 		byte_pattern::debug_output2("main text line break routine");
 
-		result |= func_hook(version); // OK
+		result |= func_hook(options);
 
-		result |= fix0_hook(version); // OK
+		result |= fix0_hook(options);
 
-		result |= fixA_hook(version); // OK
+		result |= fixA_hook(options);
 
 		// ブロックの分岐判定処理
-		result |= fix1_hook(version); // NG
+		result |= fix1_hook(options);
 
 		// 左側の分岐ブロックの処理の途中１
-		result |= fix2_hook(version); // OK
+		result |= fix2_hook(options);
 
 		// 左側の分岐ブロックの処理の途中２
-		result |= fix3_hook(version); // OK
+		result |= fix3_hook(options);
 
 		return result;
 	}
