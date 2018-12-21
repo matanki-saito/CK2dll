@@ -112,10 +112,13 @@ namespace DecorativeLetterInheritDialog
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
-			byte_pattern::temp_instance().find_pattern("6A 01 50 8D 4D CC E8");
+			// push [ebp+var_24]
+			byte_pattern::temp_instance().find_pattern("FF 75 DC 8D 45 B4 6A 01 50 8D 4D CC");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), gg_1);
-				gg_4 = byte_pattern::temp_instance().get_first().address(6);
+				// push 1
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(6), gg_1);
+				// call xxxxx
+				gg_4 = byte_pattern::temp_instance().get_first().address(6+6);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
