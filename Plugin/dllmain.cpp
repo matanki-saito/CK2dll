@@ -91,7 +91,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 			byte_pattern::debug_output2("Multibyte DLL [OK]");
 		}
 		else {
-			MessageBoxW(NULL, L"[Multibyte DLL ERROR]\nThis game version is not supported by Multibyte DLL.\nPlease delete d3d9.dll and restart game.\nOr check new version dll.\n\nhttps://github.com/matanki-saito/CK2Dll", L"Multibyte DLL", MB_OK);
+			MessageBoxW(NULL, L"[Multibyte DLL ERROR]\n\nYour current version is 3.0.1.1 is not supported by now.\n\nThe latest supprot version is 3.0.1, please rollback your main exe.\n\Or play game in english after delete d3d9.dll...\n\n Thanks", L"Multibyte DLL", MB_OK);
 			byte_pattern::debug_output2("Multibyte DLL [NG]");
 			exit(-1);
 		}
