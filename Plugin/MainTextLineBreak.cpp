@@ -553,7 +553,7 @@ namespace MainTextLineBreak {
 
 			//左側のブロックの開始位置
 			// push offset asc_XXXXXX
-			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D 4D C0 E8 71 24 07 00");
+			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D ? ? ? ? 24 07 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				ee_2_v301 = byte_pattern::temp_instance().get_first().address();
 			}
@@ -561,7 +561,7 @@ namespace MainTextLineBreak {
 
 			//右側のブロックの開始位置
 			// push offset asc_XXXXXX
-			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D 4D C0 E8 DA 23 07 00");
+			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D ? ? ? ? 23 07 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				ee_3_v301 = byte_pattern::temp_instance().get_first().address();
 			}
@@ -667,11 +667,12 @@ namespace MainTextLineBreak {
 			return NOERROR;
 
 		case v3_0_X:
-			// lea ecx,[ebp+var_88]
-			byte_pattern::temp_instance().find_pattern("8D 8D 78 FF FF FF E8 60 C5 62 FF");
+			// mov eax, [ebp+arg_10]
+			byte_pattern::temp_instance().find_pattern("8B 45 18 8B CE 8A 55 20 89 4D E4");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), x_1_v301);
-				x_2_v301 = byte_pattern::temp_instance().get_first().address(0xB);
+				// lea ecx,[ebp+var_88]
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(-0x22), x_1_v301);
+				x_2_v301 = byte_pattern::temp_instance().get_first().address(0xB - 0x22);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
