@@ -8,4 +8,4 @@
 using namespace std;
 using namespace std::experimental::filesystem::v1;
 
-int InitAutoUpdate(const path &folder);
+bool InitAutoUpdate(const path &folder);
