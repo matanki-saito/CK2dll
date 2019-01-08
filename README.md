@@ -14,6 +14,9 @@ This dll makes it possible to display double-byte characters on Crusader Kings I
 ## Find bugs
 If you find a bug, **create a issue** in this repository. 
 If possible, please write the issue report in English. However you can also create it in your language (Japanese, Korean, Chinese, Russian etc).
+
+## Autoupdate
+Plugin.dll will be updated automatically. It requires an Internet connection at game run. If you do not need or play offline game, please DELETE "plugins/autoupdate.bat" file.
  
 ## Licence
 MIT Licence
@@ -23,5 +26,5 @@ This dll was forked by the following project. Thank you so much.
 
 [EU4CHS](https://bitbucket.org/kelashi/eu4chs/src/master/)
 
-## ini
- ini
+## plugin.ini
+ TBD
