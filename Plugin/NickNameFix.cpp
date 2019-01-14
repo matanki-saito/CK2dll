@@ -338,13 +338,13 @@ namespace NickNameFix
 			else return CK2ERROR1;
 			return NOERROR;
 		case v3_0_X:
-			// mov ecx, [edi+7Ch]
+			// mov esi, [ebp+arg_0]
 			byte_pattern::temp_instance().find_pattern("8B 75 08 C6 45 FC 19 8B 4F 7C");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// lea eax,[ebp+var_C4]
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(-0x4A), start);
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(-0x43), start);
 				// lea ecx,[ebp+var_DC]
-				issue_14_end_R_v30 = byte_pattern::temp_instance().get_first().address(0xF);
+				issue_14_end_R_v30 = byte_pattern::temp_instance().get_first().address(0x16);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
