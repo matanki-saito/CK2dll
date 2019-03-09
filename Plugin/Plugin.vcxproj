@@ -105,6 +105,7 @@
     <ClCompile Include="MapView.cpp" />
     <ClCompile Include="MapJustify.cpp" />
     <ClCompile Include="mapAdj.cpp" />
+    <ClCompile Include="moddl.cpp" />
     <ClCompile Include="NickNameFix.cpp" />
     <ClCompile Include="NoDynastyId.cpp" />
     <ClCompile Include="MainTextLineBreak.cpp" />
@@ -116,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="byte_pattern.h" />
+    <ClInclude Include="moddl.h" />
     <ClInclude Include="stdinc.h" />
   </ItemGroup>
   <ItemGroup>
