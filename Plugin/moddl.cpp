@@ -3,7 +3,7 @@
 bool createProcess(WCHAR* szCmd, DWORD flag) {
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
-	WCHAR *message = L"Autoupdate error. Please DELETE 'plugins/autoupdate.bat'.";
+	WCHAR *message = L"Autoupdate error. Please DELETE 'claes.exe'.";
 	WCHAR *title = NULL;
 
 	memset(&si, 0, sizeof(STARTUPINFO));
@@ -16,14 +16,14 @@ bool createProcess(WCHAR* szCmd, DWORD flag) {
 		title = L"Autoupdate createProcess failed.";
 	}
 	else {
-		DWORD result = WaitForSingleObject(pi.hProcess, 10 * 1000); // 10 sec
+		DWORD result = WaitForSingleObject(pi.hProcess, 35 * 1000); // 35 sec
 		switch (result)
 		{
 		case WAIT_FAILED:
-			title = L"Autoupdate wait failed.";
+			title = L"moddownload wait failed.";
 			break;
 		case WAIT_TIMEOUT:
-			title = L"Autoupdate wait timeout.";
+			title = L"moddownload wait timeout.";
 			break;
 		default:
 			break;
