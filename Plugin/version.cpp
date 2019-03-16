@@ -52,6 +52,16 @@ namespace Misc {
 		else{
 			options->nickNameOrder = NickNameOrder::DISABLE;
 		}
+
+		ret = GetPrivateProfileString(
+			L"options",
+			L"ERROR_TEST",
+			L"no",
+			buf,
+			64,
+			ini_path
+		);
+		options->test = lstrcmpW(buf, L"yes") == 0 ? true : false;
 	}
 
 	CK2Version getVersion() {
