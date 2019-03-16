@@ -76,11 +76,14 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//Input
 		success |= Input::init(&options);
 
-		//Unknown 3
+		// 不明（忘れた…）
 		success |= Unk3::init(&options);
 		
-		//Unknown 4 : OK
-		success |= Unk4::init(&options);
+		// ...の省略
+		success |= TextOerflow::init(&options);
+
+		// 不明
+		success |= Unk5::init(&options);
 
 		// issue33 「XXXに忠誠を誓っている」にしたい
 		// https://github.com/matanki-saito/CK2dll/issues/33

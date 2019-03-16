@@ -174,7 +174,7 @@ namespace Unk3
 	errno_t init(RunOptions *options);
 }
 
-namespace Unk4
+namespace TextOerflow
 {
 	errno_t init(RunOptions *options);
 }
@@ -203,6 +203,12 @@ namespace FileSave
 {
 	errno_t init(RunOptions *options);
 }
+
+namespace Unk5
+{
+	errno_t init(RunOptions *options);
+}
+
 
 union T {
 	char text[0x10];
