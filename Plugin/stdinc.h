@@ -81,6 +81,9 @@ typedef struct _runoption {
 	// 2 : [Nickname] [FirstName] [Title]
 	NickNameOrder nickNameOrder;
 
+	// アラートテスト
+	boolean test;
+
 } RunOptions;
 
 namespace Misc

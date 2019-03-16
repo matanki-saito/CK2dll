@@ -96,12 +96,71 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		// ファイル保存
 		success |= FileSave::init(&options);
 
-		if (success == NOERROR) {
-			byte_pattern::debug_output2("Multibyte DLL [OK]");
+		if (success == NOERROR && options.test == false) {
+			byte_pattern::temp_instance().debug_output2("DLL [OK]");
 		}
 		else {
-			MessageBoxW(NULL, L"[Multibyte DLL ERROR]\n\nThe latest supprot version is 3.0.1.1, please rollback your main exe.\n\Or play game in english after delete d3d9.dll...\n\n Thanks", L"Multibyte DLL", MB_OK);
-			byte_pattern::debug_output2("Multibyte DLL [NG]");
+			const DWORD sysDefLcid = ::GetSystemDefaultLCID();
+
+			WCHAR* message;
+			WCHAR* caption;
+
+			switch (sysDefLcid) {
+			case MAKELANGID(LANG_JAPANESE, SUBLANG_JAPANESE_JAPAN):
+				caption = L"エラー";
+				message = L""
+					L"このバージョンはまだ日本語化に対応していないため起動できません。\n"
+					L"将来、日本語化に対応した際には自動的に起動できるようになります。\n"
+					L"\n"
+					L"以前のバージョンに戻す方法は下記サイトをご覧ください。\n"
+					L"https://paradoxian-japan-mod.com/version";
+				break;
+
+			case MAKELANGID(LANG_CHINESE_SIMPLIFIED, SUBLANG_CHINESE_SIMPLIFIED):
+				caption = L"错误";
+				message = L""
+					L"Multibyte DLL 尚未支持此游戏版本。\n"
+					L"当我发布新的时，它会自动更新。\n"
+					L"\n"
+					L"DLL宣布页面:\n"
+					L"https://github.com/matanki-saito/EU4dll";
+				break;
+
+
+			case MAKELANGID(LANG_CHINESE_TRADITIONAL, SUBLANG_CHINESE_TRADITIONAL):
+				caption = L"錯誤";
+				message = L""
+					L"Multibyte DLL 尚未支持此遊戲版本。\n"
+					L"當我發布新的時，它會自動更新。\n"
+					L"\n"
+					L"DLL宣布頁面:\n"
+					L"https://github.com/matanki-saito/EU4dll";
+				break;
+
+			case MAKELANGID(LANG_KOREAN, SUBLANG_KOREAN):
+				caption = L"오류";
+				message = L""
+					L"멀티 바이트 DLL은 아직이 게임 버전을 지원하지 않습니다.\n"
+					L"새 게시물을 게시하면 자동으로 업데이트됩니다.\n"
+					L"\n"
+					L"DLL 공지 페이지:\n"
+					L"https://github.com/matanki-saito/EU4dll";
+				break;
+
+			case MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US):
+			default:
+				caption = L"ERROR";
+				message = L""
+					L"Multibyte DLL hasn't supported this game version yet.\n"
+					L"It will be updated automatically, when I publish new one.\n"
+					L"\n"
+					L"DLL announce page:\n"
+					L"https://github.com/matanki-saito/EU4dll";
+			}
+
+			MessageBoxW(NULL, message, caption, MB_OK);
+
+			byte_pattern::temp_instance().debug_output2("DLL [NG]");
 			exit(-1);
 		}
 
