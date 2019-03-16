@@ -1,7 +1,7 @@
 ﻿#include "stdinc.h"
 #include "byte_pattern.h"
 
-namespace Unk4
+namespace TextOerflow
 {
 	/*-----------------------------------------------*/
 
@@ -149,7 +149,8 @@ namespace Unk4
 	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
-		byte_pattern::debug_output2("unk4");
+		//テキストが溢れたときの ... の省略
+		byte_pattern::debug_output2("Text overflow");
 
 		//
 		result |= fix1_hook(options);
