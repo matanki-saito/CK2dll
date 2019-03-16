@@ -1,4 +1,4 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 // Menu bar date format
@@ -6,7 +6,7 @@
 namespace DateFormat {
 
 	/*-----------------------------------------------*/
-
+	
 	uintptr_t issue_38_copyBufFunc_v28;
 
 	/*-----------------------------------------------*/
@@ -18,7 +18,7 @@ namespace DateFormat {
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
-			// issue33‚Æ“¯‚¶‚à‚Ì
+			// issue33ã¨åŒã˜ã‚‚ã®
 			// sub esp,20h
 			byte_pattern::temp_instance().find_pattern("83 EC 20 56 FF 75 0C 8D 45 D8");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -158,13 +158,13 @@ namespace DateFormat {
 
 			byte_pattern::debug_output2("Date Format");
 
-			/* ‰Eã‚Ìƒc[ƒ‹ƒo[‚Ì“ú•t•\‹L‚ÌC³ */
+			/* å³ä¸Šã®ãƒ„ãƒ¼ãƒ«ãƒãƒ¼ã®æ—¥ä»˜è¡¨è¨˜ã®ä¿®æ­£ */
 			result |= dateOrder_hook(options);
 
-			/* ŠÖ”ƒtƒbƒN */
+			/* é–¢æ•°ãƒ•ãƒƒã‚¯ */
 			result |= copyBufFunc_hook(options);
 
-			/* issue-38  uDD MON, YYYYv‚ğuYYYY”NMONDD“úv‚É‚µ‚½‚¢ */
+			/* issue-38  ã€ŒDD MON, YYYYã€ã‚’ã€ŒYYYYå¹´MONDDæ—¥ã€ã«ã—ãŸã„ */
 			result |= fix1_hook(options);
 
 		}

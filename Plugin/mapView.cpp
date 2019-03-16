@@ -1,4 +1,4 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 
@@ -114,7 +114,7 @@ namespace MapView
 			jz p_13;
 
 			mov al, [eax + ebx];
-			lea ecx, [ebp - 0x100]; // •ÏX‚³‚ê‚½
+			lea ecx, [ebp - 0x100]; // å¤‰æ›´ã•ã‚ŒãŸ
 			mov byte ptr[ebp - 0x3C], al;
 
 			push p_5_end_v301;
@@ -148,7 +148,7 @@ namespace MapView
 			mov[ecx + 1], ax;
 
 		p_1x:
-			lea ecx, [ebp - 0x100]; // •ÏX‚³‚ê‚½
+			lea ecx, [ebp - 0x100]; // å¤‰æ›´ã•ã‚ŒãŸ
 
 			push p_5_end_v301;
 			ret;
@@ -174,7 +174,7 @@ namespace MapView
 			jmp q_3;
 
 		q_2:
-			mov ecx, [ebp - 0x3C]; // •ÏX‚³‚ê‚½
+			mov ecx, [ebp - 0x3C]; // å¤‰æ›´ã•ã‚ŒãŸ
 			mov[eax], ecx;
 			mov byte ptr[eax + 0x10], 3;
 
@@ -334,14 +334,14 @@ namespace MapView
 
 		o_2:
 			add ebx, 2;
-			mov dword ptr[ebp - 0x24], ebx; // ’Ç‰Á‚µ‚½
+			mov dword ptr[ebp - 0x24], ebx; // è¿½åŠ ã—ãŸ
 			jmp o_4;
 
 		o_3:
 			movzx eax, byte ptr[eax + ebx];
 
 		o_4:
-			mov edx, [ebp - 0x18]; // •ÏX
+			mov edx, [ebp - 0x18]; // å¤‰æ›´
 
 			push o_5_end_v301;
 			ret;
@@ -538,7 +538,7 @@ namespace MapView
 		n_1x:
 			add ecx, 2;
 			movzx eax, ax;
-			mov[ebp - 0x1C], ecx; // •ÏX‚µ‚½
+			mov[ebp - 0x1C], ecx; // å¤‰æ›´ã—ãŸ
 
 			cmp eax, NO_FONT;
 			ja n_2;

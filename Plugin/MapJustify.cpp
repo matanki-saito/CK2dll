@@ -1,4 +1,4 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace MapJustify {
@@ -168,7 +168,7 @@ namespace MapJustify {
 
 			push 0xFFFFFFFF;
 			push 0;
-			lea eax, [ebp - 0x16C]; // •ÏX‚³‚ê‚½
+			lea eax, [ebp - 0x16C]; // å¤‰æ›´ã•ã‚ŒãŸ
 
 			push t_2_v30;
 			ret;
@@ -332,7 +332,7 @@ namespace MapJustify {
 			ja r_3;
 			mov eax, NOT_DEF;
 		r_3:
-			mov eax, [esi + eax * 4]; // v28¨v30‚Åedi¨esi‚É‚È‚Á‚½
+			mov eax, [esi + eax * 4]; // v28â†’v30ã§ediâ†’esiã«ãªã£ãŸ
 
 			push r_4_v30;
 			ret;

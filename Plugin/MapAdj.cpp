@@ -1,4 +1,4 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace MapAdj {
@@ -133,7 +133,7 @@ namespace MapAdj {
 
 		kk_2:
 			dec eax;
-
+			
 		kk_3:
 			sqrtss xmm1, xmm1;
 
@@ -234,15 +234,15 @@ namespace MapAdj {
 
 		byte_pattern::debug_output2("map font adjust 1");
 
-		// M—p‚ÉƒXƒ^ƒbƒNC³
+		// Mç”¨ã«ã‚¹ã‚¿ãƒƒã‚¯ä¿®æ­£
 		result |= stackSizeChange_hook(options);
-		// ƒ}ƒbƒvƒtƒHƒ“ƒg•\¦ˆ—
+		// ãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆè¡¨ç¤ºå‡¦ç†
 		result |= view_hook(options);
-		//ƒ}ƒbƒvƒeƒLƒXƒg‚Ì•\¦ˆÊ’u’²®
+		//ãƒãƒƒãƒ—ãƒ†ã‚­ã‚¹ãƒˆã®è¡¨ç¤ºä½ç½®èª¿æ•´
 		result |= mapAdj1_hook(options);
-		//ƒ}ƒbƒvƒtƒHƒ“ƒg‚ÌˆÊ’u’²®
+		//ãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆã®ä½ç½®èª¿æ•´
 		result |= mapAdj2_hook(options);
-		// ƒXƒ^ƒbƒNŒãn––
+		// ã‚¹ã‚¿ãƒƒã‚¯å¾Œå§‹æœ«
 		result |= stackClear_hook(options);
 
 		return result;

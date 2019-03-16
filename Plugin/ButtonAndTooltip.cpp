@@ -1,10 +1,10 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace ButtonAndTooltip
 {
 	/*-----------------------------------------------*/
-
+	
 	errno_t stackSizeChange_hook(RunOptions *options) {
 		std::string desc = "stack size change";
 
@@ -146,7 +146,7 @@ namespace ButtonAndTooltip
 
 		e_11:
 			movzx eax, word ptr[eax + esi + 1];
-			lea ecx, [ebp - 0x88]; // •ÏX‚³‚ê‚½
+			lea ecx, [ebp - 0x88]; // å¤‰æ›´ã•ã‚ŒãŸ
 			mov byte ptr[ecx], ESCAPE_SEQ_2;
 			mov[ecx + 1], ax;
 			jmp e_2;
@@ -199,7 +199,7 @@ namespace ButtonAndTooltip
 			jmp f_3;
 
 		f_2:
-			mov ecx, [ebp - 0x88]; // •ÏX‚³‚ê‚½
+			mov ecx, [ebp - 0x88]; // å¤‰æ›´ã•ã‚ŒãŸ
 			mov[eax], ecx;
 			mov byte ptr[eax + 0x10], 3;
 
@@ -467,7 +467,7 @@ namespace ButtonAndTooltip
 			else return CK2ERROR1;
 
 			// inc esi
-			// ‚±‚Ìƒpƒ^[ƒ“‚ª‚Ç‚¤‚µ‚Ä‚àˆø‚ÁŠ|‚¯‚ç‚ê‚È‚©‚Á‚½
+			// ã“ã®ãƒ‘ã‚¿ãƒ¼ãƒ³ãŒã©ã†ã—ã¦ã‚‚å¼•ã£æ›ã‘ã‚‰ã‚Œãªã‹ã£ãŸ
 			byte_pattern::temp_instance().find_pattern("46 3B 75 E4 0F 8C 9A F9 FF FF");
 			if (byte_pattern::temp_instance().has_size(1, desc + " end2")) {
 				func4_end2_v28 = byte_pattern::temp_instance().get_first().address();

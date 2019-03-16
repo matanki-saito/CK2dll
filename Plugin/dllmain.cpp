@@ -1,9 +1,10 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 #include "moddl.h"
 
 BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 {
+	
     if (reason == DLL_PROCESS_ATTACH)
     {
 		// moddownload
@@ -15,58 +16,58 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 
         byte_pattern::start_log(L"ck2jps");
 
-		// ƒIƒvƒVƒ‡ƒ“‚ğiniƒtƒ@ƒCƒ‹‚©‚çæ“¾
+		// ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’iniãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰å–å¾—
 		RunOptions options = RunOptions();
 		Misc::getOptionsByINI(&options);
 
-		// version‚ğ•¶š—ñ‚©‚çæ“¾
+		// versionã‚’æ–‡å­—åˆ—ã‹ã‚‰å–å¾—
 		CK2Version version = Misc::getVersion();
 
-		// versionİ’è
+		// versionè¨­å®š
 		options.version = version;
 
 		errno_t success = NOERROR;
 
-		// ƒ}ƒbƒvƒtƒHƒ“ƒg•\¦ˆ—
+		// ãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆè¡¨ç¤ºå‡¦ç†
 		success |= MapView::init(&options);
 
-		// ƒ}ƒbƒvƒtƒHƒ“ƒgjustify
+		// ãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆjustify
 		success |= MapJustify::init(&options);
 
-		// ƒ}ƒbƒvƒtƒHƒ“ƒg’²®ˆ—‚P
+		// ãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆèª¿æ•´å‡¦ç†ï¼‘
 		success |= MapAdj::init(&options);
 
-		// ƒ}ƒbƒvƒtƒHƒ“ƒg•\¦’²®‚Q
+		// ãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆè¡¨ç¤ºèª¿æ•´ï¼’
 		success |= MapAdj2::init(&options);
 
-		// ƒ}ƒbƒvƒtƒHƒ“ƒg•\¦’²®‚R ‚¨‚»‚ç‚­‹­§‘å•¶š‚Ì‰ğœ
+		// ãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆè¡¨ç¤ºèª¿æ•´ï¼“ ãŠãã‚‰ãå¼·åˆ¶å¤§æ–‡å­—ã®è§£é™¤
 		success |= MapAdj3::init(&options);
 
-		// ƒtƒHƒ“ƒgƒ[ƒfƒBƒ“ƒOˆ—
+		// ãƒ•ã‚©ãƒ³ãƒˆãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°å‡¦ç†
 		success |= Font::init(&options);
 
-		// I—¹‚Ìƒ_ƒCƒAƒƒO‚Ì‰Ô•¶š
+		// çµ‚äº†æ™‚ã®ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®èŠ±æ–‡å­—
 		success |= DecorativeLetterEndDialog::init(&options);
 
-		// ƒ_ƒCƒAƒƒO‚Ì‰Ô•¶š
+		// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®èŠ±æ–‡å­—
 		success |= DecorativeLetterDialog::init(&options);
 
-		// Œp³ƒ_ƒCƒAƒƒO‚Ì‰Ô•¶š
+		// ç¶™æ‰¿ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®èŠ±æ–‡å­—
 		success |= DecorativeLetterInheritDialog::init(&options);
 
-		// Button‚Æƒc[ƒ‹ƒ`ƒbƒv
+		// Buttonã¨ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—
 		success |= ButtonAndTooltip::init(&options);
 
-		// ƒƒCƒ“ƒeƒLƒXƒg
+		// ãƒ¡ã‚¤ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 		success |= MainText::init(&options);
 
-		// ƒƒCƒ“ƒeƒLƒXƒg‰üsˆ—iƒ_ƒCƒAƒƒOj
+		// ãƒ¡ã‚¤ãƒ³ãƒ†ã‚­ã‚¹ãƒˆæ”¹è¡Œå‡¦ç†ï¼ˆãƒ€ã‚¤ã‚¢ãƒ­ã‚°ï¼‰
 		success |= MainTextLineBreak::init(&options);
 
-		// ƒjƒbƒNƒl[ƒ€C³
+		// ãƒ‹ãƒƒã‚¯ãƒãƒ¼ãƒ ä¿®æ­£
 		success |= NickNameFix::init(&options);
 
-		// Dynasty‚É-id‚ª‚Â‚©‚È‚¢‚æ‚¤‚É‚·‚é
+		// Dynastyã«-idãŒã¤ã‹ãªã„ã‚ˆã†ã«ã™ã‚‹
 		success |= NoDynastyId::init(&options);
 
 		// IME
@@ -81,18 +82,18 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//Unknown 4 : OK
 		success |= Unk4::init(&options);
 
-		// issue33 uXXX‚É’‰½‚ğ¾‚Á‚Ä‚¢‚év‚É‚µ‚½‚¢
+		// issue33 ã€ŒXXXã«å¿ èª ã‚’èª“ã£ã¦ã„ã‚‹ã€ã«ã—ãŸã„
 		// https://github.com/matanki-saito/CK2dll/issues/33
 		success |= Issue33::init(&options);
 
-		// issue32 ‰Æ –¼‘O‚É‚È‚Á‚Ä‚¢‚é‚Ì‚ÅA“ú–{Œê‚Ì‚Æ‚«‚Ì‚İ–¼‘O ‰Æ‚É‚µ‚½‚¢
+		// issue32 å®¶ åå‰ã«ãªã£ã¦ã„ã‚‹ã®ã§ã€æ—¥æœ¬èªã®ã¨ãã®ã¿åå‰ å®¶ã«ã—ãŸã„
 		// https://github.com/matanki-saito/CK2dll/issues/32
 		success |= Issue32::init(&options);
 
-		// “ú•t•\‹L‚Ì•ÏX
+		// æ—¥ä»˜è¡¨è¨˜ã®å¤‰æ›´
 		success |= DateFormat::init(&options);
 
-		// ƒtƒ@ƒCƒ‹•Û‘¶
+		// ãƒ•ã‚¡ã‚¤ãƒ«ä¿å­˜
 		success |= FileSave::init(&options);
 
 		if (success == NOERROR) {

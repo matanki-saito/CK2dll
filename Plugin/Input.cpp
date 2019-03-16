@@ -1,11 +1,11 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace Input {
 
 	/*-----------------------------------------------*/
-
-	// TODO: ‚±‚ê‚çƒ_ƒ~[ŠÖ”‚Í•K—v‚È‚©‚Á‚½i’¼Úcall‚µ‚ÄŒÄ‚×‚éj
+	
+	// TODO: ã“ã‚Œã‚‰ãƒ€ãƒŸãƒ¼é–¢æ•°ã¯å¿…è¦ãªã‹ã£ãŸï¼ˆç›´æ¥callã—ã¦å‘¼ã¹ã‚‹ï¼‰
 	uintptr_t xx_end;
 	uintptr_t xx_end2;
 	__declspec(naked) void heap_alloc_f1() {
@@ -90,11 +90,11 @@ namespace Input {
 			mov eax, [ebp - 0x74];
 			movzx ax, word ptr[eax + esi];
 
-			// I—¹
+			// çµ‚äº†
 			cmp ax, 0;
 			jz xx_10;
 
-			// 2ƒoƒCƒg‚¶‚á‚È‚¢
+			// 2ãƒã‚¤ãƒˆã˜ã‚ƒãªã„
 			cmp ah, 0;
 			jz xx_2_1;
 
@@ -376,9 +376,9 @@ namespace Input {
 			push esi;
 			xor esi, esi;
 
-			mov eax, [edi + 0x28]; // •¶š—ñ’·‚³
+			mov eax, [edi + 0x28]; // æ–‡å­—åˆ—é•·ã•
 			
-			lea ecx, [edi + 0x18]; // ƒeƒLƒXƒg
+			lea ecx, [edi + 0x18]; // ãƒ†ã‚­ã‚¹ãƒˆ
 
 			cmp eax, 0x10;
 			jbe yy_2;
@@ -386,7 +386,7 @@ namespace Input {
 			mov ecx, [ecx];
 
 		yy_2:
-			mov eax, [edi + 0x34]; // ƒLƒƒƒŒƒbƒgˆÊ’u
+			mov eax, [edi + 0x34]; // ã‚­ãƒ£ãƒ¬ãƒƒãƒˆä½ç½®
 			sub eax, 3;
 			js yy_3;
 			mov al, [ecx + eax];
@@ -469,10 +469,10 @@ namespace Input {
 
 		byte_pattern::debug_output2("input");
 
-		// input‚ÌC³
+		// inputã®ä¿®æ­£
 		result |= input_hook(options);
 
-		// backspace‚ÌC³
+		// backspaceã®ä¿®æ­£
 		result |= backSpace_hook(options);
 
 		return result;

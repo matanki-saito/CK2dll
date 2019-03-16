@@ -1,10 +1,10 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace IME
 {
 	/*-----------------------------------------------*/
-
+	
 	errno_t SDL_windowskeyboard_Win_StartTextInput_hook(RunOptions *options) {
 		std::string desc = "SDL_windowskeyboard Win_StartTextInput";
 
@@ -21,7 +21,7 @@ namespace IME
 					byte_pattern::temp_instance().get_first().address(0x1D),// push edi
 					byte_pattern::temp_instance().get_first().address(0x2B) // add esp 1Ch
 				);
-				// ŠÖ”‚ğ‚Q‚ÂÁ‚·‚Ì‚ÅAadd esp 1Ch -> 0C
+				// é–¢æ•°ã‚’ï¼’ã¤æ¶ˆã™ã®ã§ã€add esp 1Ch -> 0C
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x2B + 2), 0x0C, true);
 			}
 			else return CK2ERROR1;
@@ -48,7 +48,7 @@ namespace IME
 					byte_pattern::temp_instance().get_first().address(0xE),// push edi
 					byte_pattern::temp_instance().get_first().address(0x25) //pop edi
 				);
-				// ŠÖ”‚ğ‚Q‚ÂÁ‚·‚Ì‚ÅAadd esp 10h -> 0
+				// é–¢æ•°ã‚’ï¼’ã¤æ¶ˆã™ã®ã§ã€add esp 10h -> 0
 				//injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x14 + 2), 0x8, true);
 			}
 			else return CK2ERROR1;
@@ -304,7 +304,7 @@ namespace IME
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
-			// ­‚µè‘O‚Éˆø‚ÁŠ|‚¯‚é
+			// å°‘ã—æ‰‹å‰ã«å¼•ã£æ›ã‘ã‚‹
 			byte_pattern::temp_instance().find_pattern("8B 45 10 59 59 50 6A 00");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(8), issue31_v28_start);
@@ -312,7 +312,7 @@ namespace IME
 			}
 			else return CK2ERROR1;
 
-			// SDL_SendKeyboardKey‚ğŒ©‚Â‚¯‚é
+			// SDL_SendKeyboardKeyã‚’è¦‹ã¤ã‘ã‚‹
 			byte_pattern::temp_instance().find_pattern("55 8B EC 83 EC 40 56 8B 75 0C 85 F6");
 			if (byte_pattern::temp_instance().has_size(1, desc + " SDL_SendKeyboardKey")) {
 				SDL_SendKeyboardKey_v28 = byte_pattern::temp_instance().get_first().address();
@@ -331,20 +331,20 @@ namespace IME
 
 		byte_pattern::debug_output2("IME fix");
 
-		// SDL_windowskeyboard.c Win_StartTextInput‚ğC³
+		// SDL_windowskeyboard.c Win_StartTextInputã‚’ä¿®æ­£
 		result |= SDL_windowskeyboard_Win_StartTextInput_hook(options);
-		// SDL_windowskeyboard.c Win_StopTextInput‚ğC³
+		// SDL_windowskeyboard.c Win_StopTextInputã‚’ä¿®æ­£
 		result |= SDL_windowskeyboard_Win_StopTextInput_hook(options);
-		// SDL_windowskeyboard Win_IME_HandleMessage‚ğC³
+		// SDL_windowskeyboard Win_IME_HandleMessageã‚’ä¿®æ­£
 		result |= SDL_windowskeyboard_Win_IME_HandleMessage_hook(options);
-		// SDL_windowsevent.c‚ÉInputRect‚ğİ’è‚·‚éƒR[ƒh‚ğ’Ç‰Á‚·‚é
+		// SDL_windowsevent.cã«InputRectã‚’è¨­å®šã™ã‚‹ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ ã™ã‚‹
 		result |= SDL_windowskeyboard_Win_IME_HandleMessage_WM_IME_STARTCOMPOSITION_hook(options);
 
-		// SDL_keyborad.c‚ğC³
+		// SDL_keyborad.cã‚’ä¿®æ­£
 		result |= SDL_keyborad_hook(options);
-		// SDL_windowevent.c‚ğ•ÏX
+		// SDL_windowevent.cã‚’å¤‰æ›´
 		result |= SDL_windowevent_hook(options);
-		// SDL_windowsevent.c‚ğ•ÏX
+		// SDL_windowsevent.cã‚’å¤‰æ›´
 		result |= SDL_windowevent_issue31_hook(options);
 
 		return result;
