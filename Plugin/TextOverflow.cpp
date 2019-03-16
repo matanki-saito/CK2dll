@@ -218,10 +218,10 @@ namespace TextOerflow
 		byte_pattern::debug_output2("Text overflow");
 
 		//
-		//result |= fix1_hook(options);
+		result |= fix1_hook(options);
 
 		// カウンタは後で進める
-		//result |= fix2_hook(options);
+		result |= fix2_hook(options);
 
 		return result;
 	}
