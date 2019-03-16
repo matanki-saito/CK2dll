@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #define NOMINMAX
 
@@ -70,16 +70,19 @@ enum NickNameOrder {
 };
 
 typedef struct _runoption {
-	// ƒvƒƒOƒ‰ƒ€ƒo[ƒWƒ‡ƒ“
+	// ãƒ—ãƒ­ã‚°ãƒ©ãƒ ãƒãƒ¼ã‚¸ãƒ§ãƒ³
 	CK2Version version;
 
-	// “ú•t‚Ì•\‹L•ÏX‚ğ—LŒø‚É‚·‚é‚©
+	// æ—¥ä»˜ã®è¡¨è¨˜å¤‰æ›´ã‚’æœ‰åŠ¹ã«ã™ã‚‹ã‹
 	boolean dateFormat;
-	// ƒjƒbƒNƒl[ƒ€‚Ìí•Ê
-	// 0 : –³Œø
+	// ãƒ‹ãƒƒã‚¯ãƒãƒ¼ãƒ ã®ç¨®åˆ¥
+	// 0 : ç„¡åŠ¹
 	// 1 : [FirstName] [Nickname] [Title]
 	// 2 : [Nickname] [FirstName] [Title]
 	NickNameOrder nickNameOrder;
+
+	// ã‚¢ãƒ©ãƒ¼ãƒˆãƒ†ã‚¹ãƒˆ
+	boolean test;
 
 } RunOptions;
 

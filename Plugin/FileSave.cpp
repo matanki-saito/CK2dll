@@ -1,10 +1,10 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace FileSave {
 
 	/*-----------------------------------------------*/
-
+	
 	errno_t fileNameSaftySkip_hook(RunOptions *options) {
 		std::string desc = "file name safty skip";
 
@@ -249,7 +249,7 @@ namespace FileSave {
 		/* */
 		size = wcslen(from);
 
-		/* ‘S•”ƒGƒXƒP[ƒv‚µ‚Ä‚à‚R”{‚ð’´‚¦‚é‚±‚Æ‚Í‚È‚¢B‚P‚O‚Íƒoƒbƒtƒ@*/
+		/* å…¨éƒ¨ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã—ã¦ã‚‚ï¼“å€ã‚’è¶…ãˆã‚‹ã“ã¨ã¯ãªã„ã€‚ï¼‘ï¼ã¯ãƒãƒƒãƒ•ã‚¡*/
 		*to = (char*)calloc(size * 3 * 2 + 10, sizeof(char));
 
 		if (*to == NULL) {
@@ -268,26 +268,26 @@ namespace FileSave {
 				continue;
 			}
 
-			/* ‚¸‚ç‚· */
+			/* ãšã‚‰ã™ */
 			if (cp > 0x100 && cp < 0xA00) {
 				cp = cp + 0xE000;
 			}
 
-			/* ãˆÊƒoƒCƒg */
+			/* ä¸Šä½ãƒã‚¤ãƒˆ */
 			byte high = (cp >> 8) & 0x000000FF;
 
-			/* ‰ºˆÊƒoƒCƒg */
+			/* ä¸‹ä½ãƒã‚¤ãƒˆ */
 			byte low = cp & 0x000000FF;
 
 			byte escapeChr = 0x10;
 
-			/* 2byte‚¶‚á‚È‚¢ */
+			/* 2byteã˜ã‚ƒãªã„ */
 			if (high == 0) {
 				(*to)[toIndex++] = (byte)cp;
 				continue;
 			}
 
-			/* high byte‚æ‚èŒˆ’è */
+			/* high byteã‚ˆã‚Šæ±ºå®š */
 			switch (high) {
 			case 0xA4:case 0xA3:case 0xA7:case 0x24:case 0x5B:case 0x00:case 0x5C:
 			case 0x20:case 0x0D:case 0x0A:case 0x22:case 0x7B:case 0x7D:case 0x40:
@@ -299,7 +299,7 @@ namespace FileSave {
 				break;
 			}
 
-			/* low byte‚æ‚èŒˆ’è */
+			/* low byteã‚ˆã‚Šæ±ºå®š */
 			switch (low) {
 			case 0xA4:case 0xA3:case 0xA7:case 0x24:case 0x5B:case 0x00:case 0x5C:
 			case 0x20:case 0x0D:case 0x0A:case 0x22:case 0x7B:case 0x7D:case 0x40:
@@ -523,23 +523,23 @@ namespace FileSave {
 
 		byte_pattern::temp_instance().debug_output2("file save etc");
 
-		/* ƒtƒ@ƒCƒ‹–¼‚ðˆÀ‘S‚É‚µ‚Ä‚¢‚éêŠ‚ð’Z—‚·‚é jmp [address] */
-		// EU4‚Í‚±‚ê‚¾‚¯‚Å‘åä•v‚¾‚Á‚½
+		/* ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å®‰å…¨ã«ã—ã¦ã„ã‚‹å ´æ‰€ã‚’çŸ­çµ¡ã™ã‚‹ jmp [address] */
+		// EU4ã¯ã“ã‚Œã ã‘ã§å¤§ä¸ˆå¤«ã ã£ãŸ
 		//result |= fileNameSaftySkip_hook(options); // OK
 
-		/* ƒtƒ@ƒCƒ‹–¼‚ðˆÀ‘S‚É‚µ‚Ä‚¢‚éêŠ‚ð’Z—‚·‚é‚Q jmp [address] */
+		/* ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å®‰å…¨ã«ã—ã¦ã„ã‚‹å ´æ‰€ã‚’çŸ­çµ¡ã™ã‚‹ï¼’ jmp [address] */
 		result |= fileNameSaftySkip2_hook(options); // OK
 
-		/* ƒtƒ@ƒCƒ‹–¼‚ð•ÏŠ·‚·‚é */
+		/* ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å¤‰æ›ã™ã‚‹ */
 		result |= filenameEncode_hook(options);
 
-		/* •ÏŠ·ŠÖ”‚ð’T‚µ‚Ä‚­‚é */
+		/* å¤‰æ›é–¢æ•°ã‚’æŽ¢ã—ã¦ãã‚‹ */
 		result |= PHYSFS_utf8FromUcs2_hook(options); // OK
 
-		/* ƒ^ƒCƒgƒ‹‚ð•\Ž¦‚Å‚«‚é‚æ‚¤‚É‚·‚é */
+		/* ã‚¿ã‚¤ãƒˆãƒ«ã‚’è¡¨ç¤ºã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ */
 		result |= loadgame_showTitle_hook(options);
 
-		/* UTF-8ƒtƒ@ƒCƒ‹‚ð—ñ‹“‚Å‚«‚é‚æ‚¤‚É‚·‚é jz(74) -> jmp(EB) */
+		/* UTF-8ãƒ•ã‚¡ã‚¤ãƒ«ã‚’åˆ—æŒ™ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ jz(74) -> jmp(EB) */
 		result |= fileEnumSkip_hook(options); // OK
 
 		return result;

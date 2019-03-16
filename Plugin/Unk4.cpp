@@ -1,4 +1,4 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace Unk4
@@ -106,7 +106,7 @@ namespace Unk4
 			add esi, 2;
 
 		cc_3:
-			mov ecx, [esp + 0x48 - 0x2C]; // C³‚³‚ê‚½
+			mov ecx, [esp + 0x48 - 0x2C]; // ä¿®æ­£ã•ã‚ŒãŸ
 
 			push cc_4_end_v301;
 			ret;

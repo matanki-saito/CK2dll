@@ -1,4 +1,4 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 // https://github.com/matanki-saito/CK2dll/issues/33
@@ -7,7 +7,7 @@ namespace Issue33 {
 	/*-----------------------------------------------*/
 
 	uintptr_t issue_33_v28_copyBuffFunc;
-
+	
 	/*-----------------------------------------------*/
 
 	errno_t func_hook(RunOptions *options) {
@@ -17,7 +17,7 @@ namespace Issue33 {
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
-			/* ƒRƒs[ŠÖ” */
+			/* ã‚³ãƒ”ãƒ¼é–¢æ•° */
 			byte_pattern::temp_instance().find_pattern("83 EC 20 56 FF 75 0C 8D 45 D8");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// sub esp,20h
@@ -35,15 +35,15 @@ namespace Issue33 {
 	uintptr_t issue_33_v28_end;
 	__declspec(naked) void issue_33_v28_start() {
 		__asm {
-			//˜! ¨ LOYAL_TO
+			//Â§! â†’ LOYAL_TO
 			push eax;
 			mov byte ptr[ebp - 0x4], 0x43;
 			lea ecx,[ebp - 0xB8]; // buf
 			push ecx;
-			lea ecx, [ebp - 0xA0]; // ˜!
+			lea ecx, [ebp - 0xA0]; // Â§!
 			call issue_33_v28_copyBuffFunc;
 
-			// XXX ¨ ˜!LOYAL_TO
+			// XXX â†’ Â§!LOYAL_TO
 			push eax;
 			mov byte ptr[ebp - 0x4], 0x44;
 			lea ecx, [ebp - 0xF0]; // buf
@@ -51,12 +51,12 @@ namespace Issue33 {
 			mov ecx, esi;
 			call issue_33_v28_copyBuffFunc;
 
-			//˜Y ¨ XXX˜!LOYAL_TO
+			//Â§Y â†’ XXXÂ§!LOYAL_TO
 			push eax;
 			mov byte ptr[ebp - 0x4], 0x45;
 			lea ecx, [ebp - 0x10C]; // buf
 			push ecx;
-			lea ecx, [ebp - 0xD0]; // ˜Y
+			lea ecx, [ebp - 0xD0]; // Â§Y
 			call issue_33_v28_copyBuffFunc;
 
 			push issue_33_v28_end;
@@ -67,15 +67,15 @@ namespace Issue33 {
 	uintptr_t issue_33_v30_end;
 	__declspec(naked) void issue_33_v30_start() {
 		__asm {
-			//˜! ¨ LOYAL_TO
+			//Â§! â†’ LOYAL_TO
 			push eax;
 			mov byte ptr[ebp - 0x4], 0x43;
 			lea ecx, [ebp - 0xBC]; // buf
 			push ecx;
-			lea ecx, [ebp - 0xA4]; // ˜!
+			lea ecx, [ebp - 0xA4]; // Â§!
 			call issue_33_v28_copyBuffFunc;
 
-			// XXX ¨ ˜!LOYAL_TO
+			// XXX â†’ Â§!LOYAL_TO
 			push eax;
 			mov byte ptr[ebp - 0x4], 0x44;
 			lea ecx, [ebp - 0xF4]; // buf
@@ -83,12 +83,12 @@ namespace Issue33 {
 			mov ecx, esi;
 			call issue_33_v28_copyBuffFunc;
 
-			//˜Y ¨ XXX˜!LOYAL_TO
+			//Â§Y â†’ XXXÂ§!LOYAL_TO
 			push eax;
 			mov byte ptr[ebp - 0x4], 0x45;
 			lea ecx, [ebp - 0x10C]; // buf
 			push ecx;
-			lea ecx, [ebp - 0xD4]; // ˜Y
+			lea ecx, [ebp - 0xD4]; // Â§Y
 			call issue_33_v28_copyBuffFunc;
 
 			push issue_33_v30_end;
@@ -103,7 +103,7 @@ namespace Issue33 {
 
 		switch (options->version) {
 		case v2_8_X:
-			/* issue-33 u‚É’‰½‚ğ¾‚Á‚Ä‚¢‚é ‰¤ ƒƒXƒ‰ƒ“v‚ğu‰¤ ƒƒXƒ‰ƒ“‚É’‰½‚ğ¾‚Á‚Ä‚¢‚é‚É‚·‚év */
+			/* issue-33 ã€Œã«å¿ èª ã‚’èª“ã£ã¦ã„ã‚‹ ç‹ ãƒ­ã‚¹ãƒ©ãƒ³ã€ã‚’ã€Œç‹ ãƒ­ã‚¹ãƒ©ãƒ³ã«å¿ èª ã‚’èª“ã£ã¦ã„ã‚‹ã«ã™ã‚‹ã€ */
 			byte_pattern::temp_instance().find_pattern("8D 8D 30 FF FF FF C6 45 FC 43 51 8D 8D");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// lea ecx, [ebp+var_D0]
@@ -117,7 +117,7 @@ namespace Issue33 {
 
 		case v3_0_0:
 		case v3_0_X:
-			/* issue-33 u‚É’‰½‚ğ¾‚Á‚Ä‚¢‚é ‰¤ ƒƒXƒ‰ƒ“v‚ğu‰¤ ƒƒXƒ‰ƒ“‚É’‰½‚ğ¾‚Á‚Ä‚¢‚é‚É‚·‚év */
+			/* issue-33 ã€Œã«å¿ èª ã‚’èª“ã£ã¦ã„ã‚‹ ç‹ ãƒ­ã‚¹ãƒ©ãƒ³ã€ã‚’ã€Œç‹ ãƒ­ã‚¹ãƒ©ãƒ³ã«å¿ èª ã‚’èª“ã£ã¦ã„ã‚‹ã«ã™ã‚‹ã€ */
 			byte_pattern::temp_instance().find_pattern("8D 8D 2C FF FF FF C6 45 FC 43");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// lea ecx, [ebp+var_D0]

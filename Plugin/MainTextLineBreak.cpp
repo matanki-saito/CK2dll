@@ -1,4 +1,4 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace MainTextLineBreak {
@@ -8,7 +8,7 @@ namespace MainTextLineBreak {
 	uintptr_t func1_v28;
 	uintptr_t func1_v30;
 	uintptr_t func1_v301;
-
+	
 	/*-----------------------------------------------*/
 
 	errno_t func_hook(RunOptions *options) {
@@ -120,7 +120,7 @@ namespace MainTextLineBreak {
 			mov eax, esi;
 
 		dd_2:
-			mov dword ptr [ebp - 0x18], eax; // ‚±‚±‚Ì’l‚¾‚¯ˆá‚¤
+			mov dword ptr [ebp - 0x18], eax; // ã“ã“ã®å€¤ã ã‘é•ã†
 			xor eax, eax;
 
 			cmp cl, ESCAPE_SEQ_1;
@@ -170,7 +170,7 @@ namespace MainTextLineBreak {
 			mov eax, esi;
 
 		dd_2:
-			mov dword ptr[ebp - 0x1C], eax; // ‚±‚±‚Ì’l‚¾‚¯ˆá‚¤
+			mov dword ptr[ebp - 0x1C], eax; // ã“ã“ã®å€¤ã ã‘é•ã†
 			xor eax, eax;
 
 			cmp cl, ESCAPE_SEQ_1;
@@ -351,7 +351,7 @@ namespace MainTextLineBreak {
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
-			//ƒXƒ^ƒbƒNC³
+			//ã‚¹ã‚¿ãƒƒã‚¯ä¿®æ­£
 			// sub esp,7Ch
 			byte_pattern::temp_instance().find_pattern("83 EC 7C 53 8B 5D 0C 56 57 8B F1");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -389,7 +389,7 @@ namespace MainTextLineBreak {
 				else return CK2ERROR1;
 			}
 
-			// Œ‹‡‚·‚éƒuƒƒbƒN‚Ì”ò‚Ñæ
+			// çµåˆã™ã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã®é£›ã³å…ˆ
 			// cmp eax,[ebp+arc_C]
 			byte_pattern::temp_instance().find_pattern("3B 45 14 0F 8F ? 01 00 00 C7");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -427,7 +427,7 @@ namespace MainTextLineBreak {
 		}
 	}
 
-	// ƒuƒƒbƒN‚Ì•\¦‚ªv28‚Æ‹t‚É‚È‚Á‚Ä‚¢‚é‚Ì‚Å’ˆÓ
+	// ãƒ–ãƒ­ãƒƒã‚¯ã®è¡¨ç¤ºãŒv28ã¨é€†ã«ãªã£ã¦ã„ã‚‹ã®ã§æ³¨æ„
 	uintptr_t ee_2_v30;
 	uintptr_t ee_3_v30;
 	__declspec(naked) void ee_1_1_v30()
@@ -449,17 +449,17 @@ namespace MainTextLineBreak {
 			cmp dword ptr [ebp + 0x24], 0; // arg_1C
 			jnz ee_3_jmp;
 			
-		ee_2_jmp: //@¶
+		ee_2_jmp: //ã€€å·¦
 			push ee_2_v30;
 			ret;
 
-		ee_3_jmp: // ‰E
+		ee_3_jmp: // å³
 			push ee_3_v30;
 			ret;
 		}
 	}
 
-	// ƒuƒƒbƒN‚Ì•\¦‚ªv28‚Æ‹t‚É‚È‚Á‚Ä‚¢‚é‚Ì‚Å’ˆÓ
+	// ãƒ–ãƒ­ãƒƒã‚¯ã®è¡¨ç¤ºãŒv28ã¨é€†ã«ãªã£ã¦ã„ã‚‹ã®ã§æ³¨æ„
 	uintptr_t ee_2_v301;
 	uintptr_t ee_3_v301;
 	__declspec(naked) void ee_1_1_v301()
@@ -481,11 +481,11 @@ namespace MainTextLineBreak {
 			cmp dword ptr[ebp + 0x24], 0; // arg_1C
 			jnz ee_3_jmp;
 
-		ee_2_jmp: //@¶
+		ee_2_jmp: //ã€€å·¦
 			push ee_2_v301;
 			ret;
 
-		ee_3_jmp: // ‰E
+		ee_3_jmp: // å³
 			push ee_3_v301;
 			ret;
 		}
@@ -502,13 +502,13 @@ namespace MainTextLineBreak {
 			byte_pattern::temp_instance().find_pattern("3B 5D E8 0F 8F");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), ee_1_1_v28);
-				// ¶‘¤ƒuƒƒbƒN‚ÌŠJnˆÊ’u
+				// å·¦å´ãƒ–ãƒ­ãƒƒã‚¯ã®é–‹å§‹ä½ç½®
 				// push esi
 				ee_2_v28 = byte_pattern::temp_instance().get_first().address(9);
 			}
 			else return CK2ERROR1;
 			
-			//‰E‘¤‚ÌƒuƒƒbƒN‚ÌŠJnˆÊ’u
+			//å³å´ã®ãƒ–ãƒ­ãƒƒã‚¯ã®é–‹å§‹ä½ç½®
 			// push ebx
 			byte_pattern::temp_instance().find_pattern("53 FF 75 E8 8D 45 90 C7");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -525,7 +525,7 @@ namespace MainTextLineBreak {
 			}
 			else return CK2ERROR1;
 
-			//¶‘¤‚ÌƒuƒƒbƒN‚ÌŠJnˆÊ’u
+			//å·¦å´ã®ãƒ–ãƒ­ãƒƒã‚¯ã®é–‹å§‹ä½ç½®
 			// push offset asc_XXXXXX
 			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D 4D C0 E8 EE 23 07 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -533,7 +533,7 @@ namespace MainTextLineBreak {
 			}
 			else return CK2ERROR1;
 
-			//‰E‘¤‚ÌƒuƒƒbƒN‚ÌŠJnˆÊ’u
+			//å³å´ã®ãƒ–ãƒ­ãƒƒã‚¯ã®é–‹å§‹ä½ç½®
 			// push offset asc_XXXXXX
 			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D 4D C0 E8 59 23 07 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -551,7 +551,7 @@ namespace MainTextLineBreak {
 			}
 			else return CK2ERROR1;
 
-			//¶‘¤‚ÌƒuƒƒbƒN‚ÌŠJnˆÊ’u
+			//å·¦å´ã®ãƒ–ãƒ­ãƒƒã‚¯ã®é–‹å§‹ä½ç½®
 			// push offset asc_XXXXXX
 			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D ? ? ? ? 24 07 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -559,7 +559,7 @@ namespace MainTextLineBreak {
 			}
 			else return CK2ERROR1;
 
-			//‰E‘¤‚ÌƒuƒƒbƒN‚ÌŠJnˆÊ’u
+			//å³å´ã®ãƒ–ãƒ­ãƒƒã‚¯ã®é–‹å§‹ä½ç½®
 			// push offset asc_XXXXXX
 			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D ? ? ? ? 23 07 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -738,7 +738,7 @@ namespace MainTextLineBreak {
 			return NOERROR;
 
 		case v3_0_0:
-			// ƒuƒƒbƒN‚ÌI’[æ‚ğ•ÏX‚·‚é
+			// ãƒ–ãƒ­ãƒƒã‚¯ã®çµ‚ç«¯å…ˆã‚’å¤‰æ›´ã™ã‚‹
 			// mov [ebp+arg_14],0
 			byte_pattern::temp_instance().find_pattern("C7 45 EC 00 00 00 00 EB 03");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -748,7 +748,7 @@ namespace MainTextLineBreak {
 			return NOERROR;
 
 		case v3_0_X:
-			// ƒuƒƒbƒN‚ÌI’[æ‚ğ•ÏX‚·‚é
+			// ãƒ–ãƒ­ãƒƒã‚¯ã®çµ‚ç«¯å…ˆã‚’å¤‰æ›´ã™ã‚‹
 			// mov [ebp+arg_14],0
 			byte_pattern::temp_instance().find_pattern("C7 45 EC 00 00 00 00 EB 06 8B 5D 0C");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -774,13 +774,13 @@ namespace MainTextLineBreak {
 
 		result |= fixA_hook(options);
 
-		// ƒuƒƒbƒN‚Ì•ªŠò”»’èˆ—
+		// ãƒ–ãƒ­ãƒƒã‚¯ã®åˆ†å²åˆ¤å®šå‡¦ç†
 		result |= fix1_hook(options);
 
-		// ¶‘¤‚Ì•ªŠòƒuƒƒbƒN‚Ìˆ—‚Ì“r’†‚P
+		// å·¦å´ã®åˆ†å²ãƒ–ãƒ­ãƒƒã‚¯ã®å‡¦ç†ã®é€”ä¸­ï¼‘
 		result |= fix2_hook(options);
 
-		// ¶‘¤‚Ì•ªŠòƒuƒƒbƒN‚Ìˆ—‚Ì“r’†‚Q
+		// å·¦å´ã®åˆ†å²ãƒ–ãƒ­ãƒƒã‚¯ã®å‡¦ç†ã®é€”ä¸­ï¼’
 		result |= fix3_hook(options);
 
 		return result;

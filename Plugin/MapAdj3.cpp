@@ -1,9 +1,9 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace MapAdj3 {
 	/*-----------------------------------------------*/
-
+	
 	uintptr_t u_4;
 	uintptr_t u_2;
 	__declspec(naked) void u_1()
@@ -131,7 +131,7 @@ namespace MapAdj3 {
 
 	/*-----------------------------------------------*/
 
-	// ‚¨‚»‚ç‚­‹­§‘å•¶š‚Ì‰ğœ
+	// ãŠãã‚‰ãå¼·åˆ¶å¤§æ–‡å­—ã®è§£é™¤
 	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 

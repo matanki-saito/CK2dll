@@ -1,9 +1,10 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 #include "moddl.h"
 
 BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 {
+	
     if (reason == DLL_PROCESS_ATTACH)
     {
 		// moddownload
@@ -15,58 +16,58 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 
         byte_pattern::start_log(L"ck2jps");
 
-		// ƒIƒvƒVƒ‡ƒ“‚ğiniƒtƒ@ƒCƒ‹‚©‚çæ“¾
+		// ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’iniãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰å–å¾—
 		RunOptions options = RunOptions();
 		Misc::getOptionsByINI(&options);
 
-		// version‚ğ•¶š—ñ‚©‚çæ“¾
+		// versionã‚’æ–‡å­—åˆ—ã‹ã‚‰å–å¾—
 		CK2Version version = Misc::getVersion();
 
-		// versionİ’è
+		// versionè¨­å®š
 		options.version = version;
 
 		errno_t success = NOERROR;
 
-		// ƒ}ƒbƒvƒtƒHƒ“ƒg•\¦ˆ—
+		// ãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆè¡¨ç¤ºå‡¦ç†
 		success |= MapView::init(&options);
 
-		// ƒ}ƒbƒvƒtƒHƒ“ƒgjustify
+		// ãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆjustify
 		success |= MapJustify::init(&options);
 
-		// ƒ}ƒbƒvƒtƒHƒ“ƒg’²®ˆ—‚P
+		// ãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆèª¿æ•´å‡¦ç†ï¼‘
 		success |= MapAdj::init(&options);
 
-		// ƒ}ƒbƒvƒtƒHƒ“ƒg•\¦’²®‚Q
+		// ãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆè¡¨ç¤ºèª¿æ•´ï¼’
 		success |= MapAdj2::init(&options);
 
-		// ƒ}ƒbƒvƒtƒHƒ“ƒg•\¦’²®‚R ‚¨‚»‚ç‚­‹­§‘å•¶š‚Ì‰ğœ
+		// ãƒãƒƒãƒ—ãƒ•ã‚©ãƒ³ãƒˆè¡¨ç¤ºèª¿æ•´ï¼“ ãŠãã‚‰ãå¼·åˆ¶å¤§æ–‡å­—ã®è§£é™¤
 		success |= MapAdj3::init(&options);
 
-		// ƒtƒHƒ“ƒgƒ[ƒfƒBƒ“ƒOˆ—
+		// ãƒ•ã‚©ãƒ³ãƒˆãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°å‡¦ç†
 		success |= Font::init(&options);
 
-		// I—¹‚Ìƒ_ƒCƒAƒƒO‚Ì‰Ô•¶š
+		// çµ‚äº†æ™‚ã®ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®èŠ±æ–‡å­—
 		success |= DecorativeLetterEndDialog::init(&options);
 
-		// ƒ_ƒCƒAƒƒO‚Ì‰Ô•¶š
+		// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®èŠ±æ–‡å­—
 		success |= DecorativeLetterDialog::init(&options);
 
-		// Œp³ƒ_ƒCƒAƒƒO‚Ì‰Ô•¶š
+		// ç¶™æ‰¿ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®èŠ±æ–‡å­—
 		success |= DecorativeLetterInheritDialog::init(&options);
 
-		// Button‚Æƒc[ƒ‹ƒ`ƒbƒv
+		// Buttonã¨ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—
 		success |= ButtonAndTooltip::init(&options);
 
-		// ƒƒCƒ“ƒeƒLƒXƒg
+		// ãƒ¡ã‚¤ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ
 		success |= MainText::init(&options);
 
-		// ƒƒCƒ“ƒeƒLƒXƒg‰üsˆ—iƒ_ƒCƒAƒƒOj
+		// ãƒ¡ã‚¤ãƒ³ãƒ†ã‚­ã‚¹ãƒˆæ”¹è¡Œå‡¦ç†ï¼ˆãƒ€ã‚¤ã‚¢ãƒ­ã‚°ï¼‰
 		success |= MainTextLineBreak::init(&options);
 
-		// ƒjƒbƒNƒl[ƒ€C³
+		// ãƒ‹ãƒƒã‚¯ãƒãƒ¼ãƒ ä¿®æ­£
 		success |= NickNameFix::init(&options);
 
-		// Dynasty‚É-id‚ª‚Â‚©‚È‚¢‚æ‚¤‚É‚·‚é
+		// Dynastyã«-idãŒã¤ã‹ãªã„ã‚ˆã†ã«ã™ã‚‹
 		success |= NoDynastyId::init(&options);
 
 		// IME
@@ -81,26 +82,85 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//Unknown 4 : OK
 		success |= Unk4::init(&options);
 
-		// issue33 uXXX‚É’‰½‚ğ¾‚Á‚Ä‚¢‚év‚É‚µ‚½‚¢
+		// issue33 ã€ŒXXXã«å¿ èª ã‚’èª“ã£ã¦ã„ã‚‹ã€ã«ã—ãŸã„
 		// https://github.com/matanki-saito/CK2dll/issues/33
 		success |= Issue33::init(&options);
 
-		// issue32 ‰Æ –¼‘O‚É‚È‚Á‚Ä‚¢‚é‚Ì‚ÅA“ú–{Œê‚Ì‚Æ‚«‚Ì‚İ–¼‘O ‰Æ‚É‚µ‚½‚¢
+		// issue32 å®¶ åå‰ã«ãªã£ã¦ã„ã‚‹ã®ã§ã€æ—¥æœ¬èªã®ã¨ãã®ã¿åå‰ å®¶ã«ã—ãŸã„
 		// https://github.com/matanki-saito/CK2dll/issues/32
 		success |= Issue32::init(&options);
 
-		// “ú•t•\‹L‚Ì•ÏX
+		// æ—¥ä»˜è¡¨è¨˜ã®å¤‰æ›´
 		success |= DateFormat::init(&options);
 
-		// ƒtƒ@ƒCƒ‹•Û‘¶
+		// ãƒ•ã‚¡ã‚¤ãƒ«ä¿å­˜
 		success |= FileSave::init(&options);
 
-		if (success == NOERROR) {
-			byte_pattern::debug_output2("Multibyte DLL [OK]");
+		if (success == NOERROR && options.test == false) {
+			byte_pattern::temp_instance().debug_output2("DLL [OK]");
 		}
 		else {
-			MessageBoxW(NULL, L"[Multibyte DLL ERROR]\n\nThe latest supprot version is 3.0.1.1, please rollback your main exe.\n\Or play game in english after delete d3d9.dll...\n\n Thanks", L"Multibyte DLL", MB_OK);
-			byte_pattern::debug_output2("Multibyte DLL [NG]");
+			const DWORD sysDefLcid = ::GetSystemDefaultLCID();
+
+			WCHAR* message;
+			WCHAR* caption;
+
+			switch (sysDefLcid) {
+			case MAKELANGID(LANG_JAPANESE, SUBLANG_JAPANESE_JAPAN):
+				caption = L"ã‚¨ãƒ©ãƒ¼";
+				message = L""
+					L"ã“ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã¯ã¾ã æ—¥æœ¬èªåŒ–ã«å¯¾å¿œã—ã¦ã„ãªã„ãŸã‚èµ·å‹•ã§ãã¾ã›ã‚“ã€‚\n"
+					L"å°†æ¥ã€æ—¥æœ¬èªåŒ–ã«å¯¾å¿œã—ãŸéš›ã«ã¯è‡ªå‹•çš„ã«èµ·å‹•ã§ãã‚‹ã‚ˆã†ã«ãªã‚Šã¾ã™ã€‚\n"
+					L"\n"
+					L"ä»¥å‰ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã«æˆ»ã™æ–¹æ³•ã¯ä¸‹è¨˜ã‚µã‚¤ãƒˆã‚’ã”è¦§ãã ã•ã„ã€‚\n"
+					L"https://paradoxian-japan-mod.com/version";
+				break;
+
+			case MAKELANGID(LANG_CHINESE_SIMPLIFIED, SUBLANG_CHINESE_SIMPLIFIED):
+				caption = L"é”™è¯¯";
+				message = L""
+					L"Multibyte DLL å°šæœªæ”¯æŒæ­¤æ¸¸æˆç‰ˆæœ¬ã€‚\n"
+					L"å½“æˆ‘å‘å¸ƒæ–°çš„æ—¶ï¼Œå®ƒä¼šè‡ªåŠ¨æ›´æ–°ã€‚\n"
+					L"\n"
+					L"DLLå®£å¸ƒé¡µé¢:\n"
+					L"https://github.com/matanki-saito/EU4dll";
+				break;
+
+
+			case MAKELANGID(LANG_CHINESE_TRADITIONAL, SUBLANG_CHINESE_TRADITIONAL):
+				caption = L"éŒ¯èª¤";
+				message = L""
+					L"Multibyte DLL å°šæœªæ”¯æŒæ­¤éŠæˆ²ç‰ˆæœ¬ã€‚\n"
+					L"ç•¶æˆ‘ç™¼å¸ƒæ–°çš„æ™‚ï¼Œå®ƒæœƒè‡ªå‹•æ›´æ–°ã€‚\n"
+					L"\n"
+					L"DLLå®£å¸ƒé é¢:\n"
+					L"https://github.com/matanki-saito/EU4dll";
+				break;
+
+			case MAKELANGID(LANG_KOREAN, SUBLANG_KOREAN):
+				caption = L"ì˜¤ë¥˜";
+				message = L""
+					L"ë©€í‹° ë°”ì´íŠ¸ DLLì€ ì•„ì§ì´ ê²Œì„ ë²„ì „ì„ ì§€ì›í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\n"
+					L"ìƒˆ ê²Œì‹œë¬¼ì„ ê²Œì‹œí•˜ë©´ ìë™ìœ¼ë¡œ ì—…ë°ì´íŠ¸ë©ë‹ˆë‹¤.\n"
+					L"\n"
+					L"DLL ê³µì§€ í˜ì´ì§€:\n"
+					L"https://github.com/matanki-saito/EU4dll";
+				break;
+
+			case MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US):
+			default:
+				caption = L"ERROR";
+				message = L""
+					L"Multibyte DLL hasn't supported this game version yet.\n"
+					L"It will be updated automatically, when I publish new one.\n"
+					L"\n"
+					L"DLL announce page:\n"
+					L"https://github.com/matanki-saito/EU4dll";
+			}
+
+			MessageBoxW(NULL, message, caption, MB_OK);
+
+			byte_pattern::temp_instance().debug_output2("DLL [NG]");
 			exit(-1);
 		}
 

@@ -1,4 +1,4 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 
@@ -15,13 +15,13 @@ namespace NickNameFix
 
 		switch (options->version) {
 		case v2_8_X:
-			/* g‚í‚È‚¢ */
+			/* ä½¿ã‚ãªã„ */
 			return NOERROR;
 		case v3_0_X:
 			// push [ebp+arg_4]
 			byte_pattern::temp_instance().find_pattern("FF 75 0C 8D 45 D8 C7 45 F0 00 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
-				// æ“ª
+				// å…ˆé ­
 				// push ebp
 				func1_v30 = byte_pattern::temp_instance().get_first().address(-0x1C);
 			}
@@ -59,7 +59,7 @@ namespace NickNameFix
 			jz issue_14_1_fix;
 
 		issue_14_1_org:
-			// Title‚Éspace‚ğ’Ç‰Á
+			// Titleã«spaceã‚’è¿½åŠ 
 			lea     eax, [ebp - 0x7C]; // joinedSrc ([space])
 			mov     byte ptr[ebp - 0x4], 0x11; // profile cnt ?
 			push    eax;
@@ -69,7 +69,7 @@ namespace NickNameFix
 			jmp issue_14_1_ret;
 
 		issue_14_1_fix:
-			// ‚ ‚¾–¼‚ÉFirstName‚ğ’Ç‰Á
+			// ã‚ã åã«FirstNameã‚’è¿½åŠ 
 			lea     eax, [ebp - 0x98]; // joinedSrc ([space])
 			mov     byte ptr[ebp - 0x4], 0x11; // profile cnt ?
 			push    eax;
@@ -91,7 +91,7 @@ namespace NickNameFix
 			jz issue_14_2_fix;
 
 		issue_14_2_org:
-			//  Title+space‚ÉFirstName‚ğ’Ç‰Á
+			//  Title+spaceã«FirstNameã‚’è¿½åŠ 
 			lea     ecx, [ebp - 0x98]; // joinedSrc
 			mov     byte ptr[ebp - 0x4], 0x12; // profile cnt ?
 			push    ecx;
@@ -101,7 +101,7 @@ namespace NickNameFix
 			jmp issue_14_2_ret;
 
 		issue_14_2_fix:
-			// ‚ ‚¾–¼+FirstName‚ÉƒXƒy[ƒX‚ğ’Ç‰Á
+			// ã‚ã å+FirstNameã«ã‚¹ãƒšãƒ¼ã‚¹ã‚’è¿½åŠ 
 			lea     ecx, [ebp - 0x7C]; // joinedSrc
 			mov     byte ptr[ebp - 0x4], 0x12; // profile cnt ?
 			push    ecx;
@@ -122,7 +122,7 @@ namespace NickNameFix
 			jz issue_14_3_fix;
 
 		issue_14_3_org:
-			// Title+space+FirstName‚ÉƒXƒy[ƒX‚ğ’Ç‰Á
+			// Title+space+FirstNameã«ã‚¹ãƒšãƒ¼ã‚¹ã‚’è¿½åŠ 
 			lea     ecx, [ebp - 0xC8];  // joinedSrc
 			mov     byte ptr[ebp - 0x4], 0x13; // profile cnt ?
 			push    ecx;
@@ -132,7 +132,7 @@ namespace NickNameFix
 			jmp issue_14_3_ret;
 
 		issue_14_3_fix:
-			// ‚ ‚¾–¼+FirstName+space‚ÉTitle‚ğ’Ç‰Á
+			// ã‚ã å+FirstName+spaceã«Titleã‚’è¿½åŠ 
 			lea     ecx, [ebp - 0x34];  // joinedSrc
 			mov     byte ptr[ebp - 0x4], 0x13; // profile cnt ?
 			push    ecx;
@@ -153,7 +153,7 @@ namespace NickNameFix
 			jz issue_14_4_fix;
 
 		issue_14_end_4:
-			// ‚ ‚¾–¼
+			// ã‚ã å
 			mov     esi, [ebp + 0x8]; // arg_0, dest
 			mov     byte ptr[ebp - 0x4], 0x14; // prifile cnt ?
 			mov     ecx, [edi + 0x9C];
@@ -164,7 +164,7 @@ namespace NickNameFix
 			jmp issue_14_4_ret;
 			
 		issue_14_4_fix:
-			//  ‚ ‚¾–¼+FirstName+space+Title‚ÉƒXƒy[ƒX‚ğ’Ç‰Á
+			//  ã‚ã å+FirstName+space+Titleã«ã‚¹ãƒšãƒ¼ã‚¹ã‚’è¿½åŠ 
 			mov     esi, [ebp + 0x8]; // arg_0, dest
 			mov     byte ptr[ebp - 0x4], 0x14; // prifile cnt ?
 			lea     ecx, [ebp - 0xC8]; // joinedSrc
@@ -185,7 +185,7 @@ namespace NickNameFix
 
 		switch (options->version) {
 		case v2_8_X:
-			/* [Title] [FirstName] [NickName]‚Æ‚È‚é‚Ì‚ğ[NickName] [FirstName] [Title] ‚É‚·‚é issue-14 */
+			/* [Title] [FirstName] [NickName]ã¨ãªã‚‹ã®ã‚’[NickName] [FirstName] [Title] ã«ã™ã‚‹ issue-14 */
 			byte_pattern::temp_instance().find_pattern("8D 45 84 C6 45 FC 11 50 8D 85 08");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), issue_14_start_1_v28);
@@ -363,7 +363,7 @@ namespace NickNameFix
 			// [ebp - 0xC4] : [space]
 			// [ebp - 0x94] : [FirstName]
 			// [ebp + 0x8] : retrun arg_0
-
+			
 			lea     eax, [ebp - 0x30]; // [space]
 			mov     byte ptr[ebp - 4], 0x11;
 			push    eax;
@@ -492,10 +492,10 @@ namespace NickNameFix
 
 			result |= func_hook(options);
 
-			// v28‚Ì‚İ legacy
+			// v28ã®ã¿ legacy
 			result |= fix1_hook(options);
 
-			// v30‚Ì‚İ
+			// v30ã®ã¿
 			// https://github.com/matanki-saito/CK2dll/issues/46
 			result |= fixR_hook(options);
 			
