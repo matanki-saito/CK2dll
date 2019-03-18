@@ -1,10 +1,10 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace Misc {
 	void getOptionsByINI(RunOptions *options) {
 
-		// exe‚ÌƒpƒX‚ðŒ©‚Â‚¯‚é
+		// exeã®ãƒ‘ã‚¹ã‚’è¦‹ã¤ã‘ã‚‹Â¿
 		wchar_t exe_path[1024];
 		wchar_t drive[8];
 		wchar_t dir[1024];
@@ -52,6 +52,16 @@ namespace Misc {
 		else{
 			options->nickNameOrder = NickNameOrder::DISABLE;
 		}
+
+		ret = GetPrivateProfileString(
+			L"options",
+			L"ERROR_TEST",
+			L"no",
+			buf,
+			64,
+			ini_path
+		);
+		options->test = lstrcmpW(buf, L"yes") == 0 ? true : false;
 	}
 
 	CK2Version getVersion() {
@@ -90,7 +100,7 @@ namespace Misc {
 		byte_pattern::debug_output2(Misc::versionString(version));
 		return version;
 	}
-
+	
 	std::string versionString(CK2Version version) {
 		switch (version) {
 		case v2_7_X:

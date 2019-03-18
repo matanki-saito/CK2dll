@@ -1,4 +1,4 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace MapAdj2
@@ -63,7 +63,7 @@ namespace MapAdj2
 		__asm {
 			cmp byte ptr[eax + esi], ESCAPE_SEQ_1;
 			jz l_10;
-
+			
 			cmp byte ptr[eax + esi], ESCAPE_SEQ_2;
 			jz l_11;
 
@@ -103,7 +103,7 @@ namespace MapAdj2
 		l_2:
 			movzx eax, byte ptr[eax + esi];
 		l_4:
-			mov ebx, [ebp - 0x10]; // •ÏX
+			mov ebx, [ebp - 0x10]; // å¤‰æ›´
 			push l_5_end_v301;
 			ret;
 		}
@@ -127,7 +127,7 @@ namespace MapAdj2
 			else return CK2ERROR1;
 			return NOERROR;
 
-		case v3_0_X: // ‚±‚ÌêŠ‚Å—Ç‚¢‚Ì‚©©M‚ª‚È‚¢
+		case v3_0_X: // ã“ã®å ´æ‰€ã§è‰¯ã„ã®ã‹è‡ªä¿¡ãŒãªã„
 			// mov ebx,[ebp+var_10]
 			byte_pattern::temp_instance().find_pattern("8B 5D F0 0F B6 04 30 8B 84 83 A4 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -148,7 +148,7 @@ namespace MapAdj2
 
 		byte_pattern::debug_output2("map adj 2");
 
-		// ƒ}ƒbƒv•\¦‚Ì’²®@‚»‚Ì‚Q
+		// ãƒãƒƒãƒ—è¡¨ç¤ºã®èª¿æ•´ã€€ãã®ï¼’
 		result |= fix1_hook(options);
 
 		return result;

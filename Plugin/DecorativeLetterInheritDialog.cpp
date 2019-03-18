@@ -1,10 +1,10 @@
-#include "stdinc.h"
+﻿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace DecorativeLetterInheritDialog
 {
 	/*-----------------------------------------------*/
-
+	
 	uintptr_t ff_5;
 	__declspec(naked) void ff_1()
 	{

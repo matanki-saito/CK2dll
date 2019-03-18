@@ -1,4 +1,4 @@
-#include "moddl.h"
+﻿#include "moddl.h"
 
 bool createProcess(WCHAR* szCmd, DWORD flag) {
 	STARTUPINFO si;

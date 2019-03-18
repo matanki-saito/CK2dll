@@ -1,4 +1,4 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace NoDynastyId
@@ -75,7 +75,7 @@ namespace NoDynastyId
 
 		byte_pattern::debug_output2("no dynasty -id");
 
-		/* dynasty‚É-id‚ª‚Â‚¢‚Ä‚µ‚Ü‚¤–â‘è */
+		/* dynastyã«-idãŒã¤ã„ã¦ã—ã¾ã†å•é¡Œ */
 		result |= fix_hook(options);
 
 		return result;

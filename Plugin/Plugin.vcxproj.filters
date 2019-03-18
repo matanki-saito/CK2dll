@@ -60,9 +60,6 @@
     <ClCompile Include="Unk3.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Unk4.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="issue33.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -91,6 +88,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="moddl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TextOverflow.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Unk5.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

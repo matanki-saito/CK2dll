@@ -1,10 +1,10 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace DecorativeLetterEndDialog
 {
 	/*-----------------------------------------------*/
-
+	
 	uintptr_t aa_5;
 	__declspec(naked) void aa_1()
 	{
@@ -175,7 +175,7 @@ namespace DecorativeLetterEndDialog
 	__declspec(naked) void ll_1_v30()
 	{
 		__asm {
-			lea ecx, [ebp - 0x8C]; // •ÏX‚³‚ê‚½
+			lea ecx, [ebp - 0x8C]; // å¤‰æ›´ã•ã‚ŒãŸ
 			mov eax, ecx;
 			cmp dword ptr[eax + 0x14], 0x10;
 			jb ll_4;
@@ -203,7 +203,7 @@ namespace DecorativeLetterEndDialog
 			push 3;
 
 		ll_2:
-			lea eax, [ebp - 0x16C]; // •ÏX‚³‚ê‚½
+			lea eax, [ebp - 0x16C]; // å¤‰æ›´ã•ã‚ŒãŸ
 			push 0;
 
 			push ll_5_v30;

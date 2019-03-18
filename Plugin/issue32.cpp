@@ -1,4 +1,4 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace Issue32 {
@@ -7,7 +7,7 @@ namespace Issue32 {
 
 	uintptr_t issue_32_copyBufFunc_v28;
 	uintptr_t issue_32_copyBufFunc_v30;
-
+	
 	/*-----------------------------------------------*/
 
 	errno_t copyBufFunc_hook(RunOptions *options) {
@@ -107,7 +107,7 @@ namespace Issue32 {
 			return NOERROR;
 		case v3_0_0:
 		case v3_0_X:
-			// ‚±‚Ìˆ—‚Í‘å‚«‚ÈƒuƒƒbƒN‚©‚ç’Pˆê‚ÌŠÖ”‚ÉØ‚èo‚³‚ê‚é‚æ‚¤‚É‚È‚Á‚½
+			// ã“ã®å‡¦ç†ã¯å¤§ããªãƒ–ãƒ­ãƒƒã‚¯ã‹ã‚‰å˜ä¸€ã®é–¢æ•°ã«åˆ‡ã‚Šå‡ºã•ã‚Œã‚‹ã‚ˆã†ã«ãªã£ãŸ
 			// sub esp,0F8h
 			byte_pattern::temp_instance().find_pattern("81 EC F8 00 00 00 53 56 57 8B F9 C7 45 D8 0F");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -221,17 +221,17 @@ namespace Issue32 {
 	errno_t init(RunOptions *options) {
 		errno_t result = NOERROR;
 
-		/* issue-32 u‰Æ XXXv‚ğuXXX‰Æv‚É‚µ‚½‚¢ */
+		/* issue-32 ã€Œå®¶ XXXã€ã‚’ã€ŒXXXå®¶ã€ã«ã—ãŸã„ */
 		byte_pattern::debug_output2("Fix Issue 32");
 
-		// ŠÖ”ƒtƒbƒN
+		// é–¢æ•°ãƒ•ãƒƒã‚¯
 		result |= copyBufFunc_hook(options);
 
-		// ‚P‰ÓŠ–ÚB
+		// ï¼‘ç®‡æ‰€ç›®ã€‚
 		// https://github.com/matanki-saito/CK2dll/issues/32#issuecomment-430287085
 		result |= fix1_hook(options);
 
-		// ‚Q‰ÓŠ–Ú
+		// ï¼’ç®‡æ‰€ç›®
 		// https://github.com/matanki-saito/CK2dll/issues/32#issuecomment-430313354
 		result |= fix2_hook(options);
 

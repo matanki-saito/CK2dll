@@ -1,4 +1,4 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace MainText
@@ -7,7 +7,7 @@ namespace MainText
 
 	errno_t stackSizeChange_hook(RunOptions *options) {
 		std::string desc = "stack size change";
-
+		
 		switch (options->version) {
 		case v2_8_X:
 		case v3_0_0:
@@ -389,7 +389,7 @@ namespace MainText
 			// mov al, byte_XXXXXX[edx]
 			byte_pattern::temp_instance().find_pattern("8A 82 ? ? ? ? 88 45 A7 0F B6");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
-				// mov‚ğlea‚É‚µ‚Ä‚¢‚é
+				// movã‚’leaã«ã—ã¦ã„ã‚‹
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0), 0x8D, true);
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(1), 0x0D, true);
 
@@ -405,7 +405,7 @@ namespace MainText
 			// mov al, byte_XXXXXX[edx]
 			byte_pattern::temp_instance().find_pattern("8A 82 ? ? ? ? 88 45 AB 0F B6");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
-				// mov‚ğlea‚É‚µ‚Ä‚¢‚é
+				// movã‚’leaã«ã—ã¦ã„ã‚‹
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0), 0x8D, true);
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(1), 0x0D, true);
 
@@ -438,17 +438,17 @@ namespace MainText
 			break;
 		}
 
-		// ƒXƒ^ƒbƒNƒTƒCƒY•ÏX
+		// ã‚¹ã‚¿ãƒƒã‚¯ã‚µã‚¤ã‚ºå¤‰æ›´
 		result |= stackSizeChange_hook(options);
-		// ƒoƒbƒtƒ@ƒAƒhƒŒƒXæ“¾
+		// ãƒãƒƒãƒ•ã‚¡ã‚¢ãƒ‰ãƒ¬ã‚¹å–å¾—
 		result |= prepareBuffCopy_hook(options);
-		// ƒoƒbƒtƒ@‚©‚çƒoƒbƒtƒ@‚ÉƒeƒLƒXƒg‚ğ‚P•¶š‚Ã‚ÂƒRƒs[
+		// ãƒãƒƒãƒ•ã‚¡ã‹ã‚‰ãƒãƒƒãƒ•ã‚¡ã«ãƒ†ã‚­ã‚¹ãƒˆã‚’ï¼‘æ–‡å­—ã¥ã¤ã‚³ãƒ”ãƒ¼
 		result |= func1_hook(options);
-		// ƒtƒHƒ“ƒgƒf[ƒ^‚©‚çƒOƒŠƒt‚ğæ‚èo‚µ‚Ä•ƒ`ƒFƒbƒNˆ—H‚É“n‚·
+		// ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ã‚°ãƒªãƒ•ã‚’å–ã‚Šå‡ºã—ã¦å¹…ãƒã‚§ãƒƒã‚¯å‡¦ç†ï¼Ÿã«æ¸¡ã™
 		result |= func2_hook(options);
-		// ‹­§‰üs‚·‚é‚©‚µ‚È‚¢‚©‚Ì”»’f
+		// å¼·åˆ¶æ”¹è¡Œã™ã‚‹ã‹ã—ãªã„ã‹ã®åˆ¤æ–­
 		result |= func3_hook(options);
-		// ƒtƒHƒ“ƒgƒf[ƒ^‚©‚çƒOƒŠƒt‚ğæ‚èo‚µ‚Ä•\¦ˆ—‚É“n‚·
+		// ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ã‚°ãƒªãƒ•ã‚’å–ã‚Šå‡ºã—ã¦è¡¨ç¤ºå‡¦ç†ã«æ¸¡ã™
 		result |= view_hook(options);
 
 		return result;

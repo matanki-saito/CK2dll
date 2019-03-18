@@ -1,10 +1,10 @@
-#include "stdinc.h"
+ï»¿#include "stdinc.h"
 #include "byte_pattern.h"
 
 namespace Font
 {
 	/*-----------------------------------------------*/
-
+	
 	errno_t heapAllocInitFlag_hook(RunOptions *options) {
 		std::string desc = "heap alloc init flag";
 
@@ -15,7 +15,7 @@ namespace Font
 			byte_pattern::temp_instance().find_pattern("8B EC 56 8B 75 08 83 FE E0 77 30");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// mov ebp, esp
-			    // 0x8‚ÍHEAP_ZERO_MEMORY
+			    // 0x8ã¯HEAP_ZERO_MEMORY
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0x28), 0x08, true);
 			}
 			else return CK2ERROR1;
@@ -92,7 +92,7 @@ namespace Font
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
-			/* File—e—Ê‚Ì§ŒÀ‰ğœ */
+			/* Fileå®¹é‡ã®åˆ¶é™è§£é™¤ */
 			byte_pattern::temp_instance().find_pattern("81 FE 00 00 00 02");
 			if (byte_pattern::temp_instance().has_size(2,desc)) {
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get(0).address(0x5), 0x04, true);
@@ -117,13 +117,13 @@ namespace Font
 
 		byte_pattern::debug_output2("map font view");
 
-		// ƒtƒHƒ“ƒg‚Ìƒoƒbƒtƒ@Šg’£i–{‘Ìj
+		// ãƒ•ã‚©ãƒ³ãƒˆã®ãƒãƒƒãƒ•ã‚¡æ‹¡å¼µï¼ˆæœ¬ä½“ï¼‰
 		result |= buffSizeMain_hook(options);
-		// ƒtƒHƒ“ƒg‚Ìƒoƒbƒtƒ@Šg’£iƒ‰ƒ“ƒ`ƒƒ[j
+		// ãƒ•ã‚©ãƒ³ãƒˆã®ãƒãƒƒãƒ•ã‚¡æ‹¡å¼µï¼ˆãƒ©ãƒ³ãƒãƒ£ãƒ¼ï¼‰
 		result |= buffSizeLauncher_hook(options);
-		// ƒq[ƒvƒNƒŠƒAƒtƒ‰ƒO
+		// ãƒ’ãƒ¼ãƒ—ã‚¯ãƒªã‚¢ãƒ•ãƒ©ã‚°
 		result |= heapAllocInitFlag_hook(options);
-		// Å‘åƒtƒ@ƒCƒ‹ƒTƒCƒY‚ğ•ÏX
+		// æœ€å¤§ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã‚’å¤‰æ›´
 		result |= maxFontSizeChange_hook(options);
 
 		return result;
