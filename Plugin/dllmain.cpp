@@ -116,7 +116,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 					L"将来、日本語化に対応した際には自動的に起動できるようになります。\n"
 					L"\n"
 					L"以前のバージョンに戻す方法は下記サイトをご覧ください。\n"
-					L"https://paradoxian-japan-mod.com/version";
+					L"https://paradoxian-japan-mod.com/ck2/version";
 				break;
 
 			case MAKELANGID(LANG_CHINESE_SIMPLIFIED, SUBLANG_CHINESE_SIMPLIFIED):
