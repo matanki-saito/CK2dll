@@ -65,7 +65,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= MainTextLineBreak::init(&options);
 
 		// ニックネーム修正
-		//success |= NickNameFix::init(&options);
+		// success |= NickNameFix::init(&options);
 
 		// Dynastyに-idがつかないようにする
 		success |= NoDynastyId::init(&options);
@@ -74,7 +74,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= IME::init(&options);
 
 		//Input
-		//success |= Input::init(&options);
+		success |= Input::init(&options);
 
 		// 不明（忘れた…）
 		success |= Unk3::init(&options);
