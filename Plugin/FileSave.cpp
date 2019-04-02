@@ -11,6 +11,7 @@ namespace FileSave {
 		switch (options->version) {
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			// xor edx,edx (33 D2)
 			byte_pattern::temp_instance().find_pattern("33 D2 85 FF 0F 8E EE 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -37,6 +38,7 @@ namespace FileSave {
 		switch (options->version) {
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			// push ebx
 			byte_pattern::temp_instance().find_pattern("53 8B 59 10 56 33 F6 85 DB");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -64,6 +66,7 @@ namespace FileSave {
 		switch (options->version) {
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			// 0: latin1
 			// 1: ucs2
 			// 2: ucs4
@@ -82,6 +85,7 @@ namespace FileSave {
 	/*-----------------------------------------------*/
 
 	uintptr_t filenameEncode_v300_end;
+	uintptr_t filenameEncode_v310_end;
 	wchar_t fnamew[200] = {};
 	char fnameutf8[200] = {};
 	uintptr_t buff;
@@ -173,6 +177,90 @@ namespace FileSave {
 		}
 	}
 
+	__declspec(naked) void filenameEncode_v310_start() {
+		__asm {
+			push eax;
+
+			call rstTmpMem;
+
+			lea ecx, dword ptr[ebp - 0x88];
+			cmp dword ptr[ecx + 0x14], 0x10;
+			jb A;
+			mov ecx, [ecx];
+		A:
+			mov buff, ecx;
+
+			push edx;
+			push ebx;
+			push esi;
+			xor esi, esi;
+
+		issue_7_1_loop_start:
+			cmp byte ptr[ecx], ESCAPE_SEQ_1;
+			jz issue_7_1_10;
+			cmp byte ptr[ecx], ESCAPE_SEQ_2;
+			jz issue_7_1_11;
+			cmp byte ptr[ecx], ESCAPE_SEQ_3;
+			jz issue_7_1_12;
+			cmp byte ptr[ecx], ESCAPE_SEQ_4;
+			jz issue_7_1_13;
+			cmp byte ptr[ecx], NULL;
+			jz issue_7_1_loop_end;
+
+			movzx eax, byte ptr[ecx];
+			jmp issue_7_1_yy;
+
+		issue_7_1_10:
+			movzx eax, word ptr[ecx + 1];
+			jmp issue_7_1_xx;
+
+		issue_7_1_11:
+			movzx eax, word ptr[ecx + 1];
+			sub eax, SHIFT_2;
+			jmp issue_7_1_xx;
+
+		issue_7_1_12:
+			movzx eax, word ptr[ecx + 1];
+			add eax, SHIFT_3;
+			jmp issue_7_1_xx;
+
+		issue_7_1_13:
+			movzx eax, word ptr[ecx + 1];
+			add eax, SHIFT_4;
+
+		issue_7_1_xx:
+			add ecx, 2;
+
+		issue_7_1_yy:
+			mov word ptr[fnamew + esi], ax;
+			inc ecx;
+			add esi, 2;
+			jmp issue_7_1_loop_start;
+
+		issue_7_1_loop_end:
+			push 0; // ?
+			push 200; // dst-buf-len 
+			push buff; // dst
+			lea eax, fnamew; // src
+			push eax;
+			call PHYSFS_utf8FromUcs2;
+			add esp, 0x10;
+
+			lea ecx, dword ptr[ebp - 0x74];
+			//mov dword ptr[ecx + 0x10], esi;
+			//mov dword ptr[ecx + 0x14], 0x10;
+
+			pop esi;
+			pop ebx;
+			pop edx;
+
+			mov dword ptr[ebp - 0x30], 0;
+
+			push filenameEncode_v310_end;
+			ret;
+		}
+	}
+
 	/*-----------------------------------------------*/
 
 	errno_t filenameEncode_hook(RunOptions *options) {
@@ -186,7 +274,18 @@ namespace FileSave {
 			byte_pattern::temp_instance().find_pattern("50 8D 8D 78 FF FF FF C7 45 D0 00 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), filenameEncode_v300_start);
+				// mov [ebp+var_30],0 
 				filenameEncode_v300_end = byte_pattern::temp_instance().get_first().address(0x7);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+		case v3_1_0:
+			// push eax
+			byte_pattern::temp_instance().find_pattern("50 8D 4D 8C C7 45 D0 00 00 00 00");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), filenameEncode_v310_start);
+				// mov byte ptr [ebp+var_40],0
+				filenameEncode_v310_end = byte_pattern::temp_instance().get_first().address(0xB);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -468,6 +567,29 @@ namespace FileSave {
 		}
 	}
 
+	uintptr_t issue_15_loadgame_end_v310;
+	__declspec(naked) void issue_15_loadgame_start_v310() {
+		__asm {
+			push edx;
+
+			mov eax, esi;
+			push eax;
+			call utf8ToEscapedStr;
+			add esp, 4;
+
+			pop edx;
+
+			push dword ptr [ebp + 0xC];
+			push eax;
+
+			mov ecx, [edi + 0x90];
+
+			push issue_15_loadgame_end_v310;
+			ret;
+
+		}
+	}
+
 	/*-----------------------------------------------*/
 
 	errno_t loadgame_showTitle_hook(RunOptions *options) {
@@ -480,10 +602,22 @@ namespace FileSave {
 			// push 1
 			byte_pattern::temp_instance().find_pattern("6A 01 40 50 FF 75 D4 EB 3A");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
-				// cmovnb lea eax, [ebp+var_2C]
+				// lea eax, [ebp+var_2C]
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(-0x2E), issue_15_loadgame_start_v300);
 				// call xxxxx
 				issue_15_loadgame_end_v300 = byte_pattern::temp_instance().get_first().address(-0x2E + 6);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+		case v3_1_0:
+			// 関数化された？ 変更した
+			// push [ebp+arg_4] 
+			byte_pattern::temp_instance().find_pattern("FF 75 0C 8B 8F 90 00 00 00 56");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				// lea eax, [ebp+var_2C]
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), issue_15_loadgame_start_v310);
+				// call xxxxx
+				issue_15_loadgame_end_v310 = byte_pattern::temp_instance().get_first().address(0xA);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -502,6 +636,7 @@ namespace FileSave {
 		switch (options->version) {
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			byte_pattern::temp_instance().find_pattern("74 0E 78 0A 8A 41 01 41");
 			if (byte_pattern::temp_instance().has_size(2, desc)) {
 				// jz short loc_XXXXX -> jmp XXXXX
