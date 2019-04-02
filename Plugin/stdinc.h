@@ -59,7 +59,8 @@ enum CK2Version {
 	v2_7_X = 270,
 	v2_8_X = 280,
 	v3_0_0 = 300,
-	v3_0_X = 301
+	v3_0_X = 301,
+	v3_1_0 = 310
 };
 
 enum NickNameOrder {

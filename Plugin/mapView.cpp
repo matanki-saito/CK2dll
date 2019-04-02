@@ -212,6 +212,7 @@ namespace MapView
 			return NOERROR;
 
 		case v3_0_X:
+		case v3_1_0:
 			// mov al,[eax+ebx]
 			byte_pattern::temp_instance().find_pattern("8A 04 18 8D 8D 00 FF FF FF");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -367,6 +368,7 @@ namespace MapView
 			return NOERROR;
 
 		case v3_0_X:
+		case v3_1_0:
 			// movzx eax, byte ptr [eax+ebx]
 			byte_pattern::temp_instance().find_pattern("0F B6 04 18 8B 55 E8 8B 84 82 A4 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -586,6 +588,7 @@ namespace MapView
 			return NOERROR;
 
 		case v3_0_X:
+		case v3_1_0:
 			// movzx eax, byte ptr [eax+ecx]
 			byte_pattern::temp_instance().find_pattern("0F B6 04 08 8B B4 86 A4 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {

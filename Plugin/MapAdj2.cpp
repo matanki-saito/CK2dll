@@ -128,6 +128,7 @@ namespace MapAdj2
 			return NOERROR;
 
 		case v3_0_X: // この場所で良いのか自信がない
+		case v3_1_0:
 			// mov ebx,[ebp+var_10]
 			byte_pattern::temp_instance().find_pattern("8B 5D F0 0F B6 04 30 8B 84 83 A4 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
