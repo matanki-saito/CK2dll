@@ -59,7 +59,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= ButtonAndTooltip::init(&options);
 
 		// メインテキスト
-		//success |= MainText::init(&options);
+		success |= MainText::init(&options);
 
 		// メインテキスト改行処理（ダイアログ）
 		//success |= MainTextLineBreak::init(&options);

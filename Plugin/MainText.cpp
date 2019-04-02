@@ -12,8 +12,9 @@ namespace MainText
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			// sub esp,428h
-			byte_pattern::temp_instance().find_pattern("81 EC 28 04 00 00 56 57 8B F9");
+			byte_pattern::temp_instance().find_pattern("81 EC 28 04 00 00 56 57 8B F9 8B");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(2), 0x30, true);
 			}
@@ -36,6 +37,7 @@ namespace MainText
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			// mov al, byte_XXXXXX[esi]
 			byte_pattern::temp_instance().find_pattern("8A 86 ? ? ? ? 88 81 ? ? ? ? 41");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -168,6 +170,7 @@ namespace MainText
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			// inc ecx
 			byte_pattern::temp_instance().find_pattern("41 89 4D CC 84 E4 0F");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -189,6 +192,7 @@ namespace MainText
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			// mov eax,[edi+eax*4+OFFSET]
 			byte_pattern::temp_instance().find_pattern("8B 84 87 ? 00 00 00 89");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -232,6 +236,7 @@ namespace MainText
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			// cmp dword ptr [ebp-2Ch],0
 			byte_pattern::temp_instance().find_pattern("83 7D D4 00 0F 85 ? ? ? ? 8B 43");
 			if (byte_pattern::temp_instance().has_size(1, desc + "start")) {
@@ -241,7 +246,7 @@ namespace MainText
 			else return CK2ERROR1;
 
 			// cmp byte_XXXXX, 0
-			byte_pattern::temp_instance().find_pattern("80 3D ? ? ? ? 00 0F 84 47");
+			byte_pattern::temp_instance().find_pattern("80 3D ? ? ? ? 00 0F 84 ? ? ? ? 8B 43 28 03 C0");
 			if (byte_pattern::temp_instance().has_size(1, desc + " end2")) {
 				c_2_end2_v28 = byte_pattern::temp_instance().get_first().address();
 			}
@@ -402,8 +407,9 @@ namespace MainText
 			return NOERROR;
 
 		case v3_0_X:
+		case v3_1_0:
 			// mov al, byte_XXXXXX[edx]
-			byte_pattern::temp_instance().find_pattern("8A 82 ? ? ? ? 88 45 AB 0F B6");
+			byte_pattern::temp_instance().find_pattern("8A 82 ? ? ? ? 88 45 AB 0F B6 C0");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// movをleaにしている
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0), 0x8D, true);
@@ -434,6 +440,7 @@ namespace MainText
 			fontOffset = 0x8C;
 			break;
 		case v3_0_X:
+		case v3_1_0:
 			fontOffset = 0xA4;
 			break;
 		}
