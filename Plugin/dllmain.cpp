@@ -62,7 +62,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= MainText::init(&options);
 
 		// メインテキスト改行処理（ダイアログ）
-		//success |= MainTextLineBreak::init(&options);
+		success |= MainTextLineBreak::init(&options);
 
 		// ニックネーム修正
 		//success |= NickNameFix::init(&options);
