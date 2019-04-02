@@ -24,6 +24,7 @@ namespace Issue32 {
 
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			// sub esp,38h
 			byte_pattern::temp_instance().find_pattern("83 EC 38 53 56 57 8B F9 C7 45 E8");
 			if (byte_pattern::temp_instance().has_size(2, desc)) {
@@ -84,6 +85,28 @@ namespace Issue32 {
 		}
 	}
 
+	uintptr_t issue_32_fix1_v310_end;
+	__declspec(naked) void issue_32_fix1_v310_start() {
+		__asm {
+			mov esi, eax;
+
+			mov edx, HOUSE;
+			//mov byte ptr[ebp - 0x4], 4;
+			lea ecx, [ebp - 0x8C];
+			call issue_32_copyBufFunc_v30;
+			push eax;
+
+			lea ecx, [ebp - 0xC4];
+			mov byte ptr[ebp - 0x4], 0x5;
+			push ecx;
+
+			mov eax, esi;
+
+			push issue_32_fix1_v310_end;
+			ret;
+		}
+	}
+
 	/*-----------------------------------------------*/
 
 	errno_t fix1_hook(RunOptions *options) {
@@ -120,6 +143,22 @@ namespace Issue32 {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0xA7), issue_32_fix1_v30_start);
 				// mov ecx, eax
 				issue_32_fix1_v30_end = byte_pattern::temp_instance().get_first().address(0xA7+0xC);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+		case v3_1_0:
+			// sub esp,148h
+			byte_pattern::temp_instance().find_pattern("81 EC 48 01 00 00 53 56 57 8B F9 C7 45 E8 0F 00");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				// mov esi,eax -> callの後ろまでjmpさせる
+				// mod edx, offset aHouse ;
+				injector::WriteMemory(byte_pattern::temp_instance().get_first().address(0x66), 0xEB, true);
+				injector::WriteMemory(byte_pattern::temp_instance().get_first().address(0x67), 0x14, true);
+
+				// push esi
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0xAA), issue_32_fix1_v310_start);
+				// mov ecx, eax
+				issue_32_fix1_v310_end = byte_pattern::temp_instance().get_first().address(0xAA + 0xC);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -196,6 +235,7 @@ namespace Issue32 {
 
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			// push esi
 			byte_pattern::temp_instance().find_pattern("56 8D 4D A8 C6 45 FC 08 51");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {

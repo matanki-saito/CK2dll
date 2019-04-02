@@ -91,7 +91,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 
 		// issue32 家 名前になっているので、日本語のときのみ名前 家にしたい
 		// https://github.com/matanki-saito/CK2dll/issues/32
-		//success |= Issue32::init(&options);
+		success |= Issue32::init(&options);
 
 		// 日付表記の変更
 		success |= DateFormat::init(&options);
