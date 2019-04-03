@@ -65,7 +65,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= MainTextLineBreak::init(&options);
 
 		// ニックネーム修正
-		success |= NickNameFix::init(&options);
+		// success |= NickNameFix::init(&options);
 
 		// Dynastyに-idがつかないようにする
 		success |= NoDynastyId::init(&options);
@@ -126,7 +126,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 					L"当我发布新的时，它会自动更新。\n"
 					L"\n"
 					L"DLL宣布页面:\n"
-					L"https://github.com/matanki-saito/EU4dll";
+					L"https://github.com/matanki-saito/CK2dll";
 				break;
 
 
@@ -137,7 +137,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 					L"當我發布新的時，它會自動更新。\n"
 					L"\n"
 					L"DLL宣布頁面:\n"
-					L"https://github.com/matanki-saito/EU4dll";
+					L"https://github.com/matanki-saito/CK2dll";
 				break;
 
 			case MAKELANGID(LANG_KOREAN, SUBLANG_KOREAN):
@@ -147,7 +147,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 					L"새 게시물을 게시하면 자동으로 업데이트됩니다.\n"
 					L"\n"
 					L"DLL 공지 페이지:\n"
-					L"https://github.com/matanki-saito/EU4dll";
+					L"https://github.com/matanki-saito/CK2dll";
 				break;
 
 			case MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US):
@@ -158,7 +158,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 					L"It will be updated automatically, when I publish new one.\n"
 					L"\n"
 					L"DLL announce page:\n"
-					L"https://github.com/matanki-saito/EU4dll";
+					L"https://github.com/matanki-saito/CK2dll";
 			}
 
 			MessageBoxW(NULL, message, caption, MB_OK);

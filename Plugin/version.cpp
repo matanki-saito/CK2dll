@@ -96,6 +96,13 @@ namespace Misc {
 			goto A;
 		}
 
+		// _ _ 3.1.0
+		byte_pattern::temp_instance().find_pattern("00 00 33 2E 31");
+		if (byte_pattern::temp_instance().count() > 1) {
+			version = v3_1_0;
+			goto A;
+		}
+
 	A:
 		byte_pattern::debug_output2(Misc::versionString(version));
 		return version;
@@ -111,6 +118,8 @@ namespace Misc {
 			return "v3_0_0";
 		case v3_0_X:
 			return "v3_0_X";
+		case v3_1_0:
+			return "v3_1_0";
 		default:
 			return "UNKNOWN";
 		}

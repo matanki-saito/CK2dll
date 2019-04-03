@@ -32,6 +32,7 @@ namespace MainTextLineBreak {
 			else return CK2ERROR1;
 			return NOERROR;
 		case v3_0_X:
+		case v3_1_0:
 			// push esi
 			byte_pattern::temp_instance().find_pattern("56 8B F1 8B 46 14 83 F8 10 72 0E");
 			if (byte_pattern::temp_instance().has_size(5, desc)) {
@@ -230,6 +231,7 @@ namespace MainTextLineBreak {
 			return NOERROR;
 
 		case v3_0_X:
+		case v3_1_0:
 			// cmp cl,20h
 			byte_pattern::temp_instance().find_pattern("80 F9 20 0F 44 C6 89 45");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -351,6 +353,7 @@ namespace MainTextLineBreak {
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			//スタック修正
 			// sub esp,7Ch
 			byte_pattern::temp_instance().find_pattern("83 EC 7C 53 8B 5D 0C 56 57 8B F1");
@@ -368,7 +371,9 @@ namespace MainTextLineBreak {
 			}
 			else return CK2ERROR1;
 
-			if (options->version == v3_0_X) {
+			switch (options->version) {
+			case v3_0_X:
+			case v3_1_0:
 				// mov eax,[ebp+arg_10]
 				byte_pattern::temp_instance().find_pattern("8B 45 18 03 45 DC 8A 55 20");
 				if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -377,8 +382,9 @@ namespace MainTextLineBreak {
 					w_2_end_v28 = byte_pattern::temp_instance().get_first().address(6);
 				}
 				else return CK2ERROR1;
+				break;
 
-			}else{
+			default:
 				// mov eax,[ebp+arg_10] 
 				byte_pattern::temp_instance().find_pattern("8B 45 18 03 45 DC 89 55");
 				if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -387,6 +393,7 @@ namespace MainTextLineBreak {
 					w_2_end_v28 = byte_pattern::temp_instance().get_first().address(6);
 				}
 				else return CK2ERROR1;
+				break;
 			}
 
 			// 結合するブロックの飛び先
@@ -544,6 +551,7 @@ namespace MainTextLineBreak {
 			return NOERROR;
 
 		case v3_0_X:
+		case v3_1_0:
 			// cmp ebx,[ebp+var_1C]
 			byte_pattern::temp_instance().find_pattern("8B 5D E4 3B 5D E8 0F 8E A6 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -553,7 +561,7 @@ namespace MainTextLineBreak {
 
 			//左側のブロックの開始位置
 			// push offset asc_XXXXXX
-			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D ? ? ? ? 24 07 00");
+			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D 4D C0 E8 ? ? ? ? 53");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				ee_2_v301 = byte_pattern::temp_instance().get_first().address();
 			}
@@ -561,8 +569,8 @@ namespace MainTextLineBreak {
 
 			//右側のブロックの開始位置
 			// push offset asc_XXXXXX
-			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D ? ? ? ? 23 07 00");
-			if (byte_pattern::temp_instance().has_size(1, desc)) {
+			byte_pattern::temp_instance().find_pattern("68 ? ? ? ? 8D 4D C0 E8 ? ? ? ? 56");
+			if (byte_pattern::temp_instance().has_size(2, desc)) {
 				ee_3_v301 = byte_pattern::temp_instance().get_first().address();
 			}
 			else return CK2ERROR1;
@@ -667,6 +675,7 @@ namespace MainTextLineBreak {
 			return NOERROR;
 
 		case v3_0_X:
+		case v3_1_0:
 			// mov eax, [ebp+arg_10]
 			byte_pattern::temp_instance().find_pattern("8B 45 18 8B CE 8A 55 20 89 4D E4");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -748,6 +757,7 @@ namespace MainTextLineBreak {
 			return NOERROR;
 
 		case v3_0_X:
+		case v3_1_0:
 			// ブロックの終端先を変更する
 			// mov [ebp+arg_14],0
 			byte_pattern::temp_instance().find_pattern("C7 45 EC 00 00 00 00 EB 06 8B 5D 0C");

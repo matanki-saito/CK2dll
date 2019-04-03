@@ -80,6 +80,7 @@ namespace Unk3 {
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			byte_pattern::temp_instance().find_pattern("8A 04 16 8B 4D F0 88");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
 				// mov al, [esi+edx]
