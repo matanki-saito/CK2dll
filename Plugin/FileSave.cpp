@@ -183,7 +183,7 @@ namespace FileSave {
 
 			call rstTmpMem;
 
-			lea ecx, dword ptr[ebp - 0x88];
+			lea ecx, dword ptr[ebp - 0x74];
 			cmp dword ptr[ecx + 0x14], 0x10;
 			jb A;
 			mov ecx, [ecx];
@@ -672,7 +672,7 @@ namespace FileSave {
 		result |= PHYSFS_utf8FromUcs2_hook(options); // OK
 
 		/* タイトルを表示できるようにする */
-		result |= loadgame_showTitle_hook(options);
+		//result |= loadgame_showTitle_hook(options);
 
 		/* UTF-8ファイルを列挙できるようにする jz(74) -> jmp(EB) */
 		result |= fileEnumSkip_hook(options); // OK
