@@ -567,26 +567,46 @@ namespace FileSave {
 		}
 	}
 
-	uintptr_t issue_15_loadgame_end_v310;
-	__declspec(naked) void issue_15_loadgame_start_v310() {
+	uintptr_t issue_15_loadgame_end_v310_1;
+	__declspec(naked) void issue_15_loadgame_start_v310_1() {
 		__asm {
-			push edx;
+			mov byte ptr[ebp - 0x4], 5;
+			lea eax, [ebp - 0x44];
 
-			mov eax, esi;
+			// ここから処理
 			push eax;
 			call utf8ToEscapedStr;
 			add esp, 4;
 
-			pop edx;
-
-			push dword ptr [ebp + 0xC];
+			push 0;
 			push eax;
 
-			mov ecx, [edi + 0x90];
+			mov ecx, [edi + 0x20];
+			lea edx, [ebp - 0x2C];
 
-			push issue_15_loadgame_end_v310;
+			push issue_15_loadgame_end_v310_1;
 			ret;
+		}
+	}
 
+	uintptr_t issue_15_loadgame_end_v310_2;
+	__declspec(naked) void issue_15_loadgame_start_v310_2() {
+		__asm {
+			mov byte ptr[ebp - 0x4], 6;
+			
+			// ここから処理
+			push esi;
+			call utf8ToEscapedStr;
+			add esp, 4;
+
+			push 0;
+			push esi;
+
+			lea edx, [ebp - 0x44];
+			mov ecx, [edi + 0x20];
+
+			push issue_15_loadgame_end_v310_2;
+			ret;
 		}
 	}
 
@@ -610,14 +630,23 @@ namespace FileSave {
 			else return CK2ERROR1;
 			return NOERROR;
 		case v3_1_0:
-			// 関数化された？ 変更した
-			// push [ebp+arg_4] 
-			byte_pattern::temp_instance().find_pattern("FF 75 0C 8B 8F 90 00 00 00 56");
+			// byte ptr [ebp+var_4],5
+			byte_pattern::temp_instance().find_pattern("C6 45 FC 05 8D 45 BC 8B 4F 20 8D 55 D4");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
-				// lea eax, [ebp+var_2C]
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), issue_15_loadgame_start_v310);
-				// call xxxxx
-				issue_15_loadgame_end_v310 = byte_pattern::temp_instance().get_first().address(0xA);
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), issue_15_loadgame_start_v310_1);
+				// push    edx
+				issue_15_loadgame_end_v310_1 = byte_pattern::temp_instance().get_first().address(0x10);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+
+			// これは上と同じだと思うので修正した
+			// byte ptr [ebp+var_4],6
+			byte_pattern::temp_instance().find_pattern("C6 45 FC 05 8D 45 BC 8B 4F 20 8D 55 D4");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), issue_15_loadgame_start_v310_2);
+				// push    edx
+				issue_15_loadgame_end_v310_2 = byte_pattern::temp_instance().get_first().address(0xD);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -672,7 +701,7 @@ namespace FileSave {
 		result |= PHYSFS_utf8FromUcs2_hook(options); // OK
 
 		/* タイトルを表示できるようにする */
-		//result |= loadgame_showTitle_hook(options);
+		result |= loadgame_showTitle_hook(options);
 
 		/* UTF-8ファイルを列挙できるようにする jz(74) -> jmp(EB) */
 		result |= fileEnumSkip_hook(options); // OK
