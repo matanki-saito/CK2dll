@@ -18,6 +18,7 @@ namespace DateFormat {
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			// issue33と同じもの
 			// sub esp,20h
 			byte_pattern::temp_instance().find_pattern("83 EC 20 56 FF 75 0C 8D 45 D8");
@@ -104,6 +105,7 @@ namespace DateFormat {
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			byte_pattern::temp_instance().find_pattern("8D 4D D4 C6 45 FC 08 51 8D 8D 58");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// lea ecx,[ebp+var_2C]
@@ -126,6 +128,7 @@ namespace DateFormat {
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			byte_pattern::temp_instance().find_pattern("64 20 77 20 6D 77 20 2C");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(0), 0x79, true);

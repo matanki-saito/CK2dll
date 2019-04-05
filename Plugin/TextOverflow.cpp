@@ -128,6 +128,7 @@ namespace TextOerflow
 			else return CK2ERROR1;
 			return NOERROR;
 		case v3_0_X:
+		case v3_1_0:
 			byte_pattern::temp_instance().find_pattern("0F B6 04 30 8B 4C 24");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// movzx eax,byte ptr [eax+esi]
@@ -193,6 +194,7 @@ namespace TextOerflow
 
 		switch (options->version) {
 		case v3_0_X:
+		case v3_1_0:
 			byte_pattern::temp_instance().find_pattern("8B 4F 10 46 89 4C 24 20");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// mov     ecx, [edi+10h]

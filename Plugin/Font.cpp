@@ -12,6 +12,7 @@ namespace Font
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			byte_pattern::temp_instance().find_pattern("8B EC 56 8B 75 08 83 FE E0 77 30");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// mov ebp, esp
@@ -42,6 +43,7 @@ namespace Font
 
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			byte_pattern::temp_instance().find_pattern("68 A8 26 00 00");
 			if (byte_pattern::temp_instance().has_size(3, desc)) {
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get(0).address(3), 0x04, true);
@@ -71,6 +73,7 @@ namespace Font
 			return NOERROR;
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			byte_pattern::temp_instance().find_pattern("68 9C 26 00 00");
 			if (byte_pattern::temp_instance().has_size(3, desc)) {
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get(0).address(3), 0x04, true);
@@ -92,6 +95,7 @@ namespace Font
 		case v2_8_X:
 		case v3_0_0:
 		case v3_0_X:
+		case v3_1_0:
 			/* File容量の制限解除 */
 			byte_pattern::temp_instance().find_pattern("81 FE 00 00 00 02");
 			if (byte_pattern::temp_instance().has_size(2,desc)) {
