@@ -412,13 +412,13 @@ namespace FileSave {
 
 			switch (escapeChr) {
 			case 0x11:
-				low += 14;
+				low += 15;
 				break;
 			case 0x12:
 				high -= 9;
 				break;
 			case 0x13:
-				low += 14;
+				low += 15;
 				high -= 9;
 				break;
 			case 0x10:
