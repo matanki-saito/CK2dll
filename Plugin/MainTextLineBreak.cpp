@@ -324,6 +324,80 @@ namespace MainTextLineBreak {
 		}
 	}
 
+	uintptr_t k_2_v310;
+	__declspec(naked) void k_1_v310()
+	{
+		__asm {
+			cmp byte ptr[eax + esi], ESCAPE_SEQ_1;
+			jz k_10;
+
+			cmp byte ptr[eax + esi], ESCAPE_SEQ_2;
+			jz k_11;
+
+			cmp byte ptr[eax + esi], ESCAPE_SEQ_3;
+			jz k_12;
+
+			cmp byte ptr[eax + esi], ESCAPE_SEQ_4;
+			jz k_13;
+
+			mov al, [eax + esi];
+			movzx eax, al;
+			jmp k_6;
+
+		k_10:
+			movzx eax, word ptr[eax + esi + 1];
+			jmp k_1x;
+
+		k_11:
+			movzx eax, word ptr[eax + esi + 1];
+			sub eax, SHIFT_2;
+			jmp k_1x;
+
+		k_12:
+			movzx eax, word ptr[eax + esi + 1];
+			add eax, SHIFT_3;
+			jmp k_1x;
+
+		k_13:
+			movzx eax, word ptr[eax + esi + 1];
+			add eax, SHIFT_4;
+
+		k_1x:
+			//add esi, 2; issue-95の修正で要らなくなった
+			movzx eax, ax;
+			cmp eax, NO_FONT;
+			ja k_6;
+			mov eax, NOT_DEF;
+
+		k_6:
+			mov ecx, [ebp - 0x20];
+
+			cmp ax, 0x20;
+			jz k_2_2;
+
+			cmp ax, 0x100;
+			ja k_2_2;
+
+			cmp word ptr[ebp - 0x8C + 2], 0x100;
+			jb k_2_5;
+
+		k_2_6:
+			mov word ptr[ebp - 0x8C + 2], 9;
+			jmp k_2_3;
+
+		k_2_5:
+			cmp word ptr[ebp - 0x8C + 2], 9;
+			jz k_2_6;
+
+		k_2_2:
+			mov word ptr[ebp - 0x8C + 2], ax;
+
+		k_2_3:
+			push k_2_v310;
+			ret;
+		}
+	}
+
 	uintptr_t w_2_end_v28;
 	__declspec(naked) void w_1_start_v28()
 	{
@@ -363,17 +437,31 @@ namespace MainTextLineBreak {
 			else return CK2ERROR1;
 
 			// mov al,[eax+esi]
-			byte_pattern::temp_instance().find_pattern("8A 04 30 8B 4D");
-			if (byte_pattern::temp_instance().has_size(1, desc)) {
-				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), k_1);
-				// mov ecx, [ecx+eax*4+OFFSET]
-				k_2 = byte_pattern::temp_instance().get_first().address(9);
+			switch (options->version) {
+			case v3_1_0:
+				byte_pattern::temp_instance().find_pattern("8A 04 30 8B 4D");
+				if (byte_pattern::temp_instance().has_size(1, desc)) {
+					injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), k_1_v310);
+					// mov ecx, [ecx+eax*4+OFFSET]
+					k_2_v310 = byte_pattern::temp_instance().get_first().address(9);
+				}
+				else return CK2ERROR1;
+				break;
+			default:
+				byte_pattern::temp_instance().find_pattern("8A 04 30 8B 4D");
+				if (byte_pattern::temp_instance().has_size(1, desc)) {
+					injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), k_1);
+					// mov ecx, [ecx+eax*4+OFFSET]
+					k_2 = byte_pattern::temp_instance().get_first().address(9);
+				}
+				else return CK2ERROR1;
+				break;
 			}
-			else return CK2ERROR1;
 
 			switch (options->version) {
-			case v3_0_X:
 			case v3_1_0:
+				break; // issue-95でこの処理はいらなくなった
+			case v3_0_X:
 				// mov eax,[ebp+arg_10]
 				byte_pattern::temp_instance().find_pattern("8B 45 18 03 45 DC 8A 55 20");
 				if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -730,6 +818,15 @@ namespace MainTextLineBreak {
 		}
 	}
 
+	__declspec(naked) void x_5_v310()
+	{
+		__asm {
+			mov[ebp - 0x10], 0; // issue-95の修正でesiの変更が要らなくなった
+			push loc_194690F;
+			ret;
+		}
+	}
+
 	/*-----------------------------------------------*/
 
 	errno_t fix3_hook(RunOptions *options) {
@@ -757,12 +854,70 @@ namespace MainTextLineBreak {
 			return NOERROR;
 
 		case v3_0_X:
-		case v3_1_0:
 			// ブロックの終端先を変更する
 			// mov [ebp+arg_14],0
 			byte_pattern::temp_instance().find_pattern("C7 45 EC 00 00 00 00 EB 06 8B 5D 0C");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), x_5_v301);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+
+		case v3_1_0:
+			// ブロックの終端先を変更する
+			// mov [ebp+arg_14],0
+			byte_pattern::temp_instance().find_pattern("C7 45 EC 00 00 00 00 EB 06 8B 5D 0C");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), x_5_v310);
+			}
+			else return CK2ERROR1;
+			return NOERROR;
+		}
+
+		return CK2ERROR1;
+	}
+
+	/*-----------------------------------------------*/
+
+	uintptr_t fix4_end_v310;
+	__declspec(naked) void fix4_start_v310()
+	{
+		__asm {
+			cmp word ptr[ebp - 0x8C + 2], 0x100;
+			jb a;
+
+			add esi, 2;
+
+		a:
+			inc esi;
+
+			mov     edx, [edi + 0x10];
+			cmp esi, edx;
+
+			mov word ptr[ebp - 0x8C + 2], 0;
+
+			push fix4_end_v310;
+			ret;
+		}
+	}
+
+	/*-----------------------------------------------*/
+
+	errno_t fix4_hook(RunOptions* options) {
+		std::string desc = "fix4";
+
+		switch (options->version) {
+		case v2_8_X:
+		case v3_0_0:
+		case v3_0_X:
+			return NOERROR;
+		case v3_1_0:
+			byte_pattern::temp_instance().find_pattern("8B 57 10 46 3B F2 0F 8C 0E FC FF FF");
+			if (byte_pattern::temp_instance().has_size(1, desc)) {
+				// mov     edx, [edi+10h]
+				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), fix4_start_v310);
+				// jl xxxx
+				fix4_end_v310 = byte_pattern::temp_instance().get_first().address(6);
 			}
 			else return CK2ERROR1;
 			return NOERROR;
@@ -792,6 +947,9 @@ namespace MainTextLineBreak {
 
 		// 左側の分岐ブロックの処理の途中２
 		result |= fix3_hook(options);
+
+		// カウントアップ変更。issue-95への対応
+		result |= fix4_hook(options);
 
 		return result;
 	}
