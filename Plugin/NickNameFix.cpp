@@ -19,6 +19,7 @@ namespace NickNameFix
 			return NOERROR;
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// push [ebp+arg_4]
 			byte_pattern::temp_instance().find_pattern("FF 75 0C 8D 45 D8 C7 45 F0 00 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -206,6 +207,7 @@ namespace NickNameFix
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			return NOERROR;
 		}
 		return CK2ERROR1;
@@ -351,6 +353,7 @@ namespace NickNameFix
 			else return CK2ERROR1;
 			return NOERROR;
 		case v3_1_0:
+		case v3_1_1:
 			/* この処理自体が要らなくなった */
 			return NOERROR;
 		}
@@ -475,6 +478,7 @@ namespace NickNameFix
 			return NOERROR;
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// lea eax,[ebp+var_30]
 			byte_pattern::temp_instance().find_pattern("8D 45 D0 C6 45 FC 11 8B 4F 7C 50 8D 85");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {

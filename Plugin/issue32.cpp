@@ -25,6 +25,7 @@ namespace Issue32 {
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// sub esp,38h
 			byte_pattern::temp_instance().find_pattern("83 EC 38 53 56 57 8B F9 C7 45 E8");
 			if (byte_pattern::temp_instance().has_size(2, desc)) {
@@ -147,6 +148,7 @@ namespace Issue32 {
 			else return CK2ERROR1;
 			return NOERROR;
 		case v3_1_0:
+		case v3_1_1:
 			// sub esp,148h
 			byte_pattern::temp_instance().find_pattern("81 EC 48 01 00 00 53 56 57 8B F9 C7 45 E8 0F 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -236,6 +238,7 @@ namespace Issue32 {
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// push esi
 			byte_pattern::temp_instance().find_pattern("56 8D 4D A8 C6 45 FC 08 51");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {

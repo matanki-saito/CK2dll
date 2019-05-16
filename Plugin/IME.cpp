@@ -13,6 +13,7 @@ namespace IME
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// skip
 			//IME_Init(videodata, hwnd);
 			//IME_Enable(videodata, hwnd);
@@ -41,6 +42,7 @@ namespace IME
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// skip
 			//IME_Init(videodata, hwnd);
 			//IME_Enable(videodata, hwnd);
@@ -71,6 +73,7 @@ namespace IME
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// skip
 			// if (!videodata->ime_initialized || !videodata->ime_available || !videodata->ime_enabled)
 			//    return SDL_FALSE;
@@ -178,6 +181,7 @@ namespace IME
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			byte_pattern::temp_instance().find_pattern("0F 84 FD 00 00 00 83 E8 01");
 			if (byte_pattern::temp_instance().has_size(1, desc + " insert code start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), settingInputRect_v28_start);
@@ -211,6 +215,7 @@ namespace IME
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// SDL_keyborad.c
 			// skip
 			// issue-9
@@ -260,6 +265,7 @@ namespace IME
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			byte_pattern::temp_instance().find_pattern("83 C4 14 85 C0 74 07 33");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), SDL_windowevent_v28_start);
@@ -311,6 +317,7 @@ namespace IME
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// 少し手前に引っ掛ける
 			byte_pattern::temp_instance().find_pattern("8B 45 10 59 59 50 6A 00");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {

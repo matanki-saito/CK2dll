@@ -68,6 +68,7 @@ namespace Unk5 {
 		switch (options->version) {
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			byte_pattern::temp_instance().find_pattern("0F B6 04 08 8B 84 87 A4 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
 				// movzx   eax, byte ptr [eax+ecx]

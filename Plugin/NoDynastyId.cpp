@@ -51,6 +51,7 @@ namespace NoDynastyId
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			byte_pattern::temp_instance().find_pattern("8B 55 E8 8B 75 D4 83 F9");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), issue_suffix_id);
