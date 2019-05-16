@@ -18,6 +18,7 @@ namespace Issue33 {
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			/* コピー関数 */
 			byte_pattern::temp_instance().find_pattern("83 EC 20 56 FF 75 0C 8D 45 D8");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -119,6 +120,7 @@ namespace Issue33 {
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			/* issue-33 「に忠誠を誓っている 王 ロスラン」を「王 ロスランに忠誠を誓っているにする」 */
 			byte_pattern::temp_instance().find_pattern("8D 8D 2C FF FF FF C6 45 FC 43");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {

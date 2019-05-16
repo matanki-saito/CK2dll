@@ -318,6 +318,7 @@ namespace Input {
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			byte_pattern::temp_instance().find_pattern("55 8B EC 83 EC 70 53 56 57 8B F9 8B DA");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::WriteMemory<uint8_t>(byte_pattern::temp_instance().get_first().address(5), 0x78, true);
@@ -333,6 +334,7 @@ namespace Input {
 
 			switch (options->version) {
 			case v3_1_0:
+			case v3_1_1:
 				byte_pattern::temp_instance().find_pattern("FF 75 A0 E8 ? ? ? ? 8B D0 83 C4 04");
 				if (byte_pattern::temp_instance().has_size(1, desc)) {
 					xx_end2 = byte_pattern::temp_instance().get_first().address();
@@ -459,6 +461,7 @@ namespace Input {
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			byte_pattern::temp_instance().find_pattern("8B 07 84 DB 5B 8B CF");
 			if (byte_pattern::temp_instance().has_size(1,desc + " start" )) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), yy_1);

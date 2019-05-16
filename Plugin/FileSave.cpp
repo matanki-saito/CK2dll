@@ -12,6 +12,7 @@ namespace FileSave {
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// xor edx,edx (33 D2)
 			byte_pattern::temp_instance().find_pattern("33 D2 85 FF 0F 8E EE 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -39,6 +40,7 @@ namespace FileSave {
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// push ebx
 			byte_pattern::temp_instance().find_pattern("53 8B 59 10 56 33 F6 85 DB");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -67,6 +69,7 @@ namespace FileSave {
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// 0: latin1
 			// 1: ucs2
 			// 2: ucs4
@@ -280,6 +283,7 @@ namespace FileSave {
 			else return CK2ERROR1;
 			return NOERROR;
 		case v3_1_0:
+		case v3_1_1:
 			// push eax
 			byte_pattern::temp_instance().find_pattern("50 8D 4D 8C C7 45 D0 00 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -630,6 +634,7 @@ namespace FileSave {
 			else return CK2ERROR1;
 			return NOERROR;
 		case v3_1_0:
+		case v3_1_1:
 			// byte ptr [ebp+var_4],5
 			byte_pattern::temp_instance().find_pattern("C6 45 FC 05 8D 45 BC 8B 4F 20 8D 55 D4");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -666,6 +671,7 @@ namespace FileSave {
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			byte_pattern::temp_instance().find_pattern("74 0E 78 0A 8A 41 01 41");
 			if (byte_pattern::temp_instance().has_size(2, desc)) {
 				// jz short loc_XXXXX -> jmp XXXXX
