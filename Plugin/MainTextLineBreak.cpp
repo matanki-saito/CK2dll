@@ -33,6 +33,7 @@ namespace MainTextLineBreak {
 			return NOERROR;
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// push esi
 			byte_pattern::temp_instance().find_pattern("56 8B F1 8B 46 14 83 F8 10 72 0E");
 			if (byte_pattern::temp_instance().has_size(5, desc)) {
@@ -232,6 +233,7 @@ namespace MainTextLineBreak {
 
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// cmp cl,20h
 			byte_pattern::temp_instance().find_pattern("80 F9 20 0F 44 C6 89 45");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -428,6 +430,7 @@ namespace MainTextLineBreak {
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			//スタック修正
 			// sub esp,7Ch
 			byte_pattern::temp_instance().find_pattern("83 EC 7C 53 8B 5D 0C 56 57 8B F1");
@@ -439,6 +442,7 @@ namespace MainTextLineBreak {
 			// mov al,[eax+esi]
 			switch (options->version) {
 			case v3_1_0:
+			case v3_1_1:
 				byte_pattern::temp_instance().find_pattern("8A 04 30 8B 4D");
 				if (byte_pattern::temp_instance().has_size(1, desc)) {
 					injector::MakeJMP(byte_pattern::temp_instance().get_first().address(), k_1_v310);
@@ -460,6 +464,7 @@ namespace MainTextLineBreak {
 
 			switch (options->version) {
 			case v3_1_0:
+			case v3_1_1:
 				break; // issue-95でこの処理はいらなくなった
 			case v3_0_X:
 				// mov eax,[ebp+arg_10]
@@ -640,6 +645,7 @@ namespace MainTextLineBreak {
 
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// cmp ebx,[ebp+var_1C]
 			byte_pattern::temp_instance().find_pattern("8B 5D E4 3B 5D E8 0F 8E A6 00 00 00");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -764,6 +770,7 @@ namespace MainTextLineBreak {
 
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// mov eax, [ebp+arg_10]
 			byte_pattern::temp_instance().find_pattern("8B 45 18 8B CE 8A 55 20 89 4D E4");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -864,6 +871,7 @@ namespace MainTextLineBreak {
 			return NOERROR;
 
 		case v3_1_0:
+		case v3_1_1:
 			// ブロックの終端先を変更する
 			// mov [ebp+arg_14],0
 			byte_pattern::temp_instance().find_pattern("C7 45 EC 00 00 00 00 EB 06 8B 5D 0C");
@@ -912,6 +920,7 @@ namespace MainTextLineBreak {
 		case v3_0_X:
 			return NOERROR;
 		case v3_1_0:
+		case v3_1_1:
 			byte_pattern::temp_instance().find_pattern("8B 57 10 46 3B F2 0F 8C 0E FC FF FF");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				// mov     edx, [edi+10h]

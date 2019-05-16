@@ -53,6 +53,7 @@ namespace DecorativeLetterInheritDialog
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			byte_pattern::temp_instance().find_pattern("6A 01 8B F8 8D 4D CC");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), ff_1);
@@ -114,6 +115,7 @@ namespace DecorativeLetterInheritDialog
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// push [ebp+var_24]
 			byte_pattern::temp_instance().find_pattern("FF 75 DC 8D 45 B4 6A 01 50 8D 4D CC");
 			if (byte_pattern::temp_instance().has_size(1,desc)) {
@@ -177,6 +179,7 @@ namespace DecorativeLetterInheritDialog
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			byte_pattern::temp_instance().find_pattern("6A 01 8B F8 8D 4D 90 6A");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), hh_1);
@@ -238,6 +241,7 @@ namespace DecorativeLetterInheritDialog
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			byte_pattern::temp_instance().find_pattern("6A 01 50 8D 4D 90 E8");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
 				injector::MakeJMP(byte_pattern::temp_instance().get_first().address(0), ii_1);

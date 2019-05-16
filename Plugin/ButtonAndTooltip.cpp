@@ -13,6 +13,7 @@ namespace ButtonAndTooltip
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// sub esp,370h
 			byte_pattern::temp_instance().find_pattern("81 EC 70 03 00 00 8B");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -239,6 +240,7 @@ namespace ButtonAndTooltip
 
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// mov al,[eax+esi]
 			byte_pattern::temp_instance().find_pattern("8A 04 30 88 85 78 FF FF FF");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -397,6 +399,7 @@ namespace ButtonAndTooltip
 
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// cmovnb  eax, edi
 			byte_pattern::temp_instance().find_pattern("0F 43 C7 0F B6 04 30 8B 8C 81");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -460,6 +463,7 @@ namespace ButtonAndTooltip
 
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// cmp [ebp+var_5C],0
 			byte_pattern::temp_instance().find_pattern("83 7D A4 00 0F 85 ? ? ? ? 83");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
@@ -614,6 +618,7 @@ namespace ButtonAndTooltip
 
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// cmovnb eax,edi
 			byte_pattern::temp_instance().find_pattern("0F 43 C7 0F B6 04 18 8B");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {
@@ -637,6 +642,7 @@ namespace ButtonAndTooltip
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// lea esp,[ebp - 388h]
 			byte_pattern::temp_instance().find_pattern("8D A5 78 FC FF FF");
 			if (byte_pattern::temp_instance().has_size(1, desc)) {

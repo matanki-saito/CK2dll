@@ -46,6 +46,7 @@ namespace MapAdj3 {
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// cmp ebx,1
 			byte_pattern::temp_instance().find_pattern("83 FB 01 72 34 56 33 F6");
 			if (byte_pattern::temp_instance().has_size(1, desc + " start")) {
@@ -110,6 +111,7 @@ namespace MapAdj3 {
 		case v3_0_0:
 		case v3_0_X:
 		case v3_1_0:
+		case v3_1_1:
 			// xor esi,esi
 			byte_pattern::temp_instance().find_pattern("33 F6 80 3F 00 74 28 83 FE 01");
 			if (byte_pattern::temp_instance().has_size(1,desc +" start")) {
