@@ -9,5 +9,24 @@
 
 // プリコンパイルするヘッダーをここに追加します
 #include "framework.h"
+#include <cstdint>
+#include <cstddef>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <utility>
+#include <filesystem>
+#include <list>
+#include <map>
+#include <algorithm>
+#include <cassert>
+#include <functional>
+#include <memory>       // for std::shared_ptr
+#include <tuple>
+#include <cstdio>
+#include <boost/utility/string_view.hpp>
+#include <boost/algorithm/string.hpp>
+#include "byte_pattern.h"
+#include "injector.hpp"
 
 #endif //PCH_H

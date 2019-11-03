@@ -1,19 +1,37 @@
 ﻿// dllmain.cpp : DLL アプリケーションのエントリ ポイントを定義します。
 #include "pch.h"
+#include "plugin_64.h"
+#include "mod_download.h"
 
 BOOL APIENTRY DllMain( HMODULE hModule,
-                       DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
-                     )
-{
-    switch (ul_reason_for_call)
-    {
-    case DLL_PROCESS_ATTACH:
-    case DLL_THREAD_ATTACH:
-    case DLL_THREAD_DETACH:
-    case DLL_PROCESS_DETACH:
-        break;
-    }
-    return TRUE;
+                       DWORD  ulReasonForCall,
+                       LPVOID lpReserved){
+
+		if (ulReasonForCall == DLL_PROCESS_ATTACH) {
+			BytePattern::StartLog(L"ck2_jps_2");
+
+			DllError e = {};
+
+			// mod download
+			#ifndef _DEBUG
+			e |= ModDownload::Init();
+			#endif
+
+			// 設定
+			RunOptions options;
+			options.version = Version::GetVersion();
+
+			// デバッグ用
+			#ifdef _DEBUG
+			//e |= Debug::Init(options);
+			#endif
+
+			Validator::Validate(e, options);
+		}
+		else if (ulReasonForCall == DLL_PROCESS_DETACH) {
+			BytePattern::ShutdownLog();
+		}
+
+		return TRUE;
 }
 
