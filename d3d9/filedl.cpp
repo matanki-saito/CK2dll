@@ -44,7 +44,7 @@ bool InitAutoUpdate(const path &pluginsPath)
 {
 	path batFilePath = path{ pluginsPath } / L"autoupdate.bat";
 
-	if (std::experimental::filesystem::exists(batFilePath)) {
+	if (exists(batFilePath)) {
 		return createProcess(
 			_wcsdup(batFilePath.c_str()),
 			CREATE_NO_WINDOW
