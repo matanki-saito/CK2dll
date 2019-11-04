@@ -3,7 +3,7 @@
 
 namespace Validator {
 	void Validate(DllError e, RunOptions options) {
-		if (e.unmatch.code2 > 0 || e.version.code1 > 0 || e.mod.code0 > 0) {
+		if (options.version == UNKNOWN || e.unmatch.code2 > 0 || e.version.code1 > 0 || e.mod.code0 > 0) {
 			const DWORD sysDefLcid = ::GetSystemDefaultLCID();
 
 			const WCHAR* message;
@@ -14,7 +14,9 @@ namespace Validator {
 				caption = L"エラー";
 				message = L""
 					L"このバージョンはまだ日本語化に対応していないため起動できません。\n"
-					L"将来、日本語化に対応した際には自動的に起動できるようになります。";
+					L"将来、日本語化に対応した際には自動的に起動できるようになります。\n"
+					L"以前のバージョンに戻す方法は下記サイトをご覧ください。\n"
+					L"https://paradoxian-japan-mod.com/ck2/version";
 				break;
 
 			case MAKELANGID(LANG_CHINESE_SIMPLIFIED, SUBLANG_CHINESE_SIMPLIFIED):

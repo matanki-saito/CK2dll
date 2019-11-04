@@ -26,6 +26,8 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			//e |= Debug::Init(options);
 			#endif
 
+			options.version = Version::GetVersion();
+
 			Validator::Validate(e, options);
 		}
 		else if (ulReasonForCall == DLL_PROCESS_DETACH) {
