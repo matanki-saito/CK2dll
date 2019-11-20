@@ -4,7 +4,7 @@
 
 enum Ck2Version {
 	UNKNOWN = 0,
-	v3_3_0 = 3300
+	v3_3_0 = 330
 };
 
 typedef UINT64 DllErrorCode;

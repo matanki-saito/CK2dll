@@ -6,12 +6,11 @@ using namespace std;
 namespace Version {
 	typedef struct {
 		char ascii1;
-		char ascii2;
 		char dot;
-		char ascii3;
+		char ascii2;
 
 		int calVer() {
-			int ver = (ascii1 - 0x30) * 100 + (ascii2 - 0x30) * 10 + (ascii3 - 0x30);
+			int ver = (ascii1 - 0x30) * 100 + (ascii2 - 0x30);
 			return ver;
 		}
 	} Pattern;
@@ -27,10 +26,10 @@ namespace Version {
 
 	Ck2Version GetVersion() {
 		// CK2 v3.??.?
-		BytePattern::temp_instance().find_pattern("45 55 34 20 76 31 2E ? ? 2E ?");
+		BytePattern::temp_instance().find_pattern("00 00 33 2E 32");
 		if (BytePattern::temp_instance().count() > 0) {
 			// ??を取得する
-			Pattern minor = Injector::ReadMemory<Pattern>(BytePattern::temp_instance().get_first().address(0x7), true);
+			Pattern minor = Injector::ReadMemory<Pattern>(BytePattern::temp_instance().get_first().address(0x2), true);
 
 			Ck2Version version;
 
