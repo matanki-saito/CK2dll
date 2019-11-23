@@ -10,9 +10,11 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		// moddownload
 		wchar_t myDocumentPath[MAX_PATH];
 		SHGetSpecialFolderPath(NULL, myDocumentPath, CSIDL_PERSONAL, 0);
-
+		
+		#ifndef _DEBUG
 		const path gameDirPath = path{ myDocumentPath } / L"Paradox Interactive" / L"Crusader Kings II";
 		if (!InitAutoUpdate(gameDirPath)) exit(-1);
+		#endif
 
         byte_pattern::start_log(L"ck2jps");
 
