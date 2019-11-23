@@ -173,3 +173,7 @@ namespace Debug {
 namespace Validator {
 	void Validate(DllError dllError, RunOptions options);
 }
+
+namespace Font {
+	DllError Init(RunOptions option);
+}

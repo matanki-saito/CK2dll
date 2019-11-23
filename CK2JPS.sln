@@ -21,7 +21,7 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9EEEE39C-A27E-4DED-A82A-B9903D459EC1}.Debug|x64.ActiveCfg = Debug|x64
 		{9EEEE39C-A27E-4DED-A82A-B9903D459EC1}.Debug|x64.Build.0 = Debug|x64
-		{9EEEE39C-A27E-4DED-A82A-B9903D459EC1}.Debug|x86.ActiveCfg = Debug|Win32
+		{9EEEE39C-A27E-4DED-A82A-B9903D459EC1}.Debug|x86.ActiveCfg = Debug|x64
 		{9EEEE39C-A27E-4DED-A82A-B9903D459EC1}.Release|x64.ActiveCfg = Release|x64
 		{9EEEE39C-A27E-4DED-A82A-B9903D459EC1}.Release|x64.Build.0 = Release|x64
 		{9EEEE39C-A27E-4DED-A82A-B9903D459EC1}.Release|x86.ActiveCfg = Release|Win32
@@ -39,7 +39,7 @@ Global
 		{F1BAF39A-68E7-48A3-A7C3-57105369E64C}.Release|x86.Build.0 = Release|Win32
 		{A44A614E-A94D-464B-BDBA-6AC82C062493}.Debug|x64.ActiveCfg = Debug|x64
 		{A44A614E-A94D-464B-BDBA-6AC82C062493}.Debug|x64.Build.0 = Debug|x64
-		{A44A614E-A94D-464B-BDBA-6AC82C062493}.Debug|x86.ActiveCfg = Debug|Win32
+		{A44A614E-A94D-464B-BDBA-6AC82C062493}.Debug|x86.ActiveCfg = Debug|x64
 		{A44A614E-A94D-464B-BDBA-6AC82C062493}.Release|x64.ActiveCfg = Release|x64
 		{A44A614E-A94D-464B-BDBA-6AC82C062493}.Release|x64.Build.0 = Release|x64
 		{A44A614E-A94D-464B-BDBA-6AC82C062493}.Release|x86.ActiveCfg = Release|Win32

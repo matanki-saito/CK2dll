@@ -26,7 +26,8 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			//e |= Debug::Init(options);
 			#endif
 
-			options.version = Version::GetVersion();
+			// フォント読み込み
+			e |= Font::Init(options);
 
 			Validator::Validate(e, options);
 		}

@@ -40,6 +40,9 @@
     <Filter Include="ソース ファイル\app\validator">
       <UniqueIdentifier>{fdf66cd0-a0f1-437f-838e-616d94e37683}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\app\font">
+      <UniqueIdentifier>{b71b1d90-9d53-42f6-a0d2-e14ab62c6867}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mod_download.h">
@@ -104,6 +107,9 @@
     <ClCompile Include="validator.cpp">
       <Filter>ソース ファイル\app\validator</Filter>
     </ClCompile>
+    <ClCompile Include="font.cpp">
+      <Filter>ソース ファイル\app\font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -111,6 +117,9 @@
   <ItemGroup>
     <MASM Include="debug_asm.asm">
       <Filter>ソース ファイル\app\debug</Filter>
+    </MASM>
+    <MASM Include="font_asm.asm">
+      <Filter>ソース ファイル\app\font</Filter>
     </MASM>
   </ItemGroup>
 </Project>
