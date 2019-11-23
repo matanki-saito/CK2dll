@@ -10,7 +10,7 @@ namespace Version {
 		char ascii2;
 
 		int calVer() {
-			int ver = (ascii1 - 0x30) * 100 + (ascii2 - 0x30);
+			int ver = (ascii1 - 0x30) * 100 + (ascii2 - 0x30)*10;
 			return ver;
 		}
 	} Pattern;
@@ -25,15 +25,15 @@ namespace Version {
 	}
 
 	Ck2Version GetVersion() {
-		// CK2 v3.??.?
-		BytePattern::temp_instance().find_pattern("00 00 33 2E 32");
+		// CK2 v3.x.
+		BytePattern::temp_instance().find_pattern("00 00 33 2E ? 2E");
 		if (BytePattern::temp_instance().count() > 0) {
 			// ??を取得する
-			Pattern minor = Injector::ReadMemory<Pattern>(BytePattern::temp_instance().get_first().address(0x2), true);
+			Pattern ptn = Injector::ReadMemory<Pattern>(BytePattern::temp_instance().get_first().address(0x2), true);
 
 			Ck2Version version;
 
-			switch (minor.calVer()) {
+			switch (ptn.calVer()) {
 			case 330:
 				version = v3_3_0;
 				break;
