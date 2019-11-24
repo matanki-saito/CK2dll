@@ -29,6 +29,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			// フォント読み込み
 			e |= Font::Init(options);
 
+			// メインテキスト
+			e |= MainText::Init(options);
+
 			Validator::Validate(e, options);
 		}
 		else if (ulReasonForCall == DLL_PROCESS_DETACH) {

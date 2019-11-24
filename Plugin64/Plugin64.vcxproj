@@ -180,6 +180,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="escape_tool.cpp" />
     <ClCompile Include="font.cpp" />
+    <ClCompile Include="main_text.cpp" />
     <ClCompile Include="mod_download.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -195,6 +196,7 @@
       <FileType>Document</FileType>
     </MASM>
     <MASM Include="font_asm.asm" />
+    <MASM Include="main_text_asm.asm" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

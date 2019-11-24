@@ -43,6 +43,9 @@
     <Filter Include="ソース ファイル\app\font">
       <UniqueIdentifier>{b71b1d90-9d53-42f6-a0d2-e14ab62c6867}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\app\main_text">
+      <UniqueIdentifier>{92575d98-4a08-4b19-a449-155af523afda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mod_download.h">
@@ -110,6 +113,9 @@
     <ClCompile Include="font.cpp">
       <Filter>ソース ファイル\app\font</Filter>
     </ClCompile>
+    <ClCompile Include="main_text.cpp">
+      <Filter>ソース ファイル\app\main_text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -120,6 +126,9 @@
     </MASM>
     <MASM Include="font_asm.asm">
       <Filter>ソース ファイル\app\font</Filter>
+    </MASM>
+    <MASM Include="main_text_asm.asm">
+      <Filter>ソース ファイル\app\main_text</Filter>
     </MASM>
   </ItemGroup>
 </Project>

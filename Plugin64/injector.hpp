@@ -565,8 +565,6 @@ namespace Injector
 	 */
 	inline memory_pointer_raw GetBranchDestination(memory_pointer_tr at, bool vp = true) {
 		switch (ReadMemory<uint8_t>(at, vp)) {
-
-
 		case 0x48:
 		case 0x4C:
 			switch (ReadMemory<uint8_t>(at + 1, vp)) {
@@ -574,6 +572,7 @@ namespace Injector
 			case 0x8D: // lea
 				switch (ReadMemory<uint8_t>(at + 2, vp)) {
 				case 0x0D:
+				case 0x1D:
 				case 0x15:
 					return ReadRelativeOffset(at + 3, 4, vp);
 				}
