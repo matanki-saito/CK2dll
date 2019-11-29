@@ -181,3 +181,7 @@ namespace Font {
 namespace MainText {
 	DllError Init(RunOptions option);
 }
+
+namespace TooltipAndButton {
+	DllError Init(RunOptions option);
+}

@@ -46,6 +46,9 @@
     <Filter Include="ソース ファイル\app\main_text">
       <UniqueIdentifier>{92575d98-4a08-4b19-a449-155af523afda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\app\tooltip_and_button">
+      <UniqueIdentifier>{4e3718ba-74e0-43ac-ab1c-ea4fc2514356}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mod_download.h">
@@ -116,6 +119,9 @@
     <ClCompile Include="main_text.cpp">
       <Filter>ソース ファイル\app\main_text</Filter>
     </ClCompile>
+    <ClCompile Include="tooltip_and_button.cpp">
+      <Filter>ソース ファイル\app\tooltip_and_button</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -129,6 +135,9 @@
     </MASM>
     <MASM Include="main_text_asm.asm">
       <Filter>ソース ファイル\app\main_text</Filter>
+    </MASM>
+    <MASM Include="tooltip_and_button_asm.asm">
+      <Filter>ソース ファイル\app\tooltip_and_button</Filter>
     </MASM>
   </ItemGroup>
 </Project>

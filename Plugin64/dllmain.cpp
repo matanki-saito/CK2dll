@@ -32,6 +32,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			// メインテキスト
 			e |= MainText::Init(options);
 
+			// ツールチップとボタン
+			e |= TooltipAndButton::Init(options);
+
 			Validator::Validate(e, options);
 		}
 		else if (ulReasonForCall == DLL_PROCESS_DETACH) {
