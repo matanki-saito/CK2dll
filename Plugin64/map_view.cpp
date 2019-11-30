@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "plugin_64.h"
 
 namespace MapView {
@@ -19,7 +19,7 @@ namespace MapView {
 		case v3_3_0:
 			// movzx   eax, byte ptr [rax+rsi]
 			BytePattern::temp_instance().find_pattern("0F B6 04 30 4C 8B 9C C7 E8 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, "ˆ—ƒ‹[ƒv‚Q‚Ì•¶šæ“¾ˆ—")) {
+			if (BytePattern::temp_instance().has_size(1, "å‡¦ç†ãƒ«ãƒ¼ãƒ—ï¼’ã®æ–‡å­—å–å¾—å‡¦ç†")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				//  jnz     short loc_xxxxx
@@ -45,7 +45,7 @@ namespace MapView {
 		case v3_3_0:
 			// movzx   eax, byte ptr [rax+r12]
 			BytePattern::temp_instance().find_pattern("42 0F B6 04 20 48 8B 8D 30 03 00 00");
-			if (BytePattern::temp_instance().has_size(1, "ˆ—ƒ‹[ƒv‚P‚Ì•¶šæ“¾ˆ—")) {
+			if (BytePattern::temp_instance().has_size(1, "å‡¦ç†ãƒ«ãƒ¼ãƒ—ï¼‘ã®æ–‡å­—å–å¾—å‡¦ç†")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// test    r15, r15
@@ -71,7 +71,7 @@ namespace MapView {
 		case v3_3_0:
 			// byte ptr [rbp-8], 0
 			BytePattern::temp_instance().find_pattern("C6 45 F8 00 45 0F B6 04 04");
-			if (BytePattern::temp_instance().has_size(1, "ˆ—ƒ‹[ƒv‚P‚Ì•¶šƒRƒs[")) {
+			if (BytePattern::temp_instance().has_size(1, "å‡¦ç†ãƒ«ãƒ¼ãƒ—ï¼‘ã®æ–‡å­—ã‚³ãƒ”ãƒ¼")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// call {sub_xxxxx}

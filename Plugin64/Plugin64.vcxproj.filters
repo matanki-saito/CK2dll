@@ -52,6 +52,9 @@
     <Filter Include="ソース ファイル\app\map_view">
       <UniqueIdentifier>{20cbd954-eafa-4896-aad0-377760b06797}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\app\map_adjustment">
+      <UniqueIdentifier>{4a9eddb4-e95c-4936-ae67-13d8a7cdd615}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mod_download.h">
@@ -128,6 +131,9 @@
     <ClCompile Include="map_view.cpp">
       <Filter>ソース ファイル\app\map_view</Filter>
     </ClCompile>
+    <ClCompile Include="map_adjustment.cpp">
+      <Filter>ソース ファイル\app\map_adjustment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -147,6 +153,9 @@
     </MASM>
     <MASM Include="map_view_asm.asm">
       <Filter>ソース ファイル\app\map_view</Filter>
+    </MASM>
+    <MASM Include="map_adjustment_asm.asm">
+      <Filter>ソース ファイル\app\map_adjustment</Filter>
     </MASM>
   </ItemGroup>
 </Project>

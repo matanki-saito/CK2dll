@@ -38,6 +38,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			// マップ表示
 			e |= MapView::Init(options);
 
+			// マップ文字の調整
+			e |= MapAdjustment::Init(options);
+
 			Validator::Validate(e, options);
 		}
 		else if (ulReasonForCall == DLL_PROCESS_DETACH) {

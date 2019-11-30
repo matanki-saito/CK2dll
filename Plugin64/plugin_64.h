@@ -189,3 +189,7 @@ namespace TooltipAndButton {
 namespace MapView {
 	DllError Init(RunOptions option);
 }
+
+namespace MapAdjustment {
+	DllError Init(RunOptions option);
+}
