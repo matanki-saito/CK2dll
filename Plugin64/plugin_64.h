@@ -185,3 +185,7 @@ namespace MainText {
 namespace TooltipAndButton {
 	DllError Init(RunOptions option);
 }
+
+namespace MapView {
+	DllError Init(RunOptions option);
+}

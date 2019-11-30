@@ -35,6 +35,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			// ツールチップとボタン
 			e |= TooltipAndButton::Init(options);
 
+			// マップ表示
+			e |= MapView::Init(options);
+
 			Validator::Validate(e, options);
 		}
 		else if (ulReasonForCall == DLL_PROCESS_DETACH) {
