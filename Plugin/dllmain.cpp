@@ -78,7 +78,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//Input
 		success |= Input::init(&options);
 
-		// 不明（忘れた…）
+		// ツールチップとボタンの改行処理
 		success |= Unk3::init(&options);
 		
 		// ...の省略
