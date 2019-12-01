@@ -36,6 +36,7 @@ struct DllError {
 			bool tooltipAndButtonProc3Injector : 1;
 			bool tooltipAndButtonProc4Injector : 1;
 			bool tooltipAndButtonProc5Injector : 1;
+			bool tooltipAndButtonProc6Injector : 1;
 			bool mapViewProc1Injector : 1;
 			bool mapViewProc2Injector : 1;
 			bool mapViewProc3Injector : 1;
@@ -84,6 +85,7 @@ struct DllError {
 			bool tooltipAndButtonProc3Injector : 1;
 			bool tooltipAndButtonProc4Injector : 1;
 			bool tooltipAndButtonProc5Injector : 1;
+			bool tooltipAndButtonProc6Injector : 1;
 			bool mapViewProc1Injector : 1;
 			bool mapViewProc2Injector : 1;
 			bool mapViewProc3Injector : 1;

@@ -6,8 +6,8 @@ EXTERN	tooltipAndButtonProc4ReturnAddress1	:	QWORD
 EXTERN	tooltipAndButtonProc4ReturnAddress2	:	QWORD
 EXTERN	tooltipAndButtonProc5ReturnAddress1	:	QWORD
 EXTERN	tooltipAndButtonProc5ReturnAddress2	:	QWORD
-EXTERN	tooltipAndButtonProcTestReturnAddress1	:	QWORD
-EXTERN	tooltipAndButtonProcTestReturnAddress2	:	QWORD
+EXTERN	tooltipAndButtonProc6ReturnAddress1	:	QWORD
+EXTERN	tooltipAndButtonProc6ReturnAddress2	:	QWORD
 
 ESCAPE_SEQ_1	=	10h
 ESCAPE_SEQ_2	=	11h
@@ -250,7 +250,7 @@ tooltipAndButtonProc5 ENDP
 
 ;-------------------------------------------;
 
-tooltipAndButtonProcTest PROC
+tooltipAndButtonProc6 PROC
 	cmp		tooltipAndButtonProc2TmpFlag, 1;
 	jnz		JMP_A;
 
@@ -261,12 +261,12 @@ JMP_A:
 	cmp     ebx, dword ptr [rbp + 440h - 438h];
 	jge		JMP_B;
 	mov		r9d, 1;
-	push	tooltipAndButtonProcTestReturnAddress1;
+	push	tooltipAndButtonProc6ReturnAddress1;
 	ret;
 
 JMP_B:
-	push	tooltipAndButtonProcTestReturnAddress2;
+	push	tooltipAndButtonProc6ReturnAddress2;
 	ret;
-tooltipAndButtonProcTest ENDP
+tooltipAndButtonProc6 ENDP
 
 END

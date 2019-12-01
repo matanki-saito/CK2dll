@@ -8,7 +8,7 @@ namespace TooltipAndButton {
 		void tooltipAndButtonProc3();
 		void tooltipAndButtonProc4();
 		void tooltipAndButtonProc5();
-		void tooltipAndButtonProcTest();
+		void tooltipAndButtonProc6();
 		uintptr_t tooltipAndButtonProc1ReturnAddress;
 		uintptr_t tooltipAndButtonProc1CallAddress;
 		uintptr_t tooltipAndButtonProc2ReturnAddress;
@@ -17,9 +17,8 @@ namespace TooltipAndButton {
 		uintptr_t tooltipAndButtonProc4ReturnAddress2;
 		uintptr_t tooltipAndButtonProc5ReturnAddress1;
 		uintptr_t tooltipAndButtonProc5ReturnAddress2;
-
-		uintptr_t tooltipAndButtonProcTestReturnAddress1;
-		uintptr_t tooltipAndButtonProcTestReturnAddress2;
+		uintptr_t tooltipAndButtonProc6ReturnAddress1;
+		uintptr_t tooltipAndButtonProc6ReturnAddress2;
 	}
 
 	DllError tooltipAndButtonProc1Injector(RunOptions options) {
@@ -168,8 +167,7 @@ namespace TooltipAndButton {
 		return e;
 	}
 
-
-	DllError tooltipAndButtonProcTestInjector(RunOptions options) {
+	DllError tooltipAndButtonProc6Injector(RunOptions options) {
 		DllError e = {};
 
 		switch (options.version) {
@@ -180,18 +178,18 @@ namespace TooltipAndButton {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jmp		loc_xxxxx  
-				tooltipAndButtonProcTestReturnAddress1 = Injector::GetBranchDestination(address + 0xD).as_int();
+				tooltipAndButtonProc6ReturnAddress1 = Injector::GetBranchDestination(address + 0xD).as_int();
 				//  mov     rbx, [rbp+440h+arg_48]
-				tooltipAndButtonProcTestReturnAddress2 = address + 0x2A;
+				tooltipAndButtonProc6ReturnAddress2 = address + 0x2A;
 
-				Injector::MakeJMP(address, tooltipAndButtonProcTest, true);
+				Injector::MakeJMP(address, tooltipAndButtonProc6, true);
 			}
 			else {
-				e.unmatch.tooltipAndButtonProc5Injector = true;
+				e.unmatch.tooltipAndButtonProc6Injector = true;
 			}
 			break;
 		default:
-			e.version.tooltipAndButtonProc5Injector = true;
+			e.version.tooltipAndButtonProc6Injector = true;
 		}
 
 		return e;
@@ -202,10 +200,10 @@ namespace TooltipAndButton {
 
 		result |= tooltipAndButtonProc1Injector(options);
 		result |= tooltipAndButtonProc2Injector(options);
-		result |= tooltipAndButtonProcTestInjector(options);
 		result |= tooltipAndButtonProc3Injector(options);
 		result |= tooltipAndButtonProc4Injector(options);
 		result |= tooltipAndButtonProc5Injector(options);
+		result |= tooltipAndButtonProc6Injector(options);
 
 		return result;
 	}
