@@ -195,3 +195,7 @@ namespace MapView {
 namespace MapAdjustment {
 	DllError Init(RunOptions option);
 }
+
+namespace MapJustify {
+	DllError Init(RunOptions option);
+}
