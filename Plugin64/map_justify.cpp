@@ -17,8 +17,8 @@ namespace MapJustify {
 
 		switch (options.version) {
 		case v3_3_0:
-			// movsd   xmm3, [rbp+1D0h+var_168]
-			BytePattern::temp_instance().find_pattern("F2 0F 10 5D 68 FF C2 F2 0F 10 65 20");
+			// movsd   xmm3, [rbp+1B0h+var_190]
+			BytePattern::temp_instance().find_pattern("F2 0F 10 5D 20 FF C6 F2 0F 10 65 28");
 			if (BytePattern::temp_instance().has_size(1, "文字取得処理リターン先２")) {
 				mapJustifyProc1ReturnAddress2 = BytePattern::temp_instance().get_first().address();
 			}
@@ -26,13 +26,13 @@ namespace MapJustify {
 				e.unmatch.mapJustifyProc1Injector = true;
 			}
 
-			// movzx   esi, byte ptr [rax+r13]
-			BytePattern::temp_instance().find_pattern("42 0F B6 34 28 F3 44 0F 10 89 48 08 00 00");
+			// movzx   eax, byte ptr [r14+rax]
+			BytePattern::temp_instance().find_pattern("41 0F B6 04 06 4C 8B 14 C1 4D 85 D2");
 			if (BytePattern::temp_instance().has_size(1, "文字取得処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
-				// cmp     word ptr [rdi+6], 0
-				mapJustifyProc1ReturnAddress1 = address + 0x1B;
+				// cmp     dword ptr [r10+0Ch], 0
+				mapJustifyProc1ReturnAddress1 = address + 0x12;
 
 				Injector::MakeJMP(address, mapJustifyProc1, true);
 			}
@@ -52,13 +52,13 @@ namespace MapJustify {
 
 		switch (options.version) {
 		case v3_3_0:
-			// lea     eax, [r10-1]
-			BytePattern::temp_instance().find_pattern("41 8D 42 FF 66 0F 6E F2 66 0F 6E C0");
+			// lea     eax, [rdx-1]
+			BytePattern::temp_instance().find_pattern("8D 42 FF 45 0F 57 C0 F3 44 0F 10 C0");
 			if (BytePattern::temp_instance().has_size(1, "一文字表示の調整")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// cvtdq2ps xmm6, xmm6
-				mapJustifyProc2ReturnAddress = address + 0xF;
+				mapJustifyProc2ReturnAddress = address + 0x19;
 
 				Injector::MakeJMP(address, mapJustifyProc2, true);
 			}
@@ -79,12 +79,12 @@ namespace MapJustify {
 		switch (options.version) {
 		case v3_3_0:
 			// movsd   xmm3, [rbp+1D0h+var_168]
-			BytePattern::temp_instance().find_pattern("F2 0F 10 5D 68 FF C2 F2 0F 10 65 20");
+			BytePattern::temp_instance().find_pattern("F2 0F 10 5D 20 FF C6 F2 0F 10 65 28");
 			if (BytePattern::temp_instance().has_size(1, "カウント処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// cmp     r13, rax
-				mapJustifyProc4ReturnAddress = address + 0x1E;
+				mapJustifyProc4ReturnAddress = address + 0x24;
 
 				Injector::MakeJMP(address, mapJustifyProc4, true);
 			}
@@ -103,8 +103,8 @@ namespace MapJustify {
 		DllError result = {};
 
 		result |= mapJustifyProc1Injector(options);
-		//result |= mapJustifyProc2Injector(options);
-		//result |= mapJustifyProc4Injector(options);
+		result |= mapJustifyProc2Injector(options);
+		result |= mapJustifyProc4Injector(options);
 
 		return result;
 	}

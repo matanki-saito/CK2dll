@@ -10,7 +10,6 @@ EXTERN	mapJustifyProc4ReturnAddress	:	QWORD
 ;temporary space for code point
 .DATA
 	mapJustifyProc1TmpFlag	DD	0
-	debug	DQ	0
 
 ESCAPE_SEQ_1	=	10h
 ESCAPE_SEQ_2	=	11h
@@ -27,59 +26,54 @@ MAP_LIMIT		=	2Dh-3
 
 .CODE
 mapJustifyProc1 PROC
-	movss   xmm9, dword ptr [rcx + 848h];
-
-	mov		debug, rax;
-
-	cmp		byte ptr [rax + r13], ESCAPE_SEQ_1;
+	cmp		byte ptr [r14 + rax], ESCAPE_SEQ_1;
 	jz		JMP_A;
-	cmp		byte ptr [rax + r13], ESCAPE_SEQ_2;
+	cmp		byte ptr [r14 + rax], ESCAPE_SEQ_2;
 	jz		JMP_B;
-	cmp		byte ptr [rax + r13], ESCAPE_SEQ_3;
+	cmp		byte ptr [r14 + rax], ESCAPE_SEQ_3;
 	jz		JMP_C;
-	cmp		byte ptr [rax + r13], ESCAPE_SEQ_4;
+	cmp		byte ptr [r14 + rax], ESCAPE_SEQ_4;
 	jz		JMP_D;
 	mov		mapJustifyProc1TmpFlag, 0h;
-	movzx	esi, byte ptr [rax + r13];
-	mov     rdi, qword ptr [rcx + rsi * 8];
-	test	rdi, rdi;
+	movzx	eax, byte ptr [r14 + rax];
+	mov		r10, qword ptr [rcx + rax * 8]
+	test	r10, r10;
 	jz		JMP_I;
 	jmp		mapJustifyProc1ReturnAddress1;
 
 JMP_A:
-	movzx	esi, word ptr [rax + r13 + 1];
+	movzx	eax, word ptr [r14 + rax + 1];
 	jmp		JMP_F;
 
 JMP_B:
-	movzx	esi, word ptr [rax + r13 + 1];
-	sub		esi, SHIFT_2;
+	movzx	eax, word ptr [r14 + rax + 1];
+	sub		eax, SHIFT_2;
 	jmp		JMP_F;
 
 JMP_C:
-	movzx	esi, word ptr [rax + r13 + 1];
-	add		esi, SHIFT_3;
+	movzx	eax, word ptr [r14 + rax + 1];
+	add		eax, SHIFT_3;
 	jmp		JMP_F;
 
 JMP_D:
-	movzx	esi, word ptr [rax + r13 + 1];
-	add		esi, SHIFT_4;
+	movzx	eax, word ptr [r14 + rax + 1];
+	add		eax, SHIFT_4;
 
 JMP_F:
-	cmp		r13,MAP_LIMIT;
+	cmp		r14,MAP_LIMIT;
 	ja		JMP_H;
 
-	movzx	esi, si;
-	cmp		esi, NO_FONT;
+	movzx	eax, ax;
+	cmp		eax, NO_FONT;
 	ja		JMP_G;
 JMP_H:
-	mov		esi, NOT_DEF;
+	mov		eax, NOT_DEF;
 
 JMP_G:
 	mov		mapJustifyProc1TmpFlag, 1h;
-	mov     rdi, qword ptr [rcx + rsi * 8];
-	mov		sil, ESCAPE_SEQ_1; // 下の方でsilを比較して'や.と比較しているのでいるので適当に埋める
+	mov     r10, qword ptr [rcx + rax * 8];
 
-	test	rdi, rdi;
+	test	r10, r10;
 	jz		JMP_I;
 	push	mapJustifyProc1ReturnAddress1;
 	ret;
@@ -96,27 +90,30 @@ mapJustifyProc2 PROC
 	jnz		JMP_A;
 
 	; 3byte = 1文字かどうか
-	cmp		r10, 3; 
+	cmp		rdx, 3;
 	ja		JMP_A;
-	inc		r10;
-	mov		edx,1;
+	inc		rdx;
+	mov		rsi,1;
+	movd	xmm6, esi;
 
 JMP_A:
-	movd    xmm6, edx;
 
 	; エスケープ文字
 	cmp		mapJustifyProc1TmpFlag, 1h;
 	jz		JMP_B;
 
-	lea     eax, [r10 - 1]; ; -1している
+	lea     eax, [rdx - 1]; ; -1している
 	jmp		JMP_C;
 
 JMP_B:
-	lea     eax, [r10 - 2]; ; -2している
+	lea     eax, [rdx - 2]; ; -2している
 
 JMP_C:
-	movd    xmm0, eax;
-	cvtdq2ps xmm0, xmm0;
+	xorps	xmm8, xmm8;
+	movss	xmm8, xmm0;
+	movss	dword ptr [rbp + 1B0h - 148h], xmm1;
+	xorps	xmm1, xmm1;
+	sqrtss	xmm8, xmm8;
 
 	push	mapJustifyProc2ReturnAddress;
 	ret;
@@ -125,25 +122,25 @@ mapJustifyProc2 ENDP
 ;-------------------------------------------;
 
 mapJustifyProc4 PROC
-	movsd   xmm3, qword ptr [rbp + 1D0h - 168h];
+	movsd	xmm3, qword ptr [rbp + 1B0h - 190h];
 
 	cmp		mapJustifyProc1TmpFlag, 1h;
 	jnz		JMP_A;
 	
-	add     edx,3;
-	add     r13,3;
-
+	add     esi,3;
+	add     r14,3;
 	jmp		JMP_C;
 
 JMP_A:
-	inc     edx;
-	inc     r13;
+	inc		esi;
+	inc		r14;
 
 JMP_C:
-	movsd   xmm4, qword ptr [rbp + 1D0h - 1B0h];
-	movsd   xmm5, qword ptr [rbp + 1D0h - 1A8h];
-	movsxd  rax, r10d;
-	mov     qword ptr [rbp + 1D0h - 138h], rdx;
+	movsd	xmm4, qword ptr [rbp + 1B0h - 188h];
+	movsd	xmm5, qword ptr [rbp + 1B0h - 198h];
+	movsd   xmm9, qword ptr [rbp + 1B0h - 180h];
+	movsxd	rax, edx;
+	mov		qword ptr [rbp + 1B0h -128h], rsi;
 
 	push	mapJustifyProc4ReturnAddress;
 	ret;
