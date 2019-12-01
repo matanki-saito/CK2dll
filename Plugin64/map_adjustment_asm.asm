@@ -69,7 +69,7 @@ mapAdjustmentProc2 PROC
 	cmp		al, ESCAPE_SEQ_4;
 	jz		JMP_A;
 
-	lea     rax, qword ptr [rbp + 1F0h - 1F0h];
+	lea     rax, qword ptr [rbp + 220h - 218h];
 	or      r8, 0FFFFFFFFFFFFFFFFh;
 	nop;
 
@@ -82,12 +82,12 @@ JMP_B:
 JMP_A:
 	mov		r8, 3;
 
-	lea     rax, qword ptr [rbp + 1F0h - 160h];
-	cmp     qword ptr [rbp + 1F0h - 148h], 10h;
-	cmovnb  rax, qword ptr [rbp + 1F0h - 160h];
-	mov		dx, word ptr [rbx + rax + 1];
+	lea     rax, qword ptr [rbp + 220h - 1A0h];
+	cmp     qword ptr [rbp + 220h - 188h], 10h;
+	cmovnb  rax, qword ptr [rbp + 220h - 1A0h];
+	mov		dx, word ptr [rax + rbx + 1];
 
-	mov		word ptr[rbp + 1F0h - 1F0h + 1], dx;
+	mov		word ptr[rbp + 220h - 218h + 1], dx;
 	add		rbx, 2;
 
 JMP_C:
@@ -98,13 +98,13 @@ mapAdjustmentProc2 ENDP
 ;-------------------------------------------;
 
 mapAdjustmentProc3 PROC
-	mov		dword ptr[rbp + 1F0h - 1F0h], 0000h;
+	mov		dword ptr[rbp + 220h - 218h], 0000h;
 	cmp     rbx, rdi;
 	jz		JMP_A;
 	or      r9, 0FFFFFFFFFFFFFFFFh;
 	xor     r8d, r8d;
-	lea     rdx, qword ptr [rbp + 1F0h - 130h];
-	lea     rcx, qword ptr [rbp + 1F0h - 1C0h];
+	lea     rdx, qword ptr [rbp + 220h - 138h];
+	lea     rcx, qword ptr [rbp + 220h - 1C0h];
 
 	push	mapAdjustmentProc3ReturnAddress1;
 	ret;
@@ -117,37 +117,37 @@ mapAdjustmentProc3 ENDP
 ;-------------------------------------------;
 
 mapAdjustmentProc4 PROC
-	lea		rax, [rbp + 1F0h - 160h];
-	cmp		r8, 10h;
-	cmovnb	rax, r9;
+	lea		rax, [rbp + 220h - 1A0h];
+	cmp		r10, 10h;
+	cmovnb	rax, r11;
 
-	cmp		byte ptr[rcx + rax], ESCAPE_SEQ_1;
+	cmp		byte ptr[rax + rcx], ESCAPE_SEQ_1;
 	jz		JMP_A;
-	cmp		byte ptr[rcx + rax], ESCAPE_SEQ_2;
+	cmp		byte ptr[rax + rcx], ESCAPE_SEQ_2;
 	jz		JMP_B;
-	cmp		byte ptr[rcx + rax], ESCAPE_SEQ_3;
+	cmp		byte ptr[rax + rcx], ESCAPE_SEQ_3;
 	jz		JMP_C;
-	cmp		byte ptr[rcx + rax], ESCAPE_SEQ_4;
+	cmp		byte ptr[rax + rcx], ESCAPE_SEQ_4;
 	jz		JMP_D;
-	movzx	eax, byte ptr[rcx + rax];
+	movzx	eax, byte ptr[rax + rcx];
 	jmp		JMP_E;
 
 JMP_A:
-	movzx	eax, word ptr[rcx + rax + 1];
+	movzx	eax, word ptr[rax + rcx + 1];
 	jmp		JMP_F;
 
 JMP_B:
-	movzx	eax, word ptr[rcx + rax + 1];
+	movzx	eax, word ptr[rax + rcx + 1];
 	sub		eax, SHIFT_2;
 	jmp		JMP_F;
 
 JMP_C:
-	movzx	eax, word ptr[rcx + rax + 1];
+	movzx	eax, word ptr[rax + rcx + 1];
 	add		eax, SHIFT_3;
 	jmp		JMP_F;
 
 JMP_D:
-	movzx	eax, word ptr[rcx + rax + 1];
+	movzx	eax, word ptr[rax + rcx + 1];
 	add		eax, SHIFT_4;
 
 JMP_F:

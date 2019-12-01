@@ -34,13 +34,13 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= MapView::init(&options);
 
 		// マップフォントjustify
-		success |= MapJustify::init(&options);
+		//success |= MapJustify::init(&options);
 
 		// マップフォント調整処理１
-		success |= MapAdj::init(&options);
+		//success |= MapAdj::init(&options);
 
 		// マップフォント表示調整２
-		success |= MapAdj2::init(&options);
+		//success |= MapAdj2::init(&options);
 
 		// マップフォント表示調整３ おそらく強制大文字の解除
 		success |= MapAdj3::init(&options);
@@ -49,13 +49,13 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= Font::init(&options);
 
 		// 終了時のダイアログの花文字
-		success |= DecorativeLetterEndDialog::init(&options);
+		//success |= DecorativeLetterEndDialog::init(&options);
 
 		// ダイアログの花文字
-		success |= DecorativeLetterDialog::init(&options);
+		//success |= DecorativeLetterDialog::init(&options);
 
 		// 継承ダイアログの花文字
-		success |= DecorativeLetterInheritDialog::init(&options);
+		//success |= DecorativeLetterInheritDialog::init(&options);
 
 		// Buttonとツールチップ
 		success |= ButtonAndTooltip::init(&options);
@@ -64,42 +64,42 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= MainText::init(&options);
 
 		// メインテキスト改行処理（ダイアログ）
-		success |= MainTextLineBreak::init(&options);
+		//success |= MainTextLineBreak::init(&options);
 
 		// ニックネーム修正
-		success |= NickNameFix::init(&options);
+		//success |= NickNameFix::init(&options);
 
 		// Dynastyに-idがつかないようにする
-		success |= NoDynastyId::init(&options);
+		//success |= NoDynastyId::init(&options);
 
 		// IME
-		success |= IME::init(&options);
+		//success |= IME::init(&options);
 
 		//Input
-		success |= Input::init(&options);
+		//success |= Input::init(&options);
 
 		// ツールチップとボタンの改行処理
 		success |= Unk3::init(&options);
 		
 		// ...の省略
-		success |= TextOerflow::init(&options);
+		//success |= TextOerflow::init(&options);
 
 		// 不明
-		success |= Unk5::init(&options);
+		//success |= Unk5::init(&options);
 
 		// issue33 「XXXに忠誠を誓っている」にしたい
 		// https://github.com/matanki-saito/CK2dll/issues/33
-		success |= Issue33::init(&options);
+		//success |= Issue33::init(&options);
 
 		// issue32 家 名前になっているので、日本語のときのみ名前 家にしたい
 		// https://github.com/matanki-saito/CK2dll/issues/32
-		success |= Issue32::init(&options);
+		//success |= Issue32::init(&options);
 
 		// 日付表記の変更
-		success |= DateFormat::init(&options);
+		//success |= DateFormat::init(&options);
 
 		// ファイル保存
-		success |= FileSave::init(&options);
+		//success |= FileSave::init(&options);
 
 		if (success == NOERROR && options.test == false) {
 			byte_pattern::temp_instance().debug_output2("DLL [OK]");

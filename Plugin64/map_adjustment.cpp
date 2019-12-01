@@ -53,12 +53,12 @@ namespace MapAdjustment {
 
 		switch (options.version) {
 		case v3_3_0:
-			// lea     rax, [rbp+1F0h+var_1F0]
-			BytePattern::temp_instance().find_pattern("48 8D 45 00 49 83 C8 FF 90 49 FF C0");
-			if (BytePattern::temp_instance().has_size(2, "文字チェック修正")) {
+			// lea     rax, [rbp+220h+var_218]
+			BytePattern::temp_instance().find_pattern("48 8D 45 08 49 83 C8 FF 90 49 FF C0");
+			if (BytePattern::temp_instance().has_size(1, "文字チェック修正")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
-				// lea     rdx, [rbp+1F0h+var_1F0]
+				// lea     rdx, [rbp+220h+var_218]
 				mapAdjustmentProc2ReturnAddress = address + 0x13;
 
 				Injector::MakeJMP(address, mapAdjustmentProc2, true);
@@ -80,7 +80,7 @@ namespace MapAdjustment {
 		switch (options.version) {
 		case v3_3_0:
 			// r9, 0FFFFFFFFFFFFFFFFh
-			BytePattern::temp_instance().find_pattern("49 83 C9 FF 45 33 C0 48 8D 95 C0 00 00 00");
+			BytePattern::temp_instance().find_pattern("49 83 C9 FF 45 33 C0 48 8D 95 E8 00 00 00 48 8D 4D 60");
 			if (BytePattern::temp_instance().has_size(1, "文字チェックの後のコピー処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
@@ -93,8 +93,8 @@ namespace MapAdjustment {
 				e.unmatch.mapAdjustmentProc3Injector = true;
 			}
 
-			// mov     rcx, [r12+30h]
-			BytePattern::temp_instance().find_pattern("49 8B 4C 24 30 48 8B 01 C6 44 24 30 01");
+			// mov     rax, [r15]
+			BytePattern::temp_instance().find_pattern("49 8B 07 48 8D 4D 00 48 89 4C 24 28 48 8D 8D 28 01 00 00");
 			if (BytePattern::temp_instance().has_size(2, "文字チェックの後のコピー処理の戻り先２")) {
 				mapAdjustmentProc3ReturnAddress2 = BytePattern::temp_instance().get_second().address();
 			}
@@ -114,12 +114,12 @@ namespace MapAdjustment {
 
 		switch (options.version) {
 		case v3_3_0:
-			//  lea     rax, [rbp+1F0h+var_160]
-			BytePattern::temp_instance().find_pattern("48 8D 85 90 00 00 00 49 83 F8 10");
+			//  lea     rax, [rbp+220h+var_1A0]
+			BytePattern::temp_instance().find_pattern("48 8D 85 80 00 00 00 49 83 FA 10 49 0F 43 C3");
 			if (BytePattern::temp_instance().has_size(1, "文字取得処理修正")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
-				// mov     rdx, [r15+rax*8]
+				// mov     rdx, [rsi+rax*8]
 				mapAdjustmentProc4ReturnAddress = address + 0x13;
 
 				Injector::MakeJMP(address, mapAdjustmentProc4, true);
@@ -165,9 +165,9 @@ namespace MapAdjustment {
 		DllError result = {};
 
 		result |= mapAdjustmentProc1Injector(options);
-		//result |= mapAdjustmentProc2Injector(options);
-		//result |= mapAdjustmentProc3Injector(options);
-		//result |= mapAdjustmentProc4Injector(options);
+		result |= mapAdjustmentProc2Injector(options);
+		result |= mapAdjustmentProc3Injector(options);
+		result |= mapAdjustmentProc4Injector(options);
 		//result |= mapAdjustmentProc5Injector(options);
 
 		return result;
