@@ -5,6 +5,7 @@
 EXTERN	mapJustifyProc1ReturnAddress1	:	QWORD
 EXTERN	mapJustifyProc1ReturnAddress2	:	QWORD
 EXTERN	mapJustifyProc2ReturnAddress	:	QWORD
+EXTERN	mapJustifyProc3ReturnAddress	:	QWORD
 EXTERN	mapJustifyProc4ReturnAddress	:	QWORD
 
 ;temporary space for code point
@@ -121,7 +122,7 @@ mapJustifyProc2 ENDP
 
 ;-------------------------------------------;
 
-mapJustifyProc4 PROC
+mapJustifyProc3 PROC
 	movsd	xmm3, qword ptr [rbp + 1B0h - 190h];
 
 	cmp		mapJustifyProc1TmpFlag, 1h;
@@ -142,6 +143,55 @@ JMP_C:
 	movsxd	rax, edx;
 	mov		qword ptr [rbp + 1B0h -128h], rsi;
 
+	push	mapJustifyProc3ReturnAddress;
+	ret;
+mapJustifyProc3 ENDP
+
+;-------------------------------------------;
+
+mapJustifyProc4 PROC
+	cmp		byte ptr [rdi + rax], ESCAPE_SEQ_1;
+	jz		JMP_A;
+			
+	cmp		byte ptr [rdi + rax], ESCAPE_SEQ_2;
+	jz		JMP_B;
+
+	cmp		byte ptr [rdi + rax], ESCAPE_SEQ_3;
+	jz		JMP_C;
+
+	cmp		byte ptr [rdi + rax], ESCAPE_SEQ_4;
+	jz		JMP_D;
+
+	movzx	eax, byte ptr [rdi + rax];
+	jmp		JMP_E;
+
+JMP_A:
+	movzx	eax, word ptr [rdi + rax + 1];
+	jmp		JMP_F;
+JMP_B:
+	movzx	eax, word ptr [rdi + rax + 1];
+	sub		eax, SHIFT_2;
+	jmp		JMP_F;
+JMP_C:
+	movzx	eax, word ptr [rdi + rax + 1];
+	add		eax, SHIFT_3;
+	jmp		JMP_F;
+JMP_D:
+	movzx	eax, word ptr [rdi + rax + 1];
+	add		eax, SHIFT_4;
+	jmp		JMP_F;
+
+JMP_F:
+	add		edi, 2;
+	movzx	eax, ax;
+	cmp		eax, NO_FONT;
+	ja		JMP_E;
+	mov		eax, NOT_DEF;
+
+JMP_E:
+	mov		r10, qword ptr [r12 + rax * 8 +0E8h];
+
+	test	r10,r10;
 	push	mapJustifyProc4ReturnAddress;
 	ret;
 mapJustifyProc4 ENDP

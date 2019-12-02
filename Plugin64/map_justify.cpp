@@ -5,10 +5,12 @@ namespace MapJustify {
 	extern "C" {
 		void mapJustifyProc1();
 		void mapJustifyProc2();
+		void mapJustifyProc3();
 		void mapJustifyProc4();
 		uintptr_t mapJustifyProc1ReturnAddress1;
 		uintptr_t mapJustifyProc1ReturnAddress2;
 		uintptr_t mapJustifyProc2ReturnAddress;
+		uintptr_t mapJustifyProc3ReturnAddress;
 		uintptr_t mapJustifyProc4ReturnAddress;
 	}
 
@@ -73,7 +75,7 @@ namespace MapJustify {
 		return e;
 	}
 
-	DllError mapJustifyProc4Injector(RunOptions options) {
+	DllError mapJustifyProc3Injector(RunOptions options) {
 		DllError e = {};
 
 		switch (options.version) {
@@ -84,7 +86,34 @@ namespace MapJustify {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// cmp     r13, rax
-				mapJustifyProc4ReturnAddress = address + 0x24;
+				mapJustifyProc3ReturnAddress = address + 0x24;
+
+				Injector::MakeJMP(address, mapJustifyProc3, true);
+			}
+			else {
+				e.unmatch.mapJustifyProc3Injector = true;
+			}
+			break;
+		default:
+			e.version.mapJustifyProc3Injector = true;
+		}
+
+		return e;
+	}
+
+	// これはwin32のときはMapAdj2としてあったもの。Proc1～3とは別のprocにinjectしている
+	DllError mapJustifyProc4Injector(RunOptions options) {
+		DllError e = {};
+
+		switch (options.version) {
+		case v3_3_0:
+			// movzx   eax, byte ptr [rdi+rax]
+			BytePattern::temp_instance().find_pattern("0F B6 04 07 4D 8B 94 C4 E8 00 00 00");
+			if (BytePattern::temp_instance().has_size(1, "文字取得処理")) {
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				// jz      loc_xxxxx
+				mapJustifyProc4ReturnAddress = address + 0x0F;
 
 				Injector::MakeJMP(address, mapJustifyProc4, true);
 			}
@@ -104,6 +133,7 @@ namespace MapJustify {
 
 		result |= mapJustifyProc1Injector(options);
 		result |= mapJustifyProc2Injector(options);
+		result |= mapJustifyProc3Injector(options);
 		result |= mapJustifyProc4Injector(options);
 
 		return result;
