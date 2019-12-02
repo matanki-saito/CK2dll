@@ -58,6 +58,9 @@
     <Filter Include="ソース ファイル\app\map_justify">
       <UniqueIdentifier>{b684cd34-af10-4f93-baa6-b91611bd60f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\app\unk">
+      <UniqueIdentifier>{01850784-bd35-4cc7-99cf-156cc743147e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mod_download.h">
@@ -140,6 +143,9 @@
     <ClCompile Include="map_justify.cpp">
       <Filter>ソース ファイル\app\map_justify</Filter>
     </ClCompile>
+    <ClCompile Include="unk.cpp">
+      <Filter>ソース ファイル\app\unk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -165,6 +171,9 @@
     </MASM>
     <MASM Include="map_justify_asm.asm">
       <Filter>ソース ファイル\app\map_justify</Filter>
+    </MASM>
+    <MASM Include="unk_asm.asm">
+      <Filter>ソース ファイル\app\unk</Filter>
     </MASM>
   </ItemGroup>
 </Project>
