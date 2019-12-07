@@ -61,6 +61,7 @@ JMP_D:
 	add		eax, SHIFT_4;
 
 JMP_F:
+	dec		rdx;
 	cmp		r14,MAP_LIMIT;
 	ja		JMP_H;
 
