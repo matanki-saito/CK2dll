@@ -1,11 +1,15 @@
-﻿#pragma once
+#pragma once
 
 #include <windows.h>
 #include <conio.h>
 #include <stdio.h>
 #include <filesystem>
+#include <shlobj.h>
+#include "plugin_64.h"
 
 using namespace std;
 using namespace std::filesystem;
 
-bool InitAutoUpdate(const path &folder);
+namespace ModDownload {
+	DllError Init();
+}

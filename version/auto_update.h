@@ -1,4 +1,5 @@
-﻿#pragma once
+#pragma once
+
 
 #include <windows.h>
 #include <conio.h>
@@ -8,4 +9,4 @@
 using namespace std;
 using namespace std::filesystem;
 
-bool InitAutoUpdate(const path &folder);
+bool InitAutoUpdate(const path& folder);

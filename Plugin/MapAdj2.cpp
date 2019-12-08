@@ -151,6 +151,7 @@ namespace MapAdj2
 		byte_pattern::debug_output2("map adj 2");
 
 		// マップ表示の調整　その２
+		// これがないと教皇領などの文字がプロビンスに対して大きくなってしまう
 		result |= fix1_hook(options);
 
 		return result;

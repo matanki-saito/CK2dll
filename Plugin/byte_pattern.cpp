@@ -4,6 +4,7 @@
 #include "byte_pattern.h"
 
 using namespace std;
+using namespace std::filesystem;
 
 memory_pointer byte_pattern::get(size_t index) const
 {
@@ -36,7 +37,7 @@ void byte_pattern::start_log(const wchar_t *module_name)
 
     GetModuleFileName(NULL, exe_path, 512);
 
-    log_stream().open(experimental::filesystem::v1::path{ exe_path }.parent_path() / filename, ios::trunc);
+    log_stream().open(path{ exe_path }.parent_path() / filename, ios::trunc);
 }
 
 void byte_pattern::shutdown_log()

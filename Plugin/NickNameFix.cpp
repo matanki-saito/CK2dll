@@ -154,7 +154,6 @@ namespace NickNameFix
 			cmp ebx, 1;
 			jz issue_14_4_fix;
 
-		issue_14_end_4:
 			// あだ名
 			mov     esi, [ebp + 0x8]; // arg_0, dest
 			mov     byte ptr[ebp - 0x4], 0x14; // prifile cnt ?
