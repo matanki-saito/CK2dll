@@ -34,13 +34,13 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= MapView::init(&options);
 
 		// マップフォントjustify
-		//success |= MapJustify::init(&options);
+		success |= MapJustify::init(&options);
 
 		// マップフォント調整処理１
-		//success |= MapAdj::init(&options);
+		success |= MapAdj::init(&options);
 
 		// マップフォント表示調整２
-		//success |= MapAdj2::init(&options);
+		success |= MapAdj2::init(&options);
 
 		// マップフォント表示調整３ おそらく強制大文字の解除
 		success |= MapAdj3::init(&options);
@@ -64,7 +64,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= MainText::init(&options);
 
 		// メインテキスト改行処理（ダイアログ）
-		//success |= MainTextLineBreak::init(&options);
+		success |= MainTextLineBreak::init(&options);
 
 		// ニックネーム修正
 		//success |= NickNameFix::init(&options);

@@ -47,6 +47,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			// 不明
 			e |= Unk::Init(options);
 
+			// メインテキスト調整
+			e |= MainTextAdjustment::Init(options);
+
 			Validator::Validate(e, options);
 		}
 		else if (ulReasonForCall == DLL_PROCESS_DETACH) {

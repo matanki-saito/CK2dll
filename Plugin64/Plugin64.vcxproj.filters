@@ -61,6 +61,9 @@
     <Filter Include="ソース ファイル\app\unk">
       <UniqueIdentifier>{01850784-bd35-4cc7-99cf-156cc743147e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\app\main_text_adjustment">
+      <UniqueIdentifier>{49cd5192-f9fb-4028-ae4d-cfb9981731ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mod_download.h">
@@ -146,6 +149,9 @@
     <ClCompile Include="unk.cpp">
       <Filter>ソース ファイル\app\unk</Filter>
     </ClCompile>
+    <ClCompile Include="main_text_adjustment.cpp">
+      <Filter>ソース ファイル\app\main_text_adjustment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -174,6 +180,9 @@
     </MASM>
     <MASM Include="unk_asm.asm">
       <Filter>ソース ファイル\app\unk</Filter>
+    </MASM>
+    <MASM Include="main_text_adjustment_asm.asm">
+      <Filter>ソース ファイル\app\main_text_adjustment</Filter>
     </MASM>
   </ItemGroup>
 </Project>

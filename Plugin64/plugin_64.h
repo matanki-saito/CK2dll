@@ -64,6 +64,8 @@ struct DllError {
 			bool fileSaveProc5Injector : 1;
 			bool dateProc1Injector : 1;
 			bool mapNudgeViewProc1Injector : 1;
+			bool mainTextAdjustmentProc1Injector : 1;
+			bool mainTextAdjustmentProc2Injector : 1;
 
 			bool unkProc1Injector : 1;
 		};
@@ -115,6 +117,8 @@ struct DllError {
 			bool fileSaveProc5Injector : 1;
 			bool dateProc1Injector : 1;
 			bool mapNudgeViewProc1Injector : 1;
+			bool mainTextAdjustmentProc1Injector : 1;
+			bool mainTextAdjustmentProc2Injector : 1;
 
 			bool unkProc1Injector : 1;
 		};
@@ -205,5 +209,9 @@ namespace MapJustify {
 }
 
 namespace Unk {
+	DllError Init(RunOptions option);
+}
+
+namespace MainTextAdjustment {
 	DllError Init(RunOptions option);
 }
