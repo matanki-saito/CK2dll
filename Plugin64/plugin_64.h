@@ -170,10 +170,15 @@ typedef struct {
 
 typedef struct {
 	Ck2Version version;
+	bool test;
 } RunOptions;
 
 namespace Version {
-	Ck2Version GetVersion();
+	void GetVersionFromExe(RunOptions* option);
+}
+
+namespace Ini {
+	void GetOptionsFromIni(RunOptions* option);
 }
 
 namespace Debug {

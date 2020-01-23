@@ -64,6 +64,9 @@
     <Filter Include="ソース ファイル\app\main_text_adjustment">
       <UniqueIdentifier>{49cd5192-f9fb-4028-ae4d-cfb9981731ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\app\options">
+      <UniqueIdentifier>{6841bc81-ff2a-4f7c-aab4-a5900e17fab8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mod_download.h">
