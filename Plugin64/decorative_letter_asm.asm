@@ -1,7 +1,7 @@
 EXTERN	decorativeLetterProc1ReturnAddress	:	QWORD
 EXTERN	decorativeLetterProc2CallAddress	:	QWORD
 EXTERN	decorativeLetterProc2ReturnAddress	:	QWORD
-
+EXTERN	decorativeLetterProc3ReturnAddress	:	QWORD
 
 ESCAPE_SEQ_1	=	10h
 ESCAPE_SEQ_2	=	11h
@@ -92,4 +92,43 @@ JMP_C:
 	push	decorativeLetterProc2ReturnAddress;
 	ret;
 decorativeLetterProc2 ENDP
+
+;----------------------;
+
+decorativeLetterProc3 PROC
+	mov     rbx, rax;
+	mov		r9d, dword ptr [rbp + 19B0h - 16C8h];
+
+	lea		rcx, [rbp + 19B0h - 16D8h];
+	cmp		dword ptr[rcx + 10h], 10h;
+	jb		JMP_A;
+	mov		rcx, [rcx];
+
+JMP_A:
+	mov		al, byte ptr [rcx];
+	cmp		al, ESCAPE_SEQ_1;
+	jz		JMP_B;
+	cmp		al, ESCAPE_SEQ_2;
+	jz		JMP_B;
+	cmp		al, ESCAPE_SEQ_3;
+	jz		JMP_B;
+	cmp		al, ESCAPE_SEQ_4;
+	jz		JMP_B;
+	jmp		JMP_C;
+
+JMP_B:
+	mov		r8d, 3;
+	jmp		JMP_D;
+
+JMP_C:
+	mov		r8d, 1;
+
+JMP_D:
+	lea		rdx, [rbp + 19B0h - 760h];
+	lea		rcx, [rbp + 19B0h - 16D8h];
+
+	push	decorativeLetterProc3ReturnAddress;
+	ret;
+decorativeLetterProc3 ENDP
+
 END
