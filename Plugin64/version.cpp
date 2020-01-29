@@ -33,8 +33,6 @@ namespace Version {
 			// ??を取得する
 			Pattern ptn = Injector::ReadMemory<Pattern>(BytePattern::temp_instance().get_first().address(0x2), true);
 
-			Ck2Version version;
-
 			switch (ptn.calVer()) {
 			case 330:
 				version = v3_3_0;

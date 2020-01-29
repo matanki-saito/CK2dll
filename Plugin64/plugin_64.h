@@ -66,6 +66,8 @@ struct DllError {
 			bool mapNudgeViewProc1Injector : 1;
 			bool mainTextAdjustmentProc1Injector : 1;
 			bool mainTextAdjustmentProc2Injector : 1;
+			bool decorativeLetterProc1Injector : 1;
+			bool decorativeLetterProc2Injector : 1;
 
 			bool unkProc1Injector : 1;
 		};
@@ -119,6 +121,8 @@ struct DllError {
 			bool mapNudgeViewProc1Injector : 1;
 			bool mainTextAdjustmentProc1Injector : 1;
 			bool mainTextAdjustmentProc2Injector : 1;
+			bool decorativeLetterProc1Injector : 1;
+			bool decorativeLetterProc2Injector : 1;
 
 			bool unkProc1Injector : 1;
 		};
@@ -218,5 +222,9 @@ namespace Unk {
 }
 
 namespace MainTextAdjustment {
+	DllError Init(RunOptions option);
+}
+
+namespace DecorativeLetter {
 	DllError Init(RunOptions option);
 }
