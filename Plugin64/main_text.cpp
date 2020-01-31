@@ -80,7 +80,7 @@ namespace MainText {
 		switch (options.version) {
 		case v3_3_0:
 			// cmp cs:byte_xxxxx, 0
-			BytePattern::temp_instance().find_pattern("80 3D E7 ? ? ? ? 0F 84 3F 01 00 00");
+			BytePattern::temp_instance().find_pattern("80 3D ? ? ? ? 00 0F 84 3F 01 00 00");
 			if (BytePattern::temp_instance().has_size(1, "テキスト処理ループ１の改行処理の戻り先２取得")) {
 				mainTextProc3ReturnAddress2 = BytePattern::temp_instance().get_first().address();
 			}

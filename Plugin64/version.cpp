@@ -35,6 +35,7 @@ namespace Version {
 
 			switch (ptn.calVer()) {
 			case 330:
+			case 331:
 				version = v3_3_0;
 				break;
 			default:
