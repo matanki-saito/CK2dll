@@ -24,17 +24,18 @@ namespace Version {
 		}
 	}
 
-	Ck2Version GetVersion() {
+	void GetVersionFromExe(RunOptions* options) {
+		Ck2Version version;
+
 		// CK2 v3.x.
 		BytePattern::temp_instance().find_pattern("00 00 33 2E ? 2E");
 		if (BytePattern::temp_instance().count() > 0) {
 			// ??を取得する
 			Pattern ptn = Injector::ReadMemory<Pattern>(BytePattern::temp_instance().get_first().address(0x2), true);
 
-			Ck2Version version;
-
 			switch (ptn.calVer()) {
 			case 330:
+			case 331:
 				version = v3_3_0;
 				break;
 			default:
@@ -44,9 +45,11 @@ namespace Version {
 			}
 
 			BytePattern::LoggingInfo(versionString(version));
-
-			return version;
 		}
-		else return UNKNOWN;
+		else {
+			version = UNKNOWN;
+		}
+		
+		options->version = version;
 	}
 }

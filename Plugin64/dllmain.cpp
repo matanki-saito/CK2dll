@@ -19,11 +19,14 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
 			// 設定
 			RunOptions options;
-			options.version = Version::GetVersion();
+			// Version取得
+			Version::GetVersionFromExe(&options);
+			// INIから取得
+			Ini::GetOptionsFromIni(&options);
 
 			// デバッグ用
 			#ifdef _DEBUG
-			//e |= Debug::Init(options);
+			// e |= Debug::Init(options);
 			#endif
 
 			// フォント読み込み
@@ -49,6 +52,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
 			// メインテキスト調整
 			e |= MainTextAdjustment::Init(options);
+
+			// 装飾文字
+			e |= DecorativeLetter::Init(options);
 
 			Validator::Validate(e, options);
 		}
