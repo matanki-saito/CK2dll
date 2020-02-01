@@ -2,6 +2,8 @@ EXTERN mainTextAdjustmentProc1ReturnAddress: QWORD
 EXTERN mainTextAdjustmentProc2ReturnAddress1: QWORD
 EXTERN mainTextAdjustmentProc2ReturnAddress2: QWORD
 EXTERN mainTextAdjustmentProc3ReturnAddress: QWORD
+EXTERN mainTextAdjustmentProc4ReturnAddress1: QWORD
+EXTERN mainTextAdjustmentProc4ReturnAddress2: QWORD
 
 
 ESCAPE_SEQ_1	=	10h
@@ -143,5 +145,33 @@ JMP_D:
 	push	mainTextAdjustmentProc3ReturnAddress;
 	ret;
 mainTextAdjustmentProc3 ENDP
+
+;-------------------------------------------;
+
+mainTextAdjustmentProc4 PROC
+	;マルチバイト文字をチェック
+	cmp		dword ptr [mainTextAdjustmentProc1TmpCharacter], 20h;
+	jz		JMP_B;
+
+	cmp		dword ptr [mainTextAdjustmentProc1TmpCharacter], 100h;
+	ja		JMP_B;
+
+	; ここから下は移植
+	mov		r13d, dword ptr[ rbp + 3Fh + 28h];
+	cmp		r15d, r13d;
+	jle		JMP_B;
+	cmp		r10d, dword ptr [rbp + 3Fh + 30h];
+	jle		JMP_A;
+	cmp		byte ptr [rbp + 3Fh + 50h], 0;
+	jnz		JMP_B;
+
+JMP_A: ;　左
+	push	mainTextAdjustmentProc4ReturnAddress1;
+	ret;
+
+JMP_B: ; 右
+	push	mainTextAdjustmentProc4ReturnAddress2;
+	ret;
+mainTextAdjustmentProc4 ENDP
 
 END
