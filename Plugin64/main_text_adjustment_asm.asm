@@ -4,6 +4,8 @@ EXTERN mainTextAdjustmentProc2ReturnAddress2: QWORD
 EXTERN mainTextAdjustmentProc3ReturnAddress: QWORD
 EXTERN mainTextAdjustmentProc4ReturnAddress1: QWORD
 EXTERN mainTextAdjustmentProc4ReturnAddress2: QWORD
+EXTERN mainTextAdjustmentProc5ReturnAddress: QWORD
+EXTERN mainTextAdjustmentProc5CallAddress: QWORD
 
 
 ESCAPE_SEQ_1	=	10h
@@ -60,7 +62,28 @@ JMP_F:
 	ja		JMP_E;
 	mov		eax, NOT_DEF;
 JMP_E:
-	mov		mainTextAdjustmentProc1TmpCharacter, eax;
+
+	cmp		eax, 20h;
+	jz		k_2_2;
+
+	cmp		eax, 100h;
+	ja		k_2_2;
+
+	cmp		dword ptr [mainTextAdjustmentProc1TmpCharacter], 100h;
+	jb		k_2_5;
+
+k_2_6:
+	mov		dword ptr[mainTextAdjustmentProc1TmpCharacter], 9;
+	jmp		k_2_3;
+
+k_2_5:
+	cmp		dword ptr[mainTextAdjustmentProc1TmpCharacter], 9;
+	jz		k_2_6;
+
+k_2_2:
+	mov		dword ptr[mainTextAdjustmentProc1TmpCharacter], eax;
+
+k_2_3:
 
 	mov		r15, qword ptr [r11 + rax * 8 + 0E8h];
 	test    r15, r15;
@@ -149,14 +172,14 @@ mainTextAdjustmentProc3 ENDP
 ;-------------------------------------------;
 
 mainTextAdjustmentProc4 PROC
-	;マルチバイト文字をチェック
-	cmp		dword ptr [mainTextAdjustmentProc1TmpCharacter], 20h;
+	cmp		dword ptr[mainTextAdjustmentProc1TmpCharacter], 9;
 	jz		JMP_B;
 
-	cmp		dword ptr [mainTextAdjustmentProc1TmpCharacter], 100h;
+	cmp		dword ptr[mainTextAdjustmentProc1TmpCharacter], 100h;
 	ja		JMP_B;
 
 	; ここから下は移植
+JMP_C:
 	mov		r13d, dword ptr[ rbp + 3Fh + 28h];
 	cmp		r15d, r13d;
 	jle		JMP_B;
@@ -173,5 +196,27 @@ JMP_B: ; 右
 	push	mainTextAdjustmentProc4ReturnAddress2;
 	ret;
 mainTextAdjustmentProc4 ENDP
+
+;-------------------------------------------;
+
+mainTextAdjustmentProc5 PROC
+
+	cmp		dword ptr [mainTextAdjustmentProc1TmpCharacter], 100h;
+	jb		JMP_A;
+
+	; 文字数を1減らす
+	mov		ecx, dword ptr [rax + 10h];
+	dec		ecx;
+	mov		dword ptr [rax + 10h], ecx;
+
+JMP_A:
+	inc		r8;
+	mov     rdx, qword ptr [rsp + 0A8h - 88h];
+	lea     rcx, [rsp + 0A8h - 88h];
+	call	mainTextAdjustmentProc5CallAddress;
+
+	push	mainTextAdjustmentProc5ReturnAddress;
+	ret;
+mainTextAdjustmentProc5 ENDP
 
 END

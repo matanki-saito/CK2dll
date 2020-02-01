@@ -8,12 +8,15 @@ namespace MainTextAdjustment {
 		void mainTextAdjustmentProc2();
 		void mainTextAdjustmentProc3();
 		void mainTextAdjustmentProc4();
+		void mainTextAdjustmentProc5();
 		uintptr_t mainTextAdjustmentProc1ReturnAddress;
 		uintptr_t mainTextAdjustmentProc2ReturnAddress1;
 		uintptr_t mainTextAdjustmentProc2ReturnAddress2;
 		uintptr_t mainTextAdjustmentProc3ReturnAddress;
 		uintptr_t mainTextAdjustmentProc4ReturnAddress1;
 		uintptr_t mainTextAdjustmentProc4ReturnAddress2;
+		uintptr_t mainTextAdjustmentProc5ReturnAddress;
+		uintptr_t mainTextAdjustmentProc5CallAddress;
 	}
 
 	DllError mainTextAdjustmentProc1Injector(RunOptions options) {
@@ -126,6 +129,35 @@ namespace MainTextAdjustment {
 		return e;
 	}
 
+	DllError mainTextAdjustmentProc5Injector(RunOptions options) {
+		DllError e = {};
+
+		switch (options.version) {
+		case v3_3_0:
+			// inc     r8
+			BytePattern::temp_instance().find_pattern("49 FF C0 48 8B 54 24 20 48 8D 4C 24 20 E8 5F B1");
+			if (BytePattern::temp_instance().has_size(1, "分岐処理（右）の修正")) {
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				// mov     [rbp+3Fh+var_A8], 0Fh
+				mainTextAdjustmentProc5ReturnAddress = address + 0x12;
+
+				// call
+				mainTextAdjustmentProc5CallAddress = Injector::GetBranchDestination(address+0xD).as_int();
+
+				Injector::MakeJMP(address, mainTextAdjustmentProc5, true);
+			}
+			else {
+				e.unmatch.mainTextAdjustmentProc5Injector = true;
+			}
+			break;
+		default:
+			e.version.mainTextAdjustmentProc5Injector = true;
+		}
+
+		return e;
+	}
+
 
 	DllError Init(RunOptions options) {
 		DllError result = {};
@@ -134,6 +166,7 @@ namespace MainTextAdjustment {
 		result |= mainTextAdjustmentProc2Injector(options);
 		result |= mainTextAdjustmentProc3Injector(options);
 		result |= mainTextAdjustmentProc4Injector(options);
+		result |= mainTextAdjustmentProc5Injector(options);
 
 		return result;
 	}
