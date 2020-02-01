@@ -1,6 +1,8 @@
 EXTERN mainTextAdjustmentProc1ReturnAddress: QWORD
 EXTERN mainTextAdjustmentProc2ReturnAddress1: QWORD
 EXTERN mainTextAdjustmentProc2ReturnAddress2: QWORD
+EXTERN mainTextAdjustmentProc3ReturnAddress: QWORD
+
 
 ESCAPE_SEQ_1	=	10h
 ESCAPE_SEQ_2	=	11h
@@ -87,5 +89,59 @@ JMP_B:
 	push	mainTextAdjustmentProc2ReturnAddress2;
 	ret;
 mainTextAdjustmentProc2 ENDP
+
+;-------------------------------------------;
+
+mainTextAdjustmentProc3 PROC
+
+	cmp		cl, ESCAPE_SEQ_1;
+	jz		JMP_A;
+
+	cmp		cl, ESCAPE_SEQ_2;
+	jz		JMP_A;
+
+	cmp		cl, ESCAPE_SEQ_3;
+	jz		JMP_A;
+
+	cmp		cl, ESCAPE_SEQ_4;
+	jz		JMP_A;
+
+	cmp		cl, 20h;
+	jz		JMP_A;
+	jmp		JMP_B;
+
+JMP_A:
+	cmovz	r15d, edi;
+
+JMP_B:
+	mov		dword ptr [rbp + 3Fh + 18h], r15d;
+	mov		eax, r14d;
+
+	cmp		cl, ESCAPE_SEQ_1;
+	jz		JMP_C;
+
+	cmp		cl, ESCAPE_SEQ_2;
+	jz		JMP_C;
+
+	cmp		cl, ESCAPE_SEQ_3;
+	jz		JMP_C;
+
+	cmp		cl, ESCAPE_SEQ_4;
+	jz		JMP_C;
+
+	cmp		cl, 20h;
+	jz		JMP_C;
+
+	jmp		JMP_D;
+
+JMP_C:
+	cmovnz	eax, r13d;
+
+JMP_D:
+	
+	mov		r13d, eax;
+	push	mainTextAdjustmentProc3ReturnAddress;
+	ret;
+mainTextAdjustmentProc3 ENDP
 
 END
