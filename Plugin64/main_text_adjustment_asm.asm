@@ -94,8 +94,8 @@ mainTextAdjustmentProc1 ENDP
 ;-------------------------------------------;
 
 mainTextAdjustmentProc2 PROC
-	cmp		mainTextAdjustmentProc1TmpCharacter, 0FFh;
-	jle		JMP_A;
+	cmp		mainTextAdjustmentProc1TmpCharacter,100h;
+	jb		JMP_A;
 	add		edi,2;
 
 JMP_A:
@@ -132,8 +132,6 @@ mainTextAdjustmentProc3 PROC
 	jz		JMP_A;
 
 	cmp		cl, 20h;
-	jz		JMP_A;
-	jmp		JMP_B;
 
 JMP_A:
 	cmovz	r15d, edi;
@@ -155,9 +153,6 @@ JMP_B:
 	jz		JMP_C;
 
 	cmp		cl, 20h;
-	jz		JMP_C;
-
-	jmp		JMP_D;
 
 JMP_C:
 	cmovnz	eax, r13d;

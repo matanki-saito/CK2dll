@@ -162,11 +162,18 @@ namespace MainTextAdjustment {
 	DllError Init(RunOptions options) {
 		DllError result = {};
 
+		// 文字列取得部分の修正
 		result |= mainTextAdjustmentProc1Injector(options);
+
+		// ループカウントの修正
 		result |= mainTextAdjustmentProc2Injector(options);
-		result |= mainTextAdjustmentProc3Injector(options);
-		result |= mainTextAdjustmentProc4Injector(options);
-		result |= mainTextAdjustmentProc5Injector(options);
+
+		// 文字列取得前のスペースチェックの修正
+		//result |= mainTextAdjustmentProc3Injector(options);
+
+		//result |= mainTextAdjustmentProc4Injector(options);
+
+		//result |= mainTextAdjustmentProc5Injector(options);
 
 		return result;
 	}
