@@ -169,11 +169,13 @@ namespace MainTextAdjustment {
 		result |= mainTextAdjustmentProc2Injector(options);
 
 		// 文字列取得前のスペースチェックの修正
-		//result |= mainTextAdjustmentProc3Injector(options);
+		result |= mainTextAdjustmentProc3Injector(options);
 
-		//result |= mainTextAdjustmentProc4Injector(options);
+		// 分岐処理
+		result |= mainTextAdjustmentProc4Injector(options);
 
-		//result |= mainTextAdjustmentProc5Injector(options);
+		// 文字カウント修正
+		result |= mainTextAdjustmentProc5Injector(options);
 
 		return result;
 	}

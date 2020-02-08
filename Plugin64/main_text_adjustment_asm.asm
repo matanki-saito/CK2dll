@@ -99,7 +99,7 @@ mainTextAdjustmentProc2 PROC
 	add		edi,2;
 
 JMP_A:
-	mov		mainTextAdjustmentProc1TmpCharacter, 0;
+	;mov		mainTextAdjustmentProc1TmpCharacter, 0;
 	inc		edi;
 	mov		r9, qword ptr [rbx+10h];
 	cmp		edi, r9d;
@@ -167,6 +167,8 @@ mainTextAdjustmentProc3 ENDP
 ;-------------------------------------------;
 
 mainTextAdjustmentProc4 PROC
+	mov		r13d, dword ptr[ rbp + 3Fh + 28h];
+
 	cmp		dword ptr[mainTextAdjustmentProc1TmpCharacter], 9;
 	jz		JMP_B;
 
@@ -175,7 +177,6 @@ mainTextAdjustmentProc4 PROC
 
 	; Ç±Ç±Ç©ÇÁâ∫ÇÕà⁄êA
 JMP_C:
-	mov		r13d, dword ptr[ rbp + 3Fh + 28h];
 	cmp		r15d, r13d;
 	jle		JMP_B;
 	cmp		r10d, dword ptr [rbp + 3Fh + 30h];
