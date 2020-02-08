@@ -9,6 +9,7 @@ namespace MainTextAdjustment {
 		void mainTextAdjustmentProc3();
 		void mainTextAdjustmentProc4();
 		void mainTextAdjustmentProc5();
+		void mainTextAdjustmentProc6();
 		uintptr_t mainTextAdjustmentProc1ReturnAddress;
 		uintptr_t mainTextAdjustmentProc2ReturnAddress1;
 		uintptr_t mainTextAdjustmentProc2ReturnAddress2;
@@ -17,6 +18,7 @@ namespace MainTextAdjustment {
 		uintptr_t mainTextAdjustmentProc4ReturnAddress2;
 		uintptr_t mainTextAdjustmentProc5ReturnAddress;
 		uintptr_t mainTextAdjustmentProc5CallAddress;
+		uintptr_t mainTextAdjustmentProc6ReturnAddress;
 	}
 
 	DllError mainTextAdjustmentProc1Injector(RunOptions options) {
@@ -158,6 +160,32 @@ namespace MainTextAdjustment {
 		return e;
 	}
 
+	DllError mainTextAdjustmentProc6Injector(RunOptions options) {
+		DllError e = {};
+
+		switch (options.version) {
+		case v3_3_0:
+			// mov     r15d, edi
+			BytePattern::temp_instance().find_pattern("44 8B FF 8B CF 89 4D 67 45 8B E6 44 8B 55 77");
+			if (BytePattern::temp_instance().has_size(1, "変数リセットキャンセル")) {
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				// jmp     short loc_xxxxx
+				mainTextAdjustmentProc6ReturnAddress = address + 0x16;
+
+				Injector::MakeJMP(address, mainTextAdjustmentProc6, true);
+			}
+			else {
+				e.unmatch.mainTextAdjustmentProc6Injector = true;
+			}
+			break;
+		default:
+			e.version.mainTextAdjustmentProc6Injector = true;
+		}
+
+		return e;
+	}
+
 
 	DllError Init(RunOptions options) {
 		DllError result = {};
@@ -176,6 +204,9 @@ namespace MainTextAdjustment {
 
 		// 文字カウント修正
 		result |= mainTextAdjustmentProc5Injector(options);
+
+		// リセットキャンセル
+		result |= mainTextAdjustmentProc6Injector(options);
 
 		return result;
 	}

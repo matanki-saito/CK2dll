@@ -69,6 +69,7 @@ struct DllError {
 			bool mainTextAdjustmentProc3Injector : 1;
 			bool mainTextAdjustmentProc4Injector : 1;
 			bool mainTextAdjustmentProc5Injector : 1;
+			bool mainTextAdjustmentProc6Injector : 1;
 			bool decorativeLetterProc1Injector : 1;
 			bool decorativeLetterProc2Injector : 1;
 			bool decorativeLetterProc3Injector : 1;
@@ -128,6 +129,7 @@ struct DllError {
 			bool mainTextAdjustmentProc3Injector : 1;
 			bool mainTextAdjustmentProc4Injector : 1;
 			bool mainTextAdjustmentProc5Injector : 1;
+			bool mainTextAdjustmentProc6Injector : 1;
 			bool decorativeLetterProc1Injector : 1;
 			bool decorativeLetterProc2Injector : 1;
 			bool decorativeLetterProc3Injector : 1;
