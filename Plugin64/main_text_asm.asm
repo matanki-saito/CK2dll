@@ -144,7 +144,7 @@ JMP_A:
 	
 JMP_B:
 	lea		eax, [r15+rbx*2];
-	cmp		eax, [rbp-78h];
+	cmp		eax, dword ptr [rbp-78h];
 
 	push	mainTextProc3ReturnAddress1;
 	ret;

@@ -828,7 +828,12 @@ namespace MainTextLineBreak {
 	__declspec(naked) void x_5_v310()
 	{
 		__asm {
-			mov[ebp - 0x10], 0; // issue-95の修正でesiの変更が要らなくなった
+			cmp word ptr[ebp - 0x8C + 2], 0x100;
+			jae x_4;
+
+			//mov[ebp - 0x10], 0; // issue-95の修正でesiの変更が要らなくなった
+			mov[ebp - 0x14], 0;
+		x_4:
 			push loc_194690F;
 			ret;
 		}

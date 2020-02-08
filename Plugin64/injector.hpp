@@ -591,6 +591,7 @@ namespace Injector
 			case 0x15:  // call dword ptr [addr]
 			case 0x25:  // jmp dword ptr [addr]
 			case 0x85:  // jne
+			case 0x8E:  // jle
 			case 0x84:  // jz
 			case 0x8D:  // jge
 				auto a = ReadRelativeOffset(at + 2, 4, vp);
