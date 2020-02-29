@@ -9,6 +9,8 @@ namespace ModDownload {
 		STARTUPINFO si;
 		PROCESS_INFORMATION pi;
 
+		DWORD errCode;
+
 		memset(&si, 0, sizeof(STARTUPINFO));
 		memset(&pi, 0, sizeof(PROCESS_INFORMATION));
 		si.cb = sizeof(STARTUPINFO);
@@ -19,10 +21,11 @@ namespace ModDownload {
 			error.mod.proccessFaild = true;
 		}
 		else {
-			DWORD result = WaitForSingleObject(pi.hProcess, 35 * 1000); // 35 sec
+			DWORD result = WaitForSingleObject(pi.hProcess, 10 * 1000); // 10 sec
 			switch (result)
 			{
 			case WAIT_FAILED:
+				errCode = GetLastError();
 				error.mod.waitFailed = true;
 				break;
 			case WAIT_TIMEOUT:

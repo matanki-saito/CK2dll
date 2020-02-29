@@ -93,11 +93,9 @@ void Initialize(HMODULE hSelf)
 
 	#ifndef _DEBUG
 	if (!InitAutoUpdate(pluginsPath)) {
-		exit(-1);
+		//　アラートを出すのみで終了はしないことにした
 	}
 	#endif // DEBUG時は自動更新しない
-
-
 
 	initInjector();
 
