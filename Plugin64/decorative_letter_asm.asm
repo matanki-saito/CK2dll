@@ -2,6 +2,10 @@ EXTERN	decorativeLetterProc1ReturnAddress	:	QWORD
 EXTERN	decorativeLetterProc2CallAddress	:	QWORD
 EXTERN	decorativeLetterProc2ReturnAddress	:	QWORD
 EXTERN	decorativeLetterProc3ReturnAddress	:	QWORD
+EXTERN	decorativeLetterProc4ReturnAddress	:	QWORD
+EXTERN	decorativeLetterProc5ReturnAddress	:	QWORD
+EXTERN	decorativeLetterProc6ReturnAddress	:	QWORD
+EXTERN	decorativeLetterProc7ReturnAddress	:	QWORD
 
 ESCAPE_SEQ_1	=	10h
 ESCAPE_SEQ_2	=	11h
@@ -130,5 +134,167 @@ JMP_D:
 	push	decorativeLetterProc3ReturnAddress;
 	ret;
 decorativeLetterProc3 ENDP
+
+;----------------------;
+
+decorativeLetterProc4 PROC
+	mov		rbx, rax;
+	lea		rdx, [rbp + 810h - 500h];
+	lea		rcx, [rbp + 810h - 760h];
+
+	cmp		qword ptr[rcx + 10h], 10h;
+	jb		JMP_A;
+	mov		rcx, [rcx];
+
+JMP_A:
+	mov		cl, byte ptr [rcx];
+
+	cmp		cl, ESCAPE_SEQ_1;
+	jz		JMP_B;
+
+	cmp		cl, ESCAPE_SEQ_2;
+	jz		JMP_B;
+
+	cmp		cl, ESCAPE_SEQ_3;
+	jz		JMP_B;
+
+	cmp		cl, ESCAPE_SEQ_4;
+	jz		JMP_B;
+
+	jmp		JMP_C;
+
+JMP_B:
+	mov		r9d,3;
+	jmp		JMP_D;
+
+JMP_C:
+	mov		r9d,1;
+
+JMP_D:
+	xor		r8d, r8d;
+	lea		rcx, [rbp + 810h - 760h]; Œ³‚É–ß‚·
+
+	push	decorativeLetterProc4ReturnAddress;
+	ret;
+decorativeLetterProc4 ENDP
+
+;----------------------;
+
+decorativeLetterProc5 PROC
+	mov		r9d, dword ptr[rbp + 810h - 750h];
+
+	lea		rcx, [rbp + 810h - 760h];
+
+	cmp		dword ptr[rcx + 10h], 10h;
+	jb		JMP_A;
+	mov		rcx, [rcx];
+
+JMP_A:
+	mov		al, byte ptr [rcx];
+	cmp		al, ESCAPE_SEQ_1;
+	jz		JMP_B;
+	cmp		al, ESCAPE_SEQ_2;
+	jz		JMP_B;
+	cmp		al, ESCAPE_SEQ_3;
+	jz		JMP_B;
+	cmp		al, ESCAPE_SEQ_4;
+	jz		JMP_B;
+	jmp		JMP_C;
+
+JMP_B:
+	mov		r8d, 3;
+	jmp		JMP_D;
+
+JMP_C:
+	mov		r8d, 1;
+
+JMP_D:
+	lea		rdx, [rbp + 810h - 4E0h];
+	lea		rcx, [rbp + 810h - 760h];
+
+	push	decorativeLetterProc5ReturnAddress;
+	ret;
+decorativeLetterProc5 ENDP
+
+;----------------------;
+
+decorativeLetterProc6 PROC
+	mov     rbx, rax;
+	lea		rdx, [rbp + 30h];
+	lea		rcx, [rbp + 70h];
+
+	cmp		qword ptr[rcx + 10h], 10h;
+	jb		JMP_A;
+	mov		rcx, [rcx];
+
+JMP_A:
+	mov		cl, byte ptr [rcx];
+
+	cmp		cl, ESCAPE_SEQ_1;
+	jz		JMP_B;
+
+	cmp		cl, ESCAPE_SEQ_2;
+	jz		JMP_B;
+
+	cmp		cl, ESCAPE_SEQ_3;
+	jz		JMP_B;
+
+	cmp		cl, ESCAPE_SEQ_4;
+	jz		JMP_B;
+
+	jmp		JMP_C;
+
+JMP_B:
+	mov		r9d,3;
+	jmp		JMP_D;
+
+JMP_C:
+	mov		r9d,1;
+
+JMP_D:
+	xor		r8d, r8d;
+	lea		rcx, [rbp + 70h]; Œ³‚É–ß‚·
+
+	push	decorativeLetterProc6ReturnAddress;
+	ret;
+decorativeLetterProc6 ENDP
+
+;----------------------;
+
+decorativeLetterProc7 PROC
+	mov		r9d, dword ptr [rbp + 80h];
+
+	lea		rcx, [rbp + 70h];
+
+	cmp		dword ptr[rcx + 10h], 10h;
+	jb		JMP_A;
+	mov		rcx, [rcx];
+
+JMP_A:
+	mov		al, byte ptr [rcx];
+	cmp		al, ESCAPE_SEQ_1;
+	jz		JMP_B;
+	cmp		al, ESCAPE_SEQ_2;
+	jz		JMP_B;
+	cmp		al, ESCAPE_SEQ_3;
+	jz		JMP_B;
+	cmp		al, ESCAPE_SEQ_4;
+	jz		JMP_B;
+	jmp		JMP_C;
+
+JMP_B:
+	mov		r8d, 3;
+	jmp		JMP_D;
+
+JMP_C:
+	mov		r8d, 1;
+
+JMP_D:
+	lea		rdx, [rbp + 1A8h];
+	lea		rcx, [rbp + 70h];
+
+	push	decorativeLetterProc7ReturnAddress;
+	ret;
+decorativeLetterProc7 ENDP
 
 END

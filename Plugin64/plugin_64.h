@@ -73,6 +73,10 @@ struct DllError {
 			bool decorativeLetterProc1Injector : 1;
 			bool decorativeLetterProc2Injector : 1;
 			bool decorativeLetterProc3Injector : 1;
+			bool decorativeLetterProc4Injector : 1;
+			bool decorativeLetterProc5Injector : 1;
+			bool decorativeLetterProc6Injector : 1;
+			bool decorativeLetterProc7Injector : 1;
 
 			bool unkProc1Injector : 1;
 		};
@@ -133,6 +137,10 @@ struct DllError {
 			bool decorativeLetterProc1Injector : 1;
 			bool decorativeLetterProc2Injector : 1;
 			bool decorativeLetterProc3Injector : 1;
+			bool decorativeLetterProc4Injector : 1;
+			bool decorativeLetterProc5Injector : 1;
+			bool decorativeLetterProc6Injector : 1;
+			bool decorativeLetterProc7Injector : 1;
 
 			bool unkProc1Injector : 1;
 		};
