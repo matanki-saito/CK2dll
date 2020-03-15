@@ -73,6 +73,9 @@
     <Filter Include="ソース ファイル\app\date">
       <UniqueIdentifier>{9d481df6-fb92-4905-8c40-343f9b9c859f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\app\word_order">
+      <UniqueIdentifier>{508b5b80-ef28-44bd-acbd-6e393831e50d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mod_download.h">
@@ -170,6 +173,9 @@
     <ClCompile Include="date.cpp">
       <Filter>ソース ファイル\app\date</Filter>
     </ClCompile>
+    <ClCompile Include="word_order.cpp">
+      <Filter>ソース ファイル\app\word_order</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -207,6 +213,9 @@
     </MASM>
     <MASM Include="date_asm.asm">
       <Filter>ソース ファイル\app\date</Filter>
+    </MASM>
+    <MASM Include="word_order_asm.asm">
+      <Filter>ソース ファイル\app\word_order</Filter>
     </MASM>
   </ItemGroup>
 </Project>

@@ -83,6 +83,8 @@ struct DllError {
 			bool decorativeLetterProc11Injector : 1;
 
 			bool unkProc1Injector : 1;
+
+			bool general : 1;
 		};
 	} version;
 
@@ -151,6 +153,8 @@ struct DllError {
 			bool decorativeLetterProc11Injector : 1;
 
 			bool unkProc1Injector : 1;
+
+			bool general : 1;
 		};
 	} unmatch;
 
@@ -256,5 +260,9 @@ namespace DecorativeLetter {
 }
 
 namespace Date {
+	DllError Init(RunOptions option);
+}
+
+namespace WordOrder {
 	DllError Init(RunOptions option);
 }

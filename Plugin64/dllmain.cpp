@@ -59,6 +59,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			// 日付
 			e |= Date::Init(options);
 
+			// 置き換え
+			e |= WordOrder::Init(options);
+
 			Validator::Validate(e, options);
 		}
 		else if (ulReasonForCall == DLL_PROCESS_DETACH) {
