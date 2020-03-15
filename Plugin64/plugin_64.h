@@ -266,3 +266,7 @@ namespace Date {
 namespace WordOrder {
 	DllError Init(RunOptions option);
 }
+
+namespace Localize {
+	DllError Init(RunOptions option);
+}

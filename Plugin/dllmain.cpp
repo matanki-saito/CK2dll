@@ -70,7 +70,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= NickNameFix::init(&options);
 
 		// Dynastyに-idがつかないようにする
-		//success |= NoDynastyId::init(&options);
+		success |= NoDynastyId::init(&options);
 
 		// IME
 		//success |= IME::init(&options);

@@ -76,6 +76,9 @@
     <Filter Include="ソース ファイル\app\word_order">
       <UniqueIdentifier>{508b5b80-ef28-44bd-acbd-6e393831e50d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\app\localize">
+      <UniqueIdentifier>{afa04787-64ef-465f-a201-0a16c8c4bc1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mod_download.h">
@@ -176,6 +179,9 @@
     <ClCompile Include="word_order.cpp">
       <Filter>ソース ファイル\app\word_order</Filter>
     </ClCompile>
+    <ClCompile Include="localize.cpp">
+      <Filter>ソース ファイル\app\localize</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -216,6 +222,9 @@
     </MASM>
     <MASM Include="word_order_asm.asm">
       <Filter>ソース ファイル\app\word_order</Filter>
+    </MASM>
+    <MASM Include="localize_asm.asm">
+      <Filter>ソース ファイル\app\localize</Filter>
     </MASM>
   </ItemGroup>
 </Project>
