@@ -254,3 +254,7 @@ namespace MainTextAdjustment {
 namespace DecorativeLetter {
 	DllError Init(RunOptions option);
 }
+
+namespace Date {
+	DllError Init(RunOptions option);
+}

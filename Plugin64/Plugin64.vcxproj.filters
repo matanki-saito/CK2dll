@@ -70,6 +70,9 @@
     <Filter Include="ソース ファイル\app\decorative_letter">
       <UniqueIdentifier>{a97170d5-51ea-4571-b36a-b0aaed93be9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\app\date">
+      <UniqueIdentifier>{9d481df6-fb92-4905-8c40-343f9b9c859f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mod_download.h">
@@ -164,6 +167,9 @@
     <ClCompile Include="decorative_letter.cpp">
       <Filter>ソース ファイル\app\decorative_letter</Filter>
     </ClCompile>
+    <ClCompile Include="date.cpp">
+      <Filter>ソース ファイル\app\date</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -198,6 +204,9 @@
     </MASM>
     <MASM Include="decorative_letter_asm.asm">
       <Filter>ソース ファイル\app\decorative_letter</Filter>
+    </MASM>
+    <MASM Include="date_asm.asm">
+      <Filter>ソース ファイル\app\date</Filter>
     </MASM>
   </ItemGroup>
 </Project>

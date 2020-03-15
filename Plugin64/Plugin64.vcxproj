@@ -177,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="byte_pattern.cpp" />
+    <ClCompile Include="date.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="decorative_letter.cpp" />
     <ClCompile Include="dllmain.cpp" />
@@ -201,6 +202,7 @@
     <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <MASM Include="date_asm.asm" />
     <MASM Include="debug_asm.asm">
       <FileType>Document</FileType>
     </MASM>
