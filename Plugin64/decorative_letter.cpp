@@ -10,6 +10,10 @@ namespace DecorativeLetter {
 		void decorativeLetterProc5();
 		void decorativeLetterProc6();
 		void decorativeLetterProc7();
+		void decorativeLetterProc8();
+		void decorativeLetterProc9();
+		void decorativeLetterProc10();
+		void decorativeLetterProc11();
 		uintptr_t decorativeLetterProc1ReturnAddress;
 		uintptr_t decorativeLetterProc2CallAddress;
 		uintptr_t decorativeLetterProc2ReturnAddress;
@@ -18,6 +22,10 @@ namespace DecorativeLetter {
 		uintptr_t decorativeLetterProc5ReturnAddress;
 		uintptr_t decorativeLetterProc6ReturnAddress;
 		uintptr_t decorativeLetterProc7ReturnAddress;
+		uintptr_t decorativeLetterProc8ReturnAddress;
+		uintptr_t decorativeLetterProc9ReturnAddress;
+		uintptr_t decorativeLetterProc10ReturnAddress;
+		uintptr_t decorativeLetterProc11ReturnAddress;
 	}
 
 	DllError decorativeLetterProc1Injector(RunOptions options) {
@@ -207,6 +215,111 @@ namespace DecorativeLetter {
 		return e;
 	}
 
+
+	DllError decorativeLetterProc8Injector(RunOptions options) {
+		DllError e = {};
+
+		switch (options.version) {
+		case v3_3_0:
+			// mov     rbx, rax
+			BytePattern::temp_instance().find_pattern("48 8B D8 41 B9 01 00 00 00 45 33 C0");
+			if (BytePattern::temp_instance().has_size(1, "1文字切り出し")) {
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				// lea     rcx, [rbp+48h]
+				decorativeLetterProc8ReturnAddress = address + 0x10;
+
+				Injector::MakeJMP(address, decorativeLetterProc8, true);
+			}
+			else {
+				e.unmatch.decorativeLetterProc8Injector = true;
+			}
+			break;
+		default:
+			e.version.decorativeLetterProc8Injector = true;
+		}
+
+		return e;
+	}
+
+	DllError decorativeLetterProc9Injector(RunOptions options) {
+		DllError e = {};
+
+		switch (options.version) {
+		case v3_3_0:
+			// r9d, [rbp+58h]
+			BytePattern::temp_instance().find_pattern("44 8B 4D 58 41 B8 01 00 00 00 48 8D 95 88 01 00");
+			if (BytePattern::temp_instance().has_size(1, "切り出した残りの部分の処理")) {
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				// lea     rcx, [rbp+48h]
+				decorativeLetterProc9ReturnAddress = address + 0x11;
+
+				Injector::MakeJMP(address, decorativeLetterProc9, true);
+			}
+			else {
+				e.unmatch.decorativeLetterProc9Injector = true;
+			}
+			break;
+		default:
+			e.version.decorativeLetterProc9Injector = true;
+		}
+
+		return e;
+	}
+
+	DllError decorativeLetterProc10Injector(RunOptions options) {
+		DllError e = {};
+
+		switch (options.version) {
+		case v3_3_0:
+			// mov     r9d, 1
+			BytePattern::temp_instance().find_pattern("41 B9 01 00 00 00 45 33 C0 48 8D 95 10 03 00 00");
+			if (BytePattern::temp_instance().has_size(1, "1文字切り出し")) {
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				// lea     rcx, [rbp+0]
+				decorativeLetterProc10ReturnAddress = address + 0x10;
+
+				Injector::MakeJMP(address, decorativeLetterProc10, true);
+			}
+			else {
+				e.unmatch.decorativeLetterProc10Injector = true;
+			}
+			break;
+		default:
+			e.version.decorativeLetterProc10Injector = true;
+		}
+
+		return e;
+	}
+
+	DllError decorativeLetterProc11Injector(RunOptions options) {
+		DllError e = {};
+
+		switch (options.version) {
+		case v3_3_0:
+			//  mov     r9d, [rbp+10h]
+			BytePattern::temp_instance().find_pattern("44 8B 4D 10 41 B8 01 00 00 00 48 8D 95 D0 02 00");
+			if (BytePattern::temp_instance().has_size(1, "切り出した残りの部分の処理")) {
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				// lea     rcx, [rbp+0]
+				decorativeLetterProc11ReturnAddress = address + 0x11;
+
+				Injector::MakeJMP(address, decorativeLetterProc11, true);
+			}
+			else {
+				e.unmatch.decorativeLetterProc11Injector = true;
+			}
+			break;
+		default:
+			e.version.decorativeLetterProc11Injector = true;
+		}
+
+		return e;
+	}
+
 	DllError Init(RunOptions options) {
 		DllError result = {};
 
@@ -222,6 +335,14 @@ namespace DecorativeLetter {
 		// 継承ダイアログ（dead）
 		result |= decorativeLetterProc6Injector(options);
 		result |= decorativeLetterProc7Injector(options);
+
+		// エンドダイアログ
+		result |= decorativeLetterProc8Injector(options);
+		result |= decorativeLetterProc9Injector(options);
+
+		// 年表
+		result |= decorativeLetterProc10Injector(options);
+		result |= decorativeLetterProc11Injector(options);
 
 		return result;
 	}

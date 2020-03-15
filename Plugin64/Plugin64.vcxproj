@@ -177,11 +177,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="byte_pattern.cpp" />
+    <ClCompile Include="date.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="decorative_letter.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="escape_tool.cpp" />
     <ClCompile Include="font.cpp" />
+    <ClCompile Include="localize.cpp" />
     <ClCompile Include="main_text.cpp" />
     <ClCompile Include="main_text_adjustment.cpp" />
     <ClCompile Include="map_adjustment.cpp" />
@@ -199,13 +201,16 @@
     <ClCompile Include="unk.cpp" />
     <ClCompile Include="validator.cpp" />
     <ClCompile Include="version.cpp" />
+    <ClCompile Include="word_order.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <MASM Include="date_asm.asm" />
     <MASM Include="debug_asm.asm">
       <FileType>Document</FileType>
     </MASM>
     <MASM Include="decorative_letter_asm.asm" />
     <MASM Include="font_asm.asm" />
+    <MASM Include="localize_asm.asm" />
     <MASM Include="main_text_adjustment_asm.asm" />
     <MASM Include="main_text_asm.asm" />
     <MASM Include="map_adjustment_asm.asm" />
@@ -213,6 +218,7 @@
     <MASM Include="map_view_asm.asm" />
     <MASM Include="tooltip_and_button_asm.asm" />
     <MASM Include="unk_asm.asm" />
+    <MASM Include="word_order_asm.asm" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

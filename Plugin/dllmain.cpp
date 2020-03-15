@@ -49,7 +49,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= Font::init(&options);
 
 		// 終了時のダイアログの花文字
-		//success |= DecorativeLetterEndDialog::init(&options);
+		success |= DecorativeLetterEndDialog::init(&options);
 
 		// ダイアログの花文字
 		success |= DecorativeLetterDialog::init(&options);
@@ -70,7 +70,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= NickNameFix::init(&options);
 
 		// Dynastyに-idがつかないようにする
-		//success |= NoDynastyId::init(&options);
+		success |= NoDynastyId::init(&options);
 
 		// IME
 		//success |= IME::init(&options);
@@ -96,7 +96,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		//success |= Issue32::init(&options);
 
 		// 日付表記の変更
-		//success |= DateFormat::init(&options);
+		success |= DateFormat::init(&options);
 
 		// ファイル保存
 		//success |= FileSave::init(&options);

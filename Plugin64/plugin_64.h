@@ -77,8 +77,14 @@ struct DllError {
 			bool decorativeLetterProc5Injector : 1;
 			bool decorativeLetterProc6Injector : 1;
 			bool decorativeLetterProc7Injector : 1;
+			bool decorativeLetterProc8Injector : 1;
+			bool decorativeLetterProc9Injector : 1;
+			bool decorativeLetterProc10Injector : 1;
+			bool decorativeLetterProc11Injector : 1;
 
 			bool unkProc1Injector : 1;
+
+			bool general : 1;
 		};
 	} version;
 
@@ -141,8 +147,14 @@ struct DllError {
 			bool decorativeLetterProc5Injector : 1;
 			bool decorativeLetterProc6Injector : 1;
 			bool decorativeLetterProc7Injector : 1;
+			bool decorativeLetterProc8Injector : 1;
+			bool decorativeLetterProc9Injector : 1;
+			bool decorativeLetterProc10Injector : 1;
+			bool decorativeLetterProc11Injector : 1;
 
 			bool unkProc1Injector : 1;
+
+			bool general : 1;
 		};
 	} unmatch;
 
@@ -244,5 +256,17 @@ namespace MainTextAdjustment {
 }
 
 namespace DecorativeLetter {
+	DllError Init(RunOptions option);
+}
+
+namespace Date {
+	DllError Init(RunOptions option);
+}
+
+namespace WordOrder {
+	DllError Init(RunOptions option);
+}
+
+namespace Localize {
 	DllError Init(RunOptions option);
 }
