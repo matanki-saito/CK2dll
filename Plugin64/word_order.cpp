@@ -5,16 +5,26 @@
 namespace WordOrder {
 	extern "C" {
 		void wordOrderProc1();
+		void wordOrderProc2();
 
 		uintptr_t insert;
 		uintptr_t append;
+		uintptr_t constructFromKey;
+		uintptr_t appendFromStatic;
+		uintptr_t constructFromStatic;
+
 	
 		uintptr_t year;
 		uintptr_t month;
 		uintptr_t day;
 
 		uintptr_t wordOrderProc1ReturnAddress;
+		uintptr_t wordOrderProc2ReturnAddress;
 	}
+
+	ParadoxTextObject _year;
+	ParadoxTextObject _month;
+	ParadoxTextObject _day;
 
 	DllError insertInjector(RunOptions options) {
 		DllError e = {};
@@ -66,9 +76,36 @@ namespace WordOrder {
 		return e;
 	}
 
-	ParadoxTextObject _year;
-	ParadoxTextObject _month;
-	ParadoxTextObject _day;
+	DllError wordOrderProc2Injector(RunOptions options) {
+		DllError e = {};
+
+		switch (options.version) {
+		case v3_3_0:
+			// nop
+			BytePattern::temp_instance().find_pattern("90 49 8B 07 48 8D 55 40 49 8B CF");
+			if (BytePattern::temp_instance().has_size(1, "issue-32 「家 XXX」を「XXX家」にしたい")) {
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				constructFromKey = Injector::GetBranchDestination(address + 0x1C).as_int();
+				constructFromStatic = Injector::GetBranchDestination(address - 5).as_int();
+				appendFromStatic = Injector::GetBranchDestination(address + 0x30).as_int();
+
+				// mov rdx, rax
+				wordOrderProc2ReturnAddress = address + 0x69;
+
+				Injector::MakeJMP(address, wordOrderProc2, true);
+
+			}
+			else {
+				e.unmatch.general = true;
+			}
+			break;
+		default:
+			e.version.general = true;
+		}
+
+		return e;
+	}
 
 	DllError Init(RunOptions options) {
 		DllError result = {};
@@ -94,6 +131,7 @@ namespace WordOrder {
 
 		result |= insertInjector(options);
 		result |= wordOrderProc1Injector(options);
+		result |= wordOrderProc2Injector(options);
 
 		return result;
 	}
