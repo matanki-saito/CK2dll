@@ -198,7 +198,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="tooltip_and_button.cpp" />
-    <ClCompile Include="unk.cpp" />
+    <ClCompile Include="main_text_overflow.cpp" />
     <ClCompile Include="validator.cpp" />
     <ClCompile Include="version.cpp" />
     <ClCompile Include="word_order.cpp" />
@@ -217,7 +217,7 @@
     <MASM Include="map_justify_asm.asm" />
     <MASM Include="map_view_asm.asm" />
     <MASM Include="tooltip_and_button_asm.asm" />
-    <MASM Include="unk_asm.asm" />
+    <MASM Include="main_text_overflow_asm.asm" />
     <MASM Include="word_order_asm.asm" />
     <None Include="packages.config" />
   </ItemGroup>

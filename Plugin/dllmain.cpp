@@ -82,7 +82,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= Unk3::init(&options);
 		
 		// ...の省略
-		//success |= TextOerflow::init(&options);
+		success |= TextOerflow::init(&options);
 
 		// 不明
 		//success |= Unk5::init(&options);
@@ -93,7 +93,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 
 		// issue32 家 名前になっているので、日本語のときのみ名前 家にしたい
 		// https://github.com/matanki-saito/CK2dll/issues/32
-		//success |= Issue32::init(&options);
+		success |= Issue32::init(&options);
 
 		// 日付表記の変更
 		success |= DateFormat::init(&options);

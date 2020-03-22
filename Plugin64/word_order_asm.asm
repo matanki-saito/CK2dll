@@ -1,6 +1,10 @@
 EXTERN	insert						:	QWORD
 EXTERN	append						:	QWORD
+EXTERN	constructFromKey			:	QWORD
+EXTERN	appendFromStatic			:	QWORD
+EXTERN	constructFromStatic			:	QWORD
 EXTERN	wordOrderProc1ReturnAddress	:	QWORD
+EXTERN	wordOrderProc2ReturnAddress	:	QWORD
 
 EXTERN year: QWORD
 EXTERN month: QWORD
@@ -17,6 +21,11 @@ SHIFT_3			=	900h
 SHIFT_4			=	8F1h
 NO_FONT			=	98Fh
 NOT_DEF			=	2026h
+
+.DATA
+	formatStart	DB	0A7h,059h,000h
+	keyHouse	DB	"HOUSE"
+
 
 .CODE
 wordOrderProc1 PROC
@@ -55,4 +64,52 @@ wordOrderProc1 PROC
 wordOrderProc1 ENDP
 
 ;----------------------;
+
+wordOrderProc2 PROC
+	nop;
+
+	; ドートヴィル
+	mov		rax, qword ptr[r15];
+	lea		rdx, [rbp + 40h];
+	mov		rcx, r15;
+	call	qword ptr [rax + 58h];
+	nop;
+
+	; <Y>ドートヴィル
+	mov     r8, rax;
+	lea     rdx, formatStart;
+	lea     rcx, [rbp+0];
+	call	appendFromStatic;
+	nop;
+
+	; 家
+	lea		rdx, keyHouse;
+	lea     rcx, [rbp+20h];
+	call	constructFromKey;
+	nop;
+
+	; <Y>ドートヴィル家
+	mov		r8, rax;
+	lea		rdx, [rbp - 40h];
+	lea		rcx, [rbp+0];
+	call	append;
+	nop;
+
+	; <Y>ドートヴィル家 
+	lea		r8, [rsp + 2F8h - 2B8h];
+	lea		rdx, [rbp - 20h];
+	mov		rcx, rax;
+	call	append;
+	nop;
+	
+	; <Y>ドートヴィル家 </Y>
+	lea		r8, [rsp + 2F8h - 298h];
+	lea		rdx, [rbp - 60h];
+	mov		rcx, rax;
+	call	append;
+
+	push	wordOrderProc2ReturnAddress;
+	ret;
+wordOrderProc2 ENDP
+
 END

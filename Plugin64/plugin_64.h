@@ -82,7 +82,7 @@ struct DllError {
 			bool decorativeLetterProc10Injector : 1;
 			bool decorativeLetterProc11Injector : 1;
 
-			bool unkProc1Injector : 1;
+			bool mainTextOverflowProc1Injector : 1;
 
 			bool general : 1;
 		};
@@ -152,7 +152,7 @@ struct DllError {
 			bool decorativeLetterProc10Injector : 1;
 			bool decorativeLetterProc11Injector : 1;
 
-			bool unkProc1Injector : 1;
+			bool mainTextOverflowProc1Injector : 1;
 
 			bool general : 1;
 		};
@@ -247,7 +247,7 @@ namespace MapJustify {
 	DllError Init(RunOptions option);
 }
 
-namespace Unk {
+namespace MainTextOverflow {
 	DllError Init(RunOptions option);
 }
 

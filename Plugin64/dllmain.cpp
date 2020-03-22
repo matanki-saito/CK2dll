@@ -47,8 +47,8 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			// マップ文字の調整
 			e |= MapJustify::Init(options);
 
-			// 不明
-			e |= Unk::Init(options);
+			// メインテキストテキスト省略処理
+			e |= MainTextOverflow::Init(options);
 
 			// メインテキスト調整
 			e |= MainTextAdjustment::Init(options);
