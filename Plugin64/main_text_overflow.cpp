@@ -5,9 +5,12 @@ namespace MainTextOverflow {
 	extern "C" {
 		void mainTextOverflowProc1();
 		void mainTextOverflowProc2();
+		void mainTextOverflowProc3();
 		uintptr_t mainTextOverflowProc1ReturnAddress;
 		uintptr_t mainTextOverflowProc2ReturnAddress1;
 		uintptr_t mainTextOverflowProc2ReturnAddress2;
+		uintptr_t mainTextOverflowProc3ReturnAddress1;
+		uintptr_t mainTextOverflowProc3ReturnAddress2;
 	}
 
 	DllError mainTextOverflowProc1Injector(RunOptions options) {
@@ -65,11 +68,41 @@ namespace MainTextOverflow {
 		return e;
 	}
 
+
+	DllError mainTextOverflowProc3Injector(RunOptions options) {
+		DllError e = {};
+
+		switch (options.version) {
+		case v3_3_0:
+			// movzx   eax, byte ptr [rax+rdi]
+			BytePattern::temp_instance().find_pattern("8D 47 FD C6 04 10 2E 49 83 7F 18 10 72 05 49 8B");
+			if (BytePattern::temp_instance().has_size(1, "カウントアップ")) {
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				// jmp loc_xxxxx
+				mainTextOverflowProc3ReturnAddress1 = address + 0x13;
+
+				mainTextOverflowProc3ReturnAddress2 = address + 0x16;
+
+				Injector::MakeJMP(address, mainTextOverflowProc3, true);
+			}
+			else {
+				e.unmatch.mainTextOverflowProc1Injector = true;
+			}
+			break;
+		default:
+			e.version.mainTextOverflowProc1Injector = true;
+		}
+
+		return e;
+	}
+
 	DllError Init(RunOptions options) {
 		DllError result = {};
 
 		result |= mainTextOverflowProc1Injector(options);
 		result |= mainTextOverflowProc2Injector(options);
+		result |= mainTextOverflowProc3Injector(options);
 
 		return result;
 	}

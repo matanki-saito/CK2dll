@@ -1,6 +1,8 @@
 EXTERN	mainTextOverflowProc1ReturnAddress	:	QWORD
 EXTERN	mainTextOverflowProc2ReturnAddress1	:	QWORD
 EXTERN	mainTextOverflowProc2ReturnAddress2	:	QWORD
+EXTERN	mainTextOverflowProc3ReturnAddress1	:	QWORD
+EXTERN	mainTextOverflowProc3ReturnAddress2	:	QWORD
 
 ESCAPE_SEQ_1	=	10h
 ESCAPE_SEQ_2	=	11h
@@ -72,7 +74,7 @@ mainTextOverflowProc1 ENDP
 mainTextOverflowProc2 PROC
 	mov		edx, dword ptr [rbx + 10h];
 
-	cmp		multibyteFlag, 00h;
+	cmp		multibyteFlag, 0;
 	jz		JMP_A;
 	add		edi,2;
 
@@ -81,8 +83,8 @@ JMP_A:
 	cmp		edi, edx;
 	jge		JMP_B;
 
-	mov		r8d, dword ptr [rsp + 78h + 18h];
-	mov		r11d, dword ptr [rsp + 78h + 20h];
+	mov		r8d, dword ptr [rsp + 78h + 20h];
+	mov		r11d, dword ptr [rsp + 78h + 28h];
 
 	push	mainTextOverflowProc2ReturnAddress2;
 	ret;
@@ -92,4 +94,22 @@ JMP_B:
 	ret;
 
 mainTextOverflowProc2 ENDP
+
+;------------------;
+
+mainTextOverflowProc3 PROC
+	lea		eax, [rdi - 3];
+	mov		byte ptr [rax + rdx], 20h;
+	cmp		qword ptr [r15 + 18h], 10h;
+	jb		JMP_A;
+	mov		rdx, [r15];
+
+	push	mainTextOverflowProc3ReturnAddress2;
+	ret;
+
+JMP_A:
+	push	mainTextOverflowProc3ReturnAddress1;
+	ret;
+
+mainTextOverflowProc3 ENDP
 END

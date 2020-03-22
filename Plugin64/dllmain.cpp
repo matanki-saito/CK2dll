@@ -48,7 +48,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			e |= MapJustify::Init(options);
 
 			// メインテキストテキスト省略処理
-			//e |= MainTextOverflow::Init(options);
+			e |= MainTextOverflow::Init(options);
 
 			// メインテキスト調整
 			e |= MainTextAdjustment::Init(options);
