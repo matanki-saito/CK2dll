@@ -58,9 +58,6 @@
     <Filter Include="ソース ファイル\app\map_justify">
       <UniqueIdentifier>{b684cd34-af10-4f93-baa6-b91611bd60f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\app\unk">
-      <UniqueIdentifier>{01850784-bd35-4cc7-99cf-156cc743147e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\app\main_text_adjustment">
       <UniqueIdentifier>{49cd5192-f9fb-4028-ae4d-cfb9981731ad}</UniqueIdentifier>
     </Filter>
@@ -78,6 +75,9 @@
     </Filter>
     <Filter Include="ソース ファイル\app\localize">
       <UniqueIdentifier>{afa04787-64ef-465f-a201-0a16c8c4bc1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\app\main_text_overflow">
+      <UniqueIdentifier>{01850784-bd35-4cc7-99cf-156cc743147e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -161,9 +161,6 @@
     <ClCompile Include="map_justify.cpp">
       <Filter>ソース ファイル\app\map_justify</Filter>
     </ClCompile>
-    <ClCompile Include="unk.cpp">
-      <Filter>ソース ファイル\app\unk</Filter>
-    </ClCompile>
     <ClCompile Include="main_text_adjustment.cpp">
       <Filter>ソース ファイル\app\main_text_adjustment</Filter>
     </ClCompile>
@@ -181,6 +178,9 @@
     </ClCompile>
     <ClCompile Include="localize.cpp">
       <Filter>ソース ファイル\app\localize</Filter>
+    </ClCompile>
+    <ClCompile Include="main_text_overflow.cpp">
+      <Filter>ソース ファイル\app\main_text_overflow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,9 +208,6 @@
     <MASM Include="map_justify_asm.asm">
       <Filter>ソース ファイル\app\map_justify</Filter>
     </MASM>
-    <MASM Include="unk_asm.asm">
-      <Filter>ソース ファイル\app\unk</Filter>
-    </MASM>
     <MASM Include="main_text_adjustment_asm.asm">
       <Filter>ソース ファイル\app\main_text_adjustment</Filter>
     </MASM>
@@ -225,6 +222,9 @@
     </MASM>
     <MASM Include="localize_asm.asm">
       <Filter>ソース ファイル\app\localize</Filter>
+    </MASM>
+    <MASM Include="main_text_overflow_asm.asm">
+      <Filter>ソース ファイル\app\main_text_overflow</Filter>
     </MASM>
   </ItemGroup>
 </Project>

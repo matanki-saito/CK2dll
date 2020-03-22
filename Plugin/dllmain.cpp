@@ -82,7 +82,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= Unk3::init(&options);
 		
 		// ...の省略
-		//success |= TextOerflow::init(&options);
+		success |= TextOerflow::init(&options);
 
 		// 不明
 		//success |= Unk5::init(&options);

@@ -1,4 +1,6 @@
-EXTERN	unkProc1ReturnAddress	:	QWORD
+EXTERN	mainTextOverflowProc1ReturnAddress	:	QWORD
+EXTERN	mainTextOverflowProc2ReturnAddress1	:	QWORD
+EXTERN	mainTextOverflowProc2ReturnAddress2	:	QWORD
 
 ESCAPE_SEQ_1	=	10h
 ESCAPE_SEQ_2	=	11h
@@ -12,8 +14,13 @@ SHIFT_4			=	8F1h
 NO_FONT			=	98Fh
 NOT_DEF			=	2026h
 
+.DATA
+	multibyteFlag	DD	0
+
 .CODE
-unkProc1 PROC
+mainTextOverflowProc1 PROC
+	mov		multibyteFlag, 0h;
+
 	cmp		byte ptr [rax + rdi], ESCAPE_SEQ_1;
 	jz		JMP_A;
 			
@@ -46,7 +53,7 @@ JMP_D:
 	jmp		JMP_F;
 
 JMP_F:
-	add		edi, 2;
+	mov		multibyteFlag, 1h;
 	movzx	eax, ax;
 	cmp		eax, NO_FONT;
 	ja		JMP_E;
@@ -56,8 +63,33 @@ JMP_E:
 	mov		r10, qword ptr [r13 + rax * 8 +0E8h];
 
 	test	r10,r10;
-	push	unkProc1ReturnAddress;
+	push	mainTextOverflowProc1ReturnAddress;
 	ret;
-unkProc1 ENDP
+mainTextOverflowProc1 ENDP
 
+;------------------;
+
+mainTextOverflowProc2 PROC
+	mov		edx, dword ptr [rbx + 10h];
+
+	cmp		multibyteFlag, 00h;
+	jz		JMP_A;
+	add		edi,2;
+
+JMP_A:
+	inc		edi;
+	cmp		edi, edx;
+	jge		JMP_B;
+
+	mov		r8d, dword ptr [rsp + 78h + 18h];
+	mov		r11d, dword ptr [rsp + 78h + 20h];
+
+	push	mainTextOverflowProc2ReturnAddress2;
+	ret;
+
+JMP_B:
+	push	mainTextOverflowProc2ReturnAddress1;
+	ret;
+
+mainTextOverflowProc2 ENDP
 END
