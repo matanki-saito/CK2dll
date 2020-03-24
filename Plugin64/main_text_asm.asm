@@ -136,11 +136,11 @@ mainTextProc3 PROC
 	jmp		JMP_B;
 
 JMP_A:
-	cmp		mainTextProc2TmpCharacter, 00FFh;
-	ja		JMP_B;
+	;cmp		mainTextProc2TmpCharacter, 00FFh;
+	;ja		JMP_B;
 
-	push	mainTextProc3ReturnAddress2;
-	ret;
+	;push	mainTextProc3ReturnAddress2;
+	;ret;
 	
 JMP_B:
 	lea		eax, [r15+rbx*2];
