@@ -130,9 +130,8 @@ errno_t convertWideTextToEscapedText(const wchar_t* from, char** to) {
 		switch (high) {
 		case 0xA4:case 0xA3:case 0xA7:case 0x24:case 0x5B:case 0x00:case 0x5C:
 		case 0x20:case 0x0D:case 0x0A:case 0x22:case 0x7B:case 0x7D:case 0x40:
-		case 0x80:case 0x7E:case 0x2F:case 0x5F:case 0xBD:case 0x3B:case 0x5D:
-		case 0x3D:case 0x23:case 0x3F:case 0x3A:case 0x3C:case 0x3E:case 0x2A:
-		case 0x7C:
+		case 0x80:case 0x7E:case 0x2F:case 0xBD:case 0x3B:case 0x5D:case 0x5F:
+		case 0x3D:case 0x23:
 			escapeChr += 2;
 			break;
 		default:
@@ -143,9 +142,8 @@ errno_t convertWideTextToEscapedText(const wchar_t* from, char** to) {
 		switch (low) {
 		case 0xA4:case 0xA3:case 0xA7:case 0x24:case 0x5B:case 0x00:case 0x5C:
 		case 0x20:case 0x0D:case 0x0A:case 0x22:case 0x7B:case 0x7D:case 0x40:
-		case 0x80:case 0x7E:case 0x2F:case 0x5F:case 0xBD:case 0x3B:case 0x5D:
-		case 0x3D:case 0x23:case 0x3F:case 0x3A:case 0x3C:case 0x3E:case 0x2A:
-		case 0x7C:
+		case 0x80:case 0x7E:case 0x2F:case 0xBD:case 0x3B:case 0x5D:case 0x5F:
+		case 0x3D:case 0x23:
 			escapeChr++;
 			break;
 		default:
@@ -154,13 +152,13 @@ errno_t convertWideTextToEscapedText(const wchar_t* from, char** to) {
 
 		switch (escapeChr) {
 		case 0x11:
-			low += 14;
+			low += 15;
 			break;
 		case 0x12:
 			high -= 9;
 			break;
 		case 0x13:
-			low += 14;
+			low += 15;
 			high -= 9;
 			break;
 		case 0x10:
@@ -422,6 +420,7 @@ ParadoxTextObject* utf8ToEscapedStr2(ParadoxTextObject* from) {
 	return tmpZV2;
 }
 
+
 ParadoxTextObject* tmpParadoxTextObject2 = NULL;
 char* escapedStrToUtf8(ParadoxTextObject* from) {
 
@@ -449,4 +448,24 @@ char* escapedStrToUtf8(ParadoxTextObject* from) {
 	delete dest;
 
 	return (char*)tmpParadoxTextObject2;
+}
+
+char* utf8ToEscapedStr3buffer = NULL;
+char* utf8ToEscapedStr3(char* from) {
+	// init
+	if (utf8ToEscapedStr3buffer != NULL) {
+		free(utf8ToEscapedStr3buffer);
+	}
+
+	wchar_t* tmp = NULL;
+
+	//UTF-8 -> wide char (ucs2)
+	convertTextToWideText(from, &tmp);
+
+	//wide char (ucs2) -> Escaped Text
+	convertWideTextToEscapedText(tmp, &utf8ToEscapedStr3buffer);
+
+	free(tmp);
+
+	return utf8ToEscapedStr3buffer;
 }
