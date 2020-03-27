@@ -65,6 +65,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			// 細かなローカライズ
 			e |= Localize::Init(options);
 
+			// ファイル名
+			e |= FileName::Init(options);
+
 			Validator::Validate(e, options);
 		}
 		else if (ulReasonForCall == DLL_PROCESS_DETACH) {

@@ -79,6 +79,9 @@
     <Filter Include="ソース ファイル\app\main_text_overflow">
       <UniqueIdentifier>{01850784-bd35-4cc7-99cf-156cc743147e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\app\file_name">
+      <UniqueIdentifier>{605a73de-2901-4751-9149-431e25d69a10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mod_download.h">
@@ -182,6 +185,9 @@
     <ClCompile Include="main_text_overflow.cpp">
       <Filter>ソース ファイル\app\main_text_overflow</Filter>
     </ClCompile>
+    <ClCompile Include="file_name.cpp">
+      <Filter>ソース ファイル\app\file_name</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -225,6 +231,9 @@
     </MASM>
     <MASM Include="main_text_overflow_asm.asm">
       <Filter>ソース ファイル\app\main_text_overflow</Filter>
+    </MASM>
+    <MASM Include="file_name_asm.asm">
+      <Filter>ソース ファイル\app\file_name</Filter>
     </MASM>
   </ItemGroup>
 </Project>

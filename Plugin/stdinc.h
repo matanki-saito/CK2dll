@@ -201,7 +201,7 @@ namespace DateFormat
 	errno_t init(RunOptions *options);
 }
 
-namespace FileSave
+namespace FileName
 {
 	errno_t init(RunOptions *options);
 }

@@ -270,3 +270,7 @@ namespace WordOrder {
 namespace Localize {
 	DllError Init(RunOptions option);
 }
+
+namespace FileName {
+	DllError Init(RunOptions option);
+}
