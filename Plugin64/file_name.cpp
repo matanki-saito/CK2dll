@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "plugin_64.h"
 #include "escape_tool.h"
 
@@ -21,7 +21,7 @@ namespace FileName {
 		case v3_3_0:
 			// movsxd  r10, dword ptr [rcx+10h]
 			BytePattern::temp_instance().find_pattern("4C 63 51 10 4D 85 D2 0F 8E 30 03 00 00 45 33 C0");
-			if (BytePattern::temp_instance().has_size(1, "ƒtƒ@ƒCƒ‹–¼‚ð•¶Žš‰»‚¯‚µ‚È‚¢‚æ‚¤‚ÉÝ’è")) {
+			if (BytePattern::temp_instance().has_size(1, "ãƒ•ã‚¡ã‚¤ãƒ«åã‚’æ–‡å­—åŒ–ã‘ã—ãªã„ã‚ˆã†ã«è¨­å®š")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jle     locret_xxxxx
@@ -47,7 +47,7 @@ namespace FileName {
 		case v3_3_0:
 			// lea     rcx, [rbp-60h]
 			BytePattern::temp_instance().find_pattern("48 8D 4D A0 E8 6C E9 6D 00 4C 8B 44 24 78");
-			if (BytePattern::temp_instance().has_size(1, "UTF-8‚É•ÏŠ·‚µ‚Ä•Û‘¶")) {
+			if (BytePattern::temp_instance().has_size(1, "UTF-8ã«å¤‰æ›ã—ã¦ä¿å­˜")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// lea     rcx, [rbp-60h]
@@ -72,11 +72,35 @@ namespace FileName {
 		return e;
 	}
 
+	DllError fileNameProc3Injector(RunOptions options) {
+		DllError e = {};
+		
+		switch (options.version) {
+		case v3_3_0:
+			// 
+			BytePattern::temp_instance().find_pattern("48 8B 16 48 8B CA 41 B0 01 0F B6 02 84 C0");
+			if (BytePattern::temp_instance().has_size(2, "UTF-8ã®å®Œå…¨ãªãƒ•ã‚¡ã‚¤ãƒ«ååˆ—æŒ™")) {
+				// jz short loc_XXXXX -> jmp XXXXX
+				Injector::WriteMemory<uint8_t>(BytePattern::temp_instance().get_first().address(14),0xEB,true);
+				Injector::WriteMemory<uint8_t>(BytePattern::temp_instance().get_second().address(14), 0xEB, true);
+			}
+			else {
+				e.unmatch.general = true;
+			}
+			break;
+		default:
+			e.version.general = true;
+		}
+
+		return e;
+	}
+
 	DllError Init(RunOptions options) {
 		DllError result = {};
 
 		result |= fileNameProc1Injector(options);
 		result |= fileNameProc2Injector(options);
+		result |= fileNameProc3Injector(options);
 
 		return result;
 	}
