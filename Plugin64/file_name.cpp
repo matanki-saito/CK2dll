@@ -1,11 +1,17 @@
 #include "pch.h"
 #include "plugin_64.h"
+#include "escape_tool.h"
 
 namespace FileName {
 	extern "C" {
 		void fileNameProc1();
+		void fileNameProc2();
 
 		uintptr_t fileNameProc1ReturnAddress;
+		uintptr_t fileNameProc2CallAddress;
+		uintptr_t fileNameProcEscapedStrToUtf8;
+		uintptr_t fileNameProcReplaceTextObject;
+		uintptr_t fileNameProc2ReturnAddress;
 	}
 
 	DllError fileNameProc1Injector(RunOptions options) {
@@ -34,10 +40,43 @@ namespace FileName {
 		return e;
 	}
 
+	DllError fileNameProc2Injector(RunOptions options) {
+		DllError e = {};
+
+		switch (options.version) {
+		case v3_3_0:
+			// lea     rcx, [rbp-60h]
+			BytePattern::temp_instance().find_pattern("48 8D 4D A0 E8 6C E9 6D 00 4C 8B 44 24 78");
+			if (BytePattern::temp_instance().has_size(1, "UTF-8‚É•ÏŠ·‚µ‚Ä•Û‘¶")) {
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				// lea     rcx, [rbp-60h]
+				fileNameProc2CallAddress = Injector::GetBranchDestination(address + 4).as_int();
+
+				// cmp     r8, 10h
+				fileNameProc2ReturnAddress = address + 14;
+
+				fileNameProcEscapedStrToUtf8 = (uintptr_t)escapedStrToUtf8;
+				fileNameProcReplaceTextObject = (uintptr_t)replaceTextObject;
+
+				Injector::MakeJMP(address, fileNameProc2, true);
+			}
+			else {
+				e.unmatch.general = true;
+			}
+			break;
+		default:
+			e.version.general = true;
+		}
+
+		return e;
+	}
+
 	DllError Init(RunOptions options) {
 		DllError result = {};
 
 		result |= fileNameProc1Injector(options);
+		result |= fileNameProc2Injector(options);
 
 		return result;
 	}

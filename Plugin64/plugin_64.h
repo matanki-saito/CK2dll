@@ -189,7 +189,8 @@ typedef struct {
 
 		if (len >= 0x10) {
 			len2 = 0x1F;
-			auto p = (char*)calloc(len + 3, sizeof(char));
+
+			auto p = (char *)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, len + 3);
 			if (p != NULL) {
 				memcpy(p, src->c_str(), len);
 				t.p = p;
@@ -199,7 +200,6 @@ typedef struct {
 			memcpy(t.text, src->c_str(), len);
 		}
 	}
-
 } ParadoxTextObject;
 
 typedef struct {

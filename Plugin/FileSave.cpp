@@ -707,10 +707,10 @@ namespace FileName {
 		result |= PHYSFS_utf8FromUcs2_hook(options); // OK
 
 		/* タイトルを表示できるようにする */
-		result |= loadgame_showTitle_hook(options);
+		//result |= loadgame_showTitle_hook(options);
 
 		/* UTF-8ファイルを列挙できるようにする jz(74) -> jmp(EB) */
-		result |= fileEnumSkip_hook(options); // OK
+		//result |= fileEnumSkip_hook(options); // OK
 
 		return result;
 	}

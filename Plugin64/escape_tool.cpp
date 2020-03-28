@@ -196,13 +196,13 @@ errno_t convertEscapedTextToWideText(const std::string* from, std::wstring* to) 
 			case 0x10:
 				break;
 			case 0x11:
-				sp -= 0xE;
+				sp -= 0xF;
 				break;
 			case 0x12:
 				sp += 0x900;
 				break;
 			case 0x13:
-				sp += 0x8F2;
+				sp += 0x8F1;
 				break;
 			default:
 				break;
@@ -468,4 +468,14 @@ char* utf8ToEscapedStr3(char* from) {
 	free(tmp);
 
 	return utf8ToEscapedStr3buffer;
+}
+
+void replaceTextObject(ParadoxTextObject* org, ParadoxTextObject* neo) {
+	if (org->len >= 0x10) {
+		HeapFree(GetProcessHeap(),NULL, org->t.p);
+	}
+
+	tmpParadoxTextObject2 = NULL;
+
+	*org = *neo;
 }
