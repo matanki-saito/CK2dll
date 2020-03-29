@@ -5,6 +5,8 @@ EXTERN	fileNameProcEscapedStrToUtf8	:	QWORD
 EXTERN	fileNameProcUtf8ToEscapedStr	:	QWORD
 EXTERN	fileNameProcReplaceTextObject	:	QWORD
 EXTERN	fileNameProc4ReturnAddress	:	QWORD
+EXTERN	fileNameProc5ReturnAddress	:	QWORD
+EXTERN	fileNameProc5CallAddress	:	QWORD
 
 ESCAPE_SEQ_1	=	10h
 ESCAPE_SEQ_2	=	11h
@@ -17,7 +19,6 @@ SHIFT_3			=	900h
 SHIFT_4			=	8F1h
 NO_FONT			=	98Fh
 NOT_DEF			=	2026h
-
 
 .CODE
 fileNameProc1 PROC
@@ -49,23 +50,41 @@ fileNameProc2 ENDP
 ;----------------------;
 
 fileNameProc4 PROC
+	nop;
 
-	lea		rcx, [r15 + 50h];
+	lea		rcx, [rsp + 138h - 0D8h];
 	call	fileNameProcUtf8ToEscapedStr;
 
-	lea		rcx, [r15 + 50h];
+	lea		rcx, [rsp + 138h - 0D8h];
 	mov		rdx, rax;
 	call	fileNameProcReplaceTextObject;
 
-	; 以下元のコード
-	lea		rdx, [rsp + 138h - 0F8h];
-	cmp		qword ptr [rsp + 138h - 0E0h], 10h
-	cmovnb  rdx, qword ptr [rsp + 138h - 0F8h];
+	; 以下は元のコード
+	mov		qword ptr [rsp + 138h - 0E0h], 0Fh
+	mov		qword ptr [rsp + 138h - 0E8h], r13;
 
 	push	fileNameProc4ReturnAddress;
 	ret;
 fileNameProc4 ENDP
 
 ;----------------------;
+
+fileNameProc5 PROC
+	lea		rcx, [rsp + 138h - 0F8h];
+	call	fileNameProcUtf8ToEscapedStr;
+
+	lea		rcx, [rsp + 138h - 0F8h];
+	mov		rdx, rax;
+	call	fileNameProcReplaceTextObject;
+
+	; 以下は元のコード
+	call	fileNameProc5CallAddress;
+	nop;
+	mov		r8, qword ptr [rsp + 138h - 0E0h];
+	cmp		r8, 10h;
+
+	push	fileNameProc5ReturnAddress;
+	ret;
+fileNameProc5 ENDP
 
 END

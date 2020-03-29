@@ -7,6 +7,7 @@ namespace FileName {
 		void fileNameProc1();
 		void fileNameProc2();
 		void fileNameProc4();
+		void fileNameProc5();
 
 		uintptr_t fileNameProc1ReturnAddress;
 		uintptr_t fileNameProc2CallAddress;
@@ -15,6 +16,8 @@ namespace FileName {
 		uintptr_t fileNameProcReplaceTextObject;
 		uintptr_t fileNameProc2ReturnAddress;
 		uintptr_t fileNameProc4ReturnAddress;
+		uintptr_t fileNameProc5ReturnAddress;
+		uintptr_t fileNameProc5CallAddress;
 	}
 
 	DllError fileNameProc1Injector(RunOptions options) {
@@ -105,17 +108,50 @@ namespace FileName {
 		case v3_3_0:
 			// 場所は適当
 			// call    sub_xxxxx
-			BytePattern::temp_instance().find_pattern("E8 3A 56 6D FF 48 8D 54 24 40 48 83 7C 24 58 10");
+			BytePattern::temp_instance().find_pattern("E8 ED 52 38 00 90 48 C7 44 24 58 0F 00 00 00 4C 89 6C 24 50");
 			if (BytePattern::temp_instance().has_size(1, "UTF-8のファイル名の変換")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				fileNameProcUtf8ToEscapedStr = (uintptr_t)utf8ToEscapedStr2;
 
-				// lea     rdx, [rsp+138h+var_F8]
+				// nop
 				Injector::MakeJMP(address + 5, fileNameProc4, true);
 
-				// or      rbx, 0FFFFFFFFFFFFFFFFh
-				fileNameProc4ReturnAddress = address + 0x16;
+				// mov     byte ptr [rsp+138h+var_F8], 0
+				fileNameProc4ReturnAddress = address + 0x14;
+
+			}
+			else {
+				e.unmatch.general = true;
+			}
+			break;
+		default:
+			e.version.general = true;
+		}
+
+		return e;
+	}
+
+
+	DllError fileNameProc5Injector(RunOptions options) {
+		DllError e = {};
+
+		switch (options.version) {
+		case v3_3_0:
+			// 場所は適当
+			// call    sub_xxxxx
+			BytePattern::temp_instance().find_pattern("E8 FA DE 27 00 90 4C 8B 44 24 58 49 83 F8 10 72 12");
+			if (BytePattern::temp_instance().has_size(1, "UTF-8のフォルダ名の変換")) {
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				// call    sub_{xxxxx}
+				fileNameProc5CallAddress = Injector::GetBranchDestination(address).as_int();
+
+				// call    sub_{xxxxx}
+				Injector::MakeJMP(address, fileNameProc5, true);
+
+				// jb      short loc_xxxxx
+				fileNameProc5ReturnAddress = address + 15;
 
 			}
 			else {
@@ -136,6 +172,7 @@ namespace FileName {
 		result |= fileNameProc2Injector(options);
 		result |= fileNameProc3Injector(options);
 		result |= fileNameProc4Injector(options);
+		result |= fileNameProc5Injector(options);
 
 		return result;
 	}
