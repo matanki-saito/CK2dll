@@ -130,9 +130,8 @@ errno_t convertWideTextToEscapedText(const wchar_t* from, char** to) {
 		switch (high) {
 		case 0xA4:case 0xA3:case 0xA7:case 0x24:case 0x5B:case 0x00:case 0x5C:
 		case 0x20:case 0x0D:case 0x0A:case 0x22:case 0x7B:case 0x7D:case 0x40:
-		case 0x80:case 0x7E:case 0x2F:case 0x5F:case 0xBD:case 0x3B:case 0x5D:
-		case 0x3D:case 0x23:case 0x3F:case 0x3A:case 0x3C:case 0x3E:case 0x2A:
-		case 0x7C:
+		case 0x80:case 0x7E:case 0x2F:case 0xBD:case 0x3B:case 0x5D:case 0x5F:
+		case 0x3D:case 0x23:
 			escapeChr += 2;
 			break;
 		default:
@@ -143,9 +142,8 @@ errno_t convertWideTextToEscapedText(const wchar_t* from, char** to) {
 		switch (low) {
 		case 0xA4:case 0xA3:case 0xA7:case 0x24:case 0x5B:case 0x00:case 0x5C:
 		case 0x20:case 0x0D:case 0x0A:case 0x22:case 0x7B:case 0x7D:case 0x40:
-		case 0x80:case 0x7E:case 0x2F:case 0x5F:case 0xBD:case 0x3B:case 0x5D:
-		case 0x3D:case 0x23:case 0x3F:case 0x3A:case 0x3C:case 0x3E:case 0x2A:
-		case 0x7C:
+		case 0x80:case 0x7E:case 0x2F:case 0xBD:case 0x3B:case 0x5D:case 0x5F:
+		case 0x3D:case 0x23:
 			escapeChr++;
 			break;
 		default:
@@ -154,13 +152,13 @@ errno_t convertWideTextToEscapedText(const wchar_t* from, char** to) {
 
 		switch (escapeChr) {
 		case 0x11:
-			low += 14;
+			low += 15;
 			break;
 		case 0x12:
 			high -= 9;
 			break;
 		case 0x13:
-			low += 14;
+			low += 15;
 			high -= 9;
 			break;
 		case 0x10:
@@ -198,13 +196,13 @@ errno_t convertEscapedTextToWideText(const std::string* from, std::wstring* to) 
 			case 0x10:
 				break;
 			case 0x11:
-				sp -= 0xE;
+				sp -= 0xF;
 				break;
 			case 0x12:
 				sp += 0x900;
 				break;
 			case 0x13:
-				sp += 0x8F2;
+				sp += 0x8F1;
 				break;
 			default:
 				break;
@@ -391,14 +389,9 @@ ParadoxTextObject* utf8ToEscapedStr2(ParadoxTextObject* from) {
 	wchar_t* tmp = NULL;
 	char* tmp2 = NULL;
 
-	char* src = NULL;
+	std::string w = from->getString();
 
-	if (from->len >= 0x10) {
-		src = from->t.p;
-	}
-	else {
-		src = from->t.text;
-	}
+	const char* src = w.c_str();
 
 	//UTF-8 -> wide char (ucs2)
 	convertTextToWideText(src, &tmp);
@@ -408,22 +401,15 @@ ParadoxTextObject* utf8ToEscapedStr2(ParadoxTextObject* from) {
 
 	free(tmp);
 
-	UINT64 len = strlen(tmp2);
-	tmpZV2->len = len;
+	std::string str1(tmp2);
 
-	if (len >= 0x10) {
-		tmpZV2->t.p = tmp2;
-		tmpZV2->len2 = 0x1F;
-	}
-	else {
-		memcpy(tmpZV2->t.text, tmp2, len);
-	}
+	tmpZV2->setString( &str1);
 
 	return tmpZV2;
 }
 
 ParadoxTextObject* tmpParadoxTextObject2 = NULL;
-char* escapedStrToUtf8(ParadoxTextObject* from) {
+ParadoxTextObject* escapedStrToUtf8(ParadoxTextObject* from) {
 
 	if (tmpParadoxTextObject2 != NULL) {
 		if (tmpParadoxTextObject2->len > 0x10) {
@@ -448,5 +434,36 @@ char* escapedStrToUtf8(ParadoxTextObject* from) {
 	delete buffer;
 	delete dest;
 
-	return (char*)tmpParadoxTextObject2;
+	return (ParadoxTextObject*)tmpParadoxTextObject2;
+}
+
+char* utf8ToEscapedStr3buffer = NULL;
+char* utf8ToEscapedStr3(char* from) {
+	// init
+	if (utf8ToEscapedStr3buffer != NULL) {
+		free(utf8ToEscapedStr3buffer);
+	}
+
+	wchar_t* tmp = NULL;
+
+	//UTF-8 -> wide char (ucs2)
+	convertTextToWideText(from, &tmp);
+
+	//wide char (ucs2) -> Escaped Text
+	convertWideTextToEscapedText(tmp, &utf8ToEscapedStr3buffer);
+
+	free(tmp);
+
+	return utf8ToEscapedStr3buffer;
+}
+
+void replaceTextObject(ParadoxTextObject* org, ParadoxTextObject* neo) {
+	if (org->len >= 0x10) {
+		HeapFree(GetProcessHeap(),NULL, org->t.p);
+	}
+
+	tmpParadoxTextObject2 = NULL;
+	tmpZV2 = NULL;
+
+	*org = *neo;
 }
