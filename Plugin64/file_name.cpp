@@ -141,7 +141,7 @@ namespace FileName {
 			// 場所は適当
 			// call    sub_xxxxx
 			BytePattern::temp_instance().find_pattern("E8 FA DE 27 00 90 4C 8B 44 24 58 49 83 F8 10 72 12");
-			if (BytePattern::temp_instance().has_size(1, "UTF-8のフォルダ名の変換")) {
+			if (BytePattern::temp_instance().has_size(1, "UTF-8のファイル名の変換")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// call    sub_{xxxxx}
@@ -172,7 +172,8 @@ namespace FileName {
 		result |= fileNameProc2Injector(options);
 		result |= fileNameProc3Injector(options);
 		result |= fileNameProc4Injector(options);
-		result |= fileNameProc5Injector(options);
+		// 効果不明のため、コメントアウト
+		//result |= fileNameProc5Injector(options);
 
 		return result;
 	}
