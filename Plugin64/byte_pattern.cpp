@@ -22,6 +22,11 @@ memory_pointer BytePattern::get_second() const
 	return this->get(1);
 }
 
+memory_pointer BytePattern::get_third() const
+{
+	return this->get(2);
+}
+
 void BytePattern::StartLog(const wchar_t* module_name)
 {
 	ShutdownLog();

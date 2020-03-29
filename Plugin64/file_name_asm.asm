@@ -2,8 +2,9 @@ EXTERN	fileNameProc1ReturnAddress	:	QWORD
 EXTERN	fileNameProc2ReturnAddress	:	QWORD
 EXTERN	fileNameProc2CallAddress	:	QWORD
 EXTERN	fileNameProcEscapedStrToUtf8	:	QWORD
+EXTERN	fileNameProcUtf8ToEscapedStr	:	QWORD
 EXTERN	fileNameProcReplaceTextObject	:	QWORD
-
+EXTERN	fileNameProc4ReturnAddress	:	QWORD
 
 ESCAPE_SEQ_1	=	10h
 ESCAPE_SEQ_2	=	11h
@@ -44,5 +45,27 @@ fileNameProc2 PROC
 	push	fileNameProc2ReturnAddress;
 	ret;
 fileNameProc2 ENDP
+
+;----------------------;
+
+fileNameProc4 PROC
+
+	lea		rcx, [r15 + 50h];
+	call	fileNameProcUtf8ToEscapedStr;
+
+	lea		rcx, [r15 + 50h];
+	mov		rdx, rax;
+	call	fileNameProcReplaceTextObject;
+
+	; à»â∫å≥ÇÃÉRÅ[Éh
+	lea		rdx, [rsp + 138h - 0F8h];
+	cmp		qword ptr [rsp + 138h - 0E0h], 10h
+	cmovnb  rdx, qword ptr [rsp + 138h - 0F8h];
+
+	push	fileNameProc4ReturnAddress;
+	ret;
+fileNameProc4 ENDP
+
+;----------------------;
 
 END

@@ -6,12 +6,15 @@ namespace FileName {
 	extern "C" {
 		void fileNameProc1();
 		void fileNameProc2();
+		void fileNameProc4();
 
 		uintptr_t fileNameProc1ReturnAddress;
 		uintptr_t fileNameProc2CallAddress;
 		uintptr_t fileNameProcEscapedStrToUtf8;
+		uintptr_t fileNameProcUtf8ToEscapedStr;
 		uintptr_t fileNameProcReplaceTextObject;
 		uintptr_t fileNameProc2ReturnAddress;
+		uintptr_t fileNameProc4ReturnAddress;
 	}
 
 	DllError fileNameProc1Injector(RunOptions options) {
@@ -95,12 +98,44 @@ namespace FileName {
 		return e;
 	}
 
+	DllError fileNameProc4Injector(RunOptions options) {
+		DllError e = {};
+
+		switch (options.version) {
+		case v3_3_0:
+			// 場所は適当
+			// call    sub_xxxxx
+			BytePattern::temp_instance().find_pattern("E8 3A 56 6D FF 48 8D 54 24 40 48 83 7C 24 58 10");
+			if (BytePattern::temp_instance().has_size(1, "UTF-8のファイル名の変換")) {
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				fileNameProcUtf8ToEscapedStr = (uintptr_t)utf8ToEscapedStr2;
+
+				// lea     rdx, [rsp+138h+var_F8]
+				Injector::MakeJMP(address + 5, fileNameProc4, true);
+
+				// or      rbx, 0FFFFFFFFFFFFFFFFh
+				fileNameProc4ReturnAddress = address + 0x16;
+
+			}
+			else {
+				e.unmatch.general = true;
+			}
+			break;
+		default:
+			e.version.general = true;
+		}
+
+		return e;
+	}
+
 	DllError Init(RunOptions options) {
 		DllError result = {};
 
 		result |= fileNameProc1Injector(options);
 		result |= fileNameProc2Injector(options);
 		result |= fileNameProc3Injector(options);
+		result |= fileNameProc4Injector(options);
 
 		return result;
 	}

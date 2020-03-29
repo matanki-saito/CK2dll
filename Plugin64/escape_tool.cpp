@@ -389,14 +389,9 @@ ParadoxTextObject* utf8ToEscapedStr2(ParadoxTextObject* from) {
 	wchar_t* tmp = NULL;
 	char* tmp2 = NULL;
 
-	char* src = NULL;
+	std::string w = from->getString();
 
-	if (from->len >= 0x10) {
-		src = from->t.p;
-	}
-	else {
-		src = from->t.text;
-	}
+	const char* src = w.c_str();
 
 	//UTF-8 -> wide char (ucs2)
 	convertTextToWideText(src, &tmp);
@@ -406,23 +401,15 @@ ParadoxTextObject* utf8ToEscapedStr2(ParadoxTextObject* from) {
 
 	free(tmp);
 
-	UINT64 len = strlen(tmp2);
-	tmpZV2->len = len;
+	std::string str1(tmp2);
 
-	if (len >= 0x10) {
-		tmpZV2->t.p = tmp2;
-		tmpZV2->len2 = 0x1F;
-	}
-	else {
-		memcpy(tmpZV2->t.text, tmp2, len);
-	}
+	tmpZV2->setString( &str1);
 
 	return tmpZV2;
 }
 
-
 ParadoxTextObject* tmpParadoxTextObject2 = NULL;
-char* escapedStrToUtf8(ParadoxTextObject* from) {
+ParadoxTextObject* escapedStrToUtf8(ParadoxTextObject* from) {
 
 	if (tmpParadoxTextObject2 != NULL) {
 		if (tmpParadoxTextObject2->len > 0x10) {
@@ -447,7 +434,7 @@ char* escapedStrToUtf8(ParadoxTextObject* from) {
 	delete buffer;
 	delete dest;
 
-	return (char*)tmpParadoxTextObject2;
+	return (ParadoxTextObject*)tmpParadoxTextObject2;
 }
 
 char* utf8ToEscapedStr3buffer = NULL;
@@ -476,6 +463,7 @@ void replaceTextObject(ParadoxTextObject* org, ParadoxTextObject* neo) {
 	}
 
 	tmpParadoxTextObject2 = NULL;
+	tmpZV2 = NULL;
 
 	*org = *neo;
 }
