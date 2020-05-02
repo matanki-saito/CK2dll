@@ -888,13 +888,13 @@ IME_HandleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM *lParam, SDL_VideoD
         break;
     case WM_IME_SETCONTEXT:
         // *lParam = 0;
+        break;
+    case WM_IME_STARTCOMPOSITION:
+        trap = SDL_TRUE;
         videodata->ime_hwnd_current = hwnd;
         rect.x = 0;
         rect.y = 0;
         SDL_SetTextInputRect(&rect);
-        break;
-    case WM_IME_STARTCOMPOSITION:
-        trap = SDL_TRUE;
         break;
     case WM_IME_COMPOSITION:
         trap = SDL_TRUE;
