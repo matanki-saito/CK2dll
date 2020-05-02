@@ -202,8 +202,9 @@ WIN_StartTextInput(_THIS)
         HWND hwnd = ((SDL_WindowData *) window->driverdata)->hwnd;
         SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
         SDL_GetWindowSize(window, &videodata->ime_winwidth, &videodata->ime_winheight);
-        IME_Init(videodata, hwnd);
-        IME_Enable(videodata, hwnd);
+        // skip
+        // IME_Init(videodata, hwnd);
+        // IME_Enable(videodata, hwnd);
     }
 #endif /* !SDL_DISABLE_WINDOWS_IME */
 }
@@ -222,8 +223,8 @@ WIN_StopTextInput(_THIS)
     if (window) {
         HWND hwnd = ((SDL_WindowData *) window->driverdata)->hwnd;
         SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
-        IME_Init(videodata, hwnd);
-        IME_Disable(videodata, hwnd);
+        //IME_Init(videodata, hwnd);
+        //IME_Disable(videodata, hwnd);
     }
 #endif /* !SDL_DISABLE_WINDOWS_IME */
 }
@@ -876,15 +877,21 @@ IME_HandleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM *lParam, SDL_VideoD
 {
     SDL_bool trap = SDL_FALSE;
     HIMC himc = 0;
-    if (!videodata->ime_initialized || !videodata->ime_available || !videodata->ime_enabled)
-        return SDL_FALSE;
+    SDL_Rect rect;
+
+    //if (!videodata->ime_initialized || !videodata->ime_available || !videodata->ime_enabled)
+    //    return SDL_FALSE;
 
     switch (msg) {
     case WM_INPUTLANGCHANGE:
         IME_InputLangChanged(videodata);
         break;
     case WM_IME_SETCONTEXT:
-        *lParam = 0;
+        // *lParam = 0;
+        videodata->ime_hwnd_current = hwnd;
+        rect.x = 0;
+        rect.y = 0;
+        SDL_SetTextInputRect(&rect);
         break;
     case WM_IME_STARTCOMPOSITION:
         trap = SDL_TRUE;
@@ -892,17 +899,17 @@ IME_HandleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM *lParam, SDL_VideoD
     case WM_IME_COMPOSITION:
         trap = SDL_TRUE;
         himc = ImmGetContext(hwnd);
-        if (*lParam & GCS_RESULTSTR) {
-            IME_GetCompositionString(videodata, himc, GCS_RESULTSTR);
-            IME_SendInputEvent(videodata);
-        }
-        if (*lParam & GCS_COMPSTR) {
-            if (!videodata->ime_uiless)
-                videodata->ime_readingstring[0] = 0;
+        //if (*lParam & GCS_RESULTSTR) {
+        //    IME_GetCompositionString(videodata, himc, GCS_RESULTSTR);
+        //    IME_SendInputEvent(videodata);
+        //}
+        //if (*lParam & GCS_COMPSTR) {
+        //    if (!videodata->ime_uiless)
+        //        videodata->ime_readingstring[0] = 0;
 
-            IME_GetCompositionString(videodata, himc, GCS_COMPSTR);
-            IME_SendEditingEvent(videodata);
-        }
+        //    IME_GetCompositionString(videodata, himc, GCS_COMPSTR);
+        //    IME_SendEditingEvent(videodata);
+        //}
         ImmReleaseContext(hwnd, himc);
         break;
     case WM_IME_ENDCOMPOSITION:

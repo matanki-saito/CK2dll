@@ -379,8 +379,10 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     }
 #endif /* WMMSG_DEBUG */
 
-    if (IME_HandleMessage(hwnd, msg, wParam, &lParam, data->videodata))
+    if (IME_HandleMessage(hwnd, msg, wParam, &lParam, data->videodata)) {
         return 0;
+    }
+
 
     switch (msg) {
 
@@ -609,7 +611,9 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             }
 
             if (code != SDL_SCANCODE_UNKNOWN) {
-                SDL_SendKeyboardKey(SDL_PRESSED, code);
+                if (wParam != 229) {
+                    SDL_SendKeyboardKey(SDL_PRESSED, code);
+                }
             }
         }
  
@@ -627,7 +631,9 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     keyboardState[code] == SDL_RELEASED) {
                     SDL_SendKeyboardKey(SDL_PRESSED, code);
                 }
-                SDL_SendKeyboardKey(SDL_RELEASED, code);
+                if (wParam != 229) {
+                    SDL_SendKeyboardKey(SDL_RELEASED, code);
+                }
             }
         }
         returnCode = 0;
@@ -978,7 +984,7 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         break;
 
     }
-
+A:
     /* If there's a window proc, assume it's going to handle messages */
     if (data->wndproc) {
         return CallWindowProc(data->wndproc, hwnd, msg, wParam, lParam);
