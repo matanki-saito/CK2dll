@@ -33,6 +33,7 @@
 #include "../../events/scancodes_windows.h"
 #include "SDL_assert.h"
 #include "SDL_hints.h"
+#include "../../dll/escated_char.h"
 
 /* Dropfile support */
 #include <shellapi.h>
@@ -647,9 +648,12 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         /* otherwise fall through to below */
     case WM_CHAR:
         {
-            char text[5];
-            if ( WIN_ConvertUTF32toUTF8( (UINT32)wParam, text ) ) {
-                SDL_SendKeyboardText( text );
+            char text[5] = { 0 };
+            if (WIN_ConvertUTF32toEscapedChar((UINT32)wParam, text)) {
+                for (int i = 0; i < strlen(text); i++) {
+                    char buf[2] = { text[i], 0 };
+                    SDL_SendKeyboardText(buf);
+                }
             }
         }
         returnCode = 0;

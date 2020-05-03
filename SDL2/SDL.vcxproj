@@ -292,6 +292,7 @@
     <ClInclude Include="include\SDL_types.h" />
     <ClInclude Include="include\SDL_version.h" />
     <ClInclude Include="include\SDL_video.h" />
+    <ClInclude Include="src\dll\escated_char.h" />
     <ClInclude Include="src\events\blank_cursor.h" />
     <ClInclude Include="src\events\default_cursor.h" />
     <ClInclude Include="src\libm\math.h" />
@@ -378,6 +379,7 @@
     <ClInclude Include="src\video\windows\wmmsg.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\dll\escaped_char.c" />
     <ClCompile Include="src\libm\e_atan2.c" />
     <ClCompile Include="src\libm\e_log.c" />
     <ClCompile Include="src\libm\e_pow.c" />

@@ -4,6 +4,9 @@
     <Filter Include="API Headers">
       <UniqueIdentifier>{395b3af0-33d0-411b-b153-de1676bf1ef8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="escaped_text">
+      <UniqueIdentifier>{c0059c76-50b1-4b40-9f1c-6fb729d203a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\begin_code.h">
@@ -306,6 +309,9 @@
     <ClInclude Include="src\joystick\windows\SDL_xinputjoystick_c.h" />
     <ClInclude Include="src\render\SDL_yuv_sw_c.h" />
     <ClInclude Include="src\video\windows\wmmsg.h" />
+    <ClInclude Include="src\dll\escated_char.h">
+      <Filter>escaped_text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\libm\e_atan2.c" />
@@ -436,6 +442,9 @@
     <ClCompile Include="src\joystick\windows\SDL_xinputjoystick.c" />
     <ClCompile Include="src\render\SDL_yuv_mmx.c" />
     <ClCompile Include="src\render\SDL_yuv_sw.c" />
+    <ClCompile Include="src\dll\escaped_char.c">
+      <Filter>escaped_text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="src\main\windows\version.rc" />
