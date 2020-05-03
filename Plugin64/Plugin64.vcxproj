@@ -184,6 +184,7 @@
     <ClCompile Include="escape_tool.cpp" />
     <ClCompile Include="file_name.cpp" />
     <ClCompile Include="font.cpp" />
+    <ClCompile Include="input.cpp" />
     <ClCompile Include="localize.cpp" />
     <ClCompile Include="main_text.cpp" />
     <ClCompile Include="main_text_adjustment.cpp" />
@@ -212,6 +213,7 @@
     <MASM Include="decorative_letter_asm.asm" />
     <MASM Include="file_name_asm.asm" />
     <MASM Include="font_asm.asm" />
+    <MASM Include="input_asm.asm" />
     <MASM Include="localize_asm.asm" />
     <MASM Include="main_text_adjustment_asm.asm" />
     <MASM Include="main_text_asm.asm" />
