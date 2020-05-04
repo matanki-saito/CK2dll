@@ -23,23 +23,22 @@ NOT_DEF			=	2026h
 
 .CODE
 inputProc1 PROC
-	; ecxにはIMEからutf8の文字が渡されてくる
+	; ecxにはIMEからエスケープ済みの文字が渡されてくる
 	mov		ecx, dword ptr [rbp + 57h - 6Ch];
-	; chが0であればa-zなどの1byteで収まる文字なので、変換処理は必要ない
-	cmp		ch, 0;
-	jnz		JMP_A;
+
+	mov		ebx, r15d;
 
 	; JMP_X,Yについての説明。MakeJMPでコードが破壊されてしまうため、処理を丸ごとコピーしてきている。
 	; ここで80hと比較しているのはUTF8でU+0000 … U+007Fかどうか確認するため
 	; https://ja.wikipedia.org/wiki/UTF-8
-	cmp		cl, 80h;
-	jnb		JMP_X;
+	cmp		cl, 0FFh;
+	jnb		JMP_A;
 	movzx	ebx, cl;
-	jmp     JMP_Y;
+	jmp     JMP_B;
 
-JMP_X:
-	cmp		cl, 0E0h;
-	jnb		JMP_Y;
+JMP_A:
+	cmp		cl, 0FFh;
+	jnb		JMP_B;
 	movzx	eax, byte ptr [rbp + 57h - 6Bh];
 	movzx	ebx,cl;
 	and		eax, 3Fh;
@@ -47,70 +46,9 @@ JMP_X:
 	shl		ebx, 6;
 	or		ebx, eax;
 
-JMP_Y:
-	push	inputProc1ReturnAddress1;
-	ret;
-
-JMP_A:
-	lea		rcx,[rbp + 57h - 6Ch];
-	call	inputProc1CallAddress;
-	; 変換したエスケープ済みテキストアドレスを保存。 10 81 82のようになる
-	mov		inputProc2Tmp, rax;
-	;カウンタとして使うのでもともとあったものは保存
-	mov		inputProc1Tmp,rsi;
-	xor		rsi,rsi;
-
 JMP_B:
-	; そのままコピーした
-	mov		dword ptr [rbp + 57h - 40h], ebx;
-	lea		rdx, [rbp + 57h - 0B0h];
-	mov		byte ptr [rbp + 57h - 40h + 4], 1;
-	mov		rcx, rdi;
-	mov		rax, [rbp + 57h - 40h];
-	mov		[rbp + 57h - 0B0h], rax;
-	mov		rax, [rdi];
-	mov		qword ptr [rbp + 57h - 0A8h], 1;
-	mov		qword ptr [rbp + 57h - 0A0h], r15;
-	mov		qword ptr [rbp + 57h - 98h], r15;
-	mov		word ptr [rbp + 57h - 90h], r15w;
 
-	mov		rax, [r14];
-	lea     rdx, [rsp+200h - 1D0h];
-	xorps	xmm0, xmm0;
-	mov		qword ptr [rsp+200h - 1D0h], 0;
-	movdqu	xmmword ptr [rsp + 200h - 1C0h], xmm0;
-	mov		rcx, r14;
-	mov		dword ptr [rsp + 200h + 1C8h], edi;
-	movdqa  xmm0, xmmword ptr [inputProc1Var1];
-	movdqu  xmmword ptr [rsp + 200h - 198h], xmm0;
-
-	; １byte取り出す
-	mov		rbx, inputProc2Tmp;
-	mov		bl, byte ptr [rbx + rsi];
-
-	; null文字チェック
-	cmp		bl,0;
-	jz		JMP_C;
-
-	mov		byte ptr [rsp + 200h - 1C4h], bl;
-	mov		qword ptr [rsp + 200h - 1B0h], 0;
-	mov		dword ptr [rsp + 200h - 1A8h], edi;
-	mov		qword ptr [rsp + 200h - 1A0h], rdi;
-	mov		dword ptr [rsp + 200h - 188h], edi;
-	mov		dword ptr [rbp + 120h - 1A0h], 2;
-	mov		word ptr [rbp + 120h - 1A0h + 4], di;
-	mov		byte ptr [rbp + 120h - 1A0h + 6], 0;
-	call	qword ptr [rax + 18h];
-
-	; 1byte進める
-	inc		rsi;
-	jmp		JMP_B;
-
-JMP_C:
-	;戻す
-	mov		rsi, inputProc1Tmp;
-
-	push	inputProc1ReturnAddress2;
+	push	inputProc1ReturnAddress1;
 	ret;
 inputProc1 ENDP
 

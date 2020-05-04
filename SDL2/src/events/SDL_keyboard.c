@@ -780,11 +780,11 @@ SDL_SendKeyboardText(const char *text)
 
     if (cr >= 0x10 && cr <= 0x13) {
         /* DO NOTHING*/
-    }else
-    /* Don't post text events for unprintable characters */
-    if ( cr < ' ' || *text == 127) {
-        return 0;
     }
+    /* Don't post text events for unprintable characters */
+    //if ( cr < ' ' || *text == 127) {
+    //    return 0;
+    //}
   
 
     /* Post the event, if desired */
@@ -793,7 +793,9 @@ SDL_SendKeyboardText(const char *text)
         SDL_Event event;
         event.text.type = SDL_TEXTINPUT;
         event.text.windowID = keyboard->focus ? keyboard->focus->id : 0;
-        SDL_utf8strlcpy(event.text.text, text, SDL_arraysize(event.text.text));
+        //SDL_utf8strlcpy(event.text.text, text, SDL_arraysize(event.text.text));
+        SDL_memcpy(event.edit.text, text, SDL_arraysize(event.text.text));
+        
         posted = (SDL_PushEvent(&event) > 0);
     }
     return (posted);

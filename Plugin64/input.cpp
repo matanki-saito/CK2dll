@@ -83,7 +83,7 @@ namespace Input {
 	DllError Init(RunOptions options) {
 		DllError result = {};
 
-		//result |= inputProc1Injector(options);
+		result |= inputProc1Injector(options);
 		//result |= inputProc2Injector(options);
 
 		return result;
