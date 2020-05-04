@@ -776,10 +776,16 @@ SDL_SendKeyboardText(const char *text)
     SDL_Keyboard *keyboard = &SDL_keyboard;
     int posted;
 
+    unsigned char cr =(unsigned char)*text;
+
+    if (cr >= 0x10 && cr <= 0x13) {
+        /* DO NOTHING*/
+    }else
     /* Don't post text events for unprintable characters */
-    if ((unsigned char)*text < ' ' || *text == 127) {
+    if ( cr < ' ' || *text == 127) {
         return 0;
     }
+  
 
     /* Post the event, if desired */
     posted = 0;
