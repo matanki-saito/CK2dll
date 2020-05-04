@@ -650,7 +650,7 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         {
             char text[5] = { 0 };
             if (WIN_ConvertUTF32toEscapedChar((UINT32)wParam, text)) {
-                for (int i = 0; i < strlen(text); i++) {
+                for (int i = 0; i < SDL_strlen(text); i++) {
                     char buf[2] = { text[i], 0 };
                     SDL_SendKeyboardText(buf);
                 }
