@@ -778,8 +778,8 @@ SDL_SendKeyboardText(const char *text)
 
     unsigned char cr =(unsigned char)*text;
 
-    if (cr >= 0x10 && cr <= 0x13) {
-        /* DO NOTHING*/
+    if (cr == 8) {
+        return 0;
     }
     /* Don't post text events for unprintable characters */
     //if ( cr < ' ' || *text == 127) {
