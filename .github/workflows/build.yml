@@ -2,7 +2,7 @@ name: DllBuild
 on:
   push:
     branches:
-      - master
+      - feature/buildtest
 
 jobs:
   build:
