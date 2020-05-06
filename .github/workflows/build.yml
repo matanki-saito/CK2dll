@@ -39,7 +39,8 @@ jobs:
         Move-Item README.md artifact/
         Move-Item resource/.dist.v1.json artifact/
         Move-Item x64/Release/version.dll artifact/
-        Move-Item x64/Release/plugin64.dll artifact/plugins/
+        Move-Item x64/Release/SDL2.dll artifact/
+        Move-Item x64/Release/plugin64.dll artifact/plugins/        
         Move-Item resource/plugin.ini artifact/plugins/
         Move-Item resource/dllautoupdater.exe artifact/plugins/
         Move-Item resource/autoupdate64.bat artifact/plugins/
@@ -47,7 +48,7 @@ jobs:
 
     - name: generate artifact zip
       run: |
-        compress-archive -Path artifact/* -DestinationPath alpha_steam_CK_3.3_fixdll_build_${{ github.run_number }}.zip
+        compress-archive -Path artifact/* -DestinationPath alpha_steam_CK_3_3_fixdll_build_${{ github.run_number }}.zip
       shell: powershell
 
     - name: Create Release
@@ -71,5 +72,5 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
         asset_path: ./alpha_steam_CK_3_3_fixdll_build_${{ github.run_number }}.zip
-        asset_name: alpha_steam_CK_3_3__fixdll_build_${{ github.run_number }}.zip
+        asset_name: alpha_steam_CK_3_3_fixdll_build_${{ github.run_number }}.zip
         asset_content_type: application/json
