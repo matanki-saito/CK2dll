@@ -778,7 +778,7 @@ SDL_SendKeyboardText(const char *text)
 
     unsigned char cr =(unsigned char)*text;
 
-    if (cr == 8) {
+    if (cr == 8 || cr == 13) {
         return 0;
     }
     /* Don't post text events for unprintable characters */
