@@ -73,7 +73,7 @@ BOOL WINAPI DllMain(HMODULE module, DWORD reason, void *reserved)
 		success |= NoDynastyId::init(&options);
 
 		// IME
-		//success |= IME::init(&options);
+		success |= IME::init(&options);
 
 		//Input
 		//success |= Input::init(&options);

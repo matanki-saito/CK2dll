@@ -81,10 +81,10 @@ struct DllError {
 			bool decorativeLetterProc9Injector : 1;
 			bool decorativeLetterProc10Injector : 1;
 			bool decorativeLetterProc11Injector : 1;
-
 			bool mainTextOverflowProc1Injector : 1;
-
 			bool general : 1;
+			bool inputProc1Injector : 1;
+			bool inputProc2Injector : 1;
 		};
 	} version;
 
@@ -151,10 +151,10 @@ struct DllError {
 			bool decorativeLetterProc9Injector : 1;
 			bool decorativeLetterProc10Injector : 1;
 			bool decorativeLetterProc11Injector : 1;
-
 			bool mainTextOverflowProc1Injector : 1;
-
 			bool general : 1;
+			bool inputProc1Injector : 1;
+			bool inputProc2Injector : 1;
 		};
 	} unmatch;
 
@@ -272,5 +272,9 @@ namespace Localize {
 }
 
 namespace FileName {
+	DllError Init(RunOptions option);
+}
+
+namespace Input {
 	DllError Init(RunOptions option);
 }

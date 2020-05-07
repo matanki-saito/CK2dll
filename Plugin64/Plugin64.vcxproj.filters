@@ -82,6 +82,9 @@
     <Filter Include="ソース ファイル\app\file_name">
       <UniqueIdentifier>{605a73de-2901-4751-9149-431e25d69a10}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\app\Input">
+      <UniqueIdentifier>{3fca2860-c4d1-499d-a9b3-2f699c9a3ab6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mod_download.h">
@@ -188,6 +191,9 @@
     <ClCompile Include="file_name.cpp">
       <Filter>ソース ファイル\app\file_name</Filter>
     </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>ソース ファイル\app\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -234,6 +240,9 @@
     </MASM>
     <MASM Include="file_name_asm.asm">
       <Filter>ソース ファイル\app\file_name</Filter>
+    </MASM>
+    <MASM Include="input_asm.asm">
+      <Filter>ソース ファイル\app\Input</Filter>
     </MASM>
   </ItemGroup>
 </Project>

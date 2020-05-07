@@ -68,6 +68,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			// ファイル名
 			e |= FileName::Init(options);
 
+			// Input
+			e |= Input::Init(options);
+
 			Validator::Validate(e, options);
 		}
 		else if (ulReasonForCall == DLL_PROCESS_DETACH) {

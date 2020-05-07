@@ -351,7 +351,7 @@ namespace IME
 		result |= SDL_windowskeyboard_Win_StopTextInput_hook(options);
 		// SDL_windowskeyboard Win_IME_HandleMessageを修正
 		result |= SDL_windowskeyboard_Win_IME_HandleMessage_hook(options);
-		// SDL_windowsevent.cにInputRectを設定するコードを追加する
+		// SDL_windowskeyboard.cにInputRectを設定するコードを追加する
 		result |= SDL_windowskeyboard_Win_IME_HandleMessage_WM_IME_STARTCOMPOSITION_hook(options);
 
 		// SDL_keyborad.cを修正
