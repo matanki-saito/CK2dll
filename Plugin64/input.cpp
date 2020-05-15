@@ -35,12 +35,12 @@ namespace Input {
 				e.unmatch.inputProc1Injector = true;
 			}
 
-			// call    qword ptr [rax+18h]
-			BytePattern::temp_instance().find_pattern("48 8D 1D D9 C4 3D 00 48 8D 4D DF");
+			// mov     rax, [r14]
+			BytePattern::temp_instance().find_pattern("49 8B 06 45 33 C9 8B 55 DF");
 			if (BytePattern::temp_instance().has_size(1, "入力した文字をutf8からエスケープ列へ変換する")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
-				// lea     rbx, off_7FF63B038D38
-				inputProc1ReturnAddress2 = address;
+				// lea     rbx, off_xxxxx
+				inputProc1ReturnAddress2 = address + 0xF;
 			}
 			else {
 				e.unmatch.inputProc1Injector = true;

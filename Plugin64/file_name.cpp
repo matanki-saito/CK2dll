@@ -51,10 +51,11 @@ namespace FileName {
 
 		switch (options.version) {
 		case v3_3_0:
-			// lea     rcx, [rbp-60h]
-			BytePattern::temp_instance().find_pattern("48 8D 4D A0 E8 6C E9 6D 00 4C 8B 44 24 78");
+			// mov     [rsp+210h+var_1D8], 0Fh
+			BytePattern::temp_instance().find_pattern("48 C7 44 24 38 0F 00 00 00 48 89 7C 24 30 C6 44 24 20 00 48 8D 54 24 60");
 			if (BytePattern::temp_instance().has_size(1, "UTF-8に変換して保存")) {
-				uintptr_t address = BytePattern::temp_instance().get_first().address();
+				// lea     rcx, [rbp+110h+var_170]
+				uintptr_t address = BytePattern::temp_instance().get_first().address() + 0x18;
 
 				// lea     rcx, [rbp-60h]
 				fileNameProc2CallAddress = Injector::GetBranchDestination(address + 4).as_int();
@@ -106,19 +107,17 @@ namespace FileName {
 
 		switch (options.version) {
 		case v3_3_0:
-			// 場所は適当
-			// call    sub_xxxxx
-			BytePattern::temp_instance().find_pattern("E8 ED 52 38 00 90 48 C7 44 24 58 0F 00 00 00 4C 89 6C 24 50");
+			// mov r9d, esi
+			BytePattern::temp_instance().find_pattern("44 8B CE 45 33 C0 48 8D 54 24 60 49 8D 4F 50");
 			if (BytePattern::temp_instance().has_size(1, "UTF-8のファイル名の変換")) {
-				uintptr_t address = BytePattern::temp_instance().get_first().address();
-
 				fileNameProcUtf8ToEscapedStr = (uintptr_t)utf8ToEscapedStr2;
 
 				// nop
-				Injector::MakeJMP(address + 5, fileNameProc4, true);
+				uintptr_t address = BytePattern::temp_instance().get_first().address() + 0x14;
+				Injector::MakeJMP(address, fileNameProc4, true);
 
-				// mov     byte ptr [rsp+138h+var_F8], 0
-				fileNameProc4ReturnAddress = address + 0x14;
+				// mov     byte ptr [rsp+130h+Dst], 0
+				fileNameProc4ReturnAddress = address + 0x23;
 
 			}
 			else {
