@@ -113,8 +113,10 @@ namespace FileName {
 				fileNameProcUtf8ToEscapedStr = (uintptr_t)utf8ToEscapedStr2;
 
 				// nop
-				uintptr_t address = BytePattern::temp_instance().get_first().address() + 0x14;
-				Injector::MakeJMP(address, fileNameProc4, true);
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				Injector::MakeJMP(address + 0x14, fileNameProc4, true);
+
 
 				// mov     byte ptr [rsp+130h+Dst], 0
 				fileNameProc4ReturnAddress = address + 0x23;
