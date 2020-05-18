@@ -25,6 +25,7 @@ NOT_DEF			=	2026h
 inputProc1 PROC
 	; ecxにはIMEからエスケープ済みの文字が渡されてくる
 	mov		ecx, dword ptr [rbp + 57h - 6Ch];
+	shr		ecx,8; 
 
 	mov		ebx, r15d;
 

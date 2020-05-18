@@ -649,10 +649,21 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_CHAR:
         {
             char text[5] = { 0 };
-            if (WIN_ConvertUTF32toEscapedChar((UINT32)wParam, text)) {
+
+            UINT32 cr = (UINT32)wParam;
+
+            if (cr < ' ' || cr == 127) {
+                return;
+            }
+            if (WIN_ConvertUTF32toEscapedChar(cr, text)) {
                 for (int i = 0; i < SDL_strlen(text); i++) {
-                    char buf[2] = { text[i], 0 };
-                    SDL_SendKeyboardText(buf);
+                    int escaped = text[i] << 8;
+
+                    char high = (escaped >> 8) & 0x000000FF;
+                    char low = escaped & 0x000000FF;
+
+                    char buf[3] = { low, high, 0 };
+                    SDL_SendKeyboardEscapedText(buf);
                 }
             }
         }

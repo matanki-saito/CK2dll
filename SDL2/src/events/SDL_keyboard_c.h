@@ -53,6 +53,9 @@ extern int SDL_SendKeyboardKey(Uint8 state, SDL_Scancode scancode);
 /* Send keyboard text input */
 extern int SDL_SendKeyboardText(const char *text);
 
+/* Send keyboard escaped text input */
+extern int SDL_SendKeyboardEscapedText(const char* text);
+
 /* Send editing text for selected range from start to end */
 extern int SDL_SendEditingText(const char *text, int start, int end);
 
