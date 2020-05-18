@@ -778,14 +778,10 @@ SDL_SendKeyboardText(const char *text)
 
     unsigned char cr =(unsigned char)*text;
 
-    if (cr == 8 || cr == 13) {
+    /* Don't post text events for unprintable characters */
+    if (cr < ' ' || cr == 127) {
         return 0;
     }
-    /* Don't post text events for unprintable characters */
-    //if ( cr < ' ' || *text == 127) {
-    //    return 0;
-    //}
-  
 
     /* Post the event, if desired */
     posted = 0;
@@ -793,12 +789,33 @@ SDL_SendKeyboardText(const char *text)
         SDL_Event event;
         event.text.type = SDL_TEXTINPUT;
         event.text.windowID = keyboard->focus ? keyboard->focus->id : 0;
-        //SDL_utf8strlcpy(event.text.text, text, SDL_arraysize(event.text.text));
-        SDL_memcpy(event.edit.text, text, SDL_arraysize(event.text.text));
-        
+        SDL_utf8strlcpy(event.text.text, text, SDL_arraysize(event.text.text));
         posted = (SDL_PushEvent(&event) > 0);
     }
     return (posted);
+
+}
+
+
+int
+SDL_SendKeyboardEscapedText(const char* text)
+{
+    SDL_Keyboard* keyboard = &SDL_keyboard;
+    int posted;
+
+    unsigned char cr = (unsigned char)*text;
+
+    /* Post the event, if desired */
+    posted = 0;
+    if (SDL_GetEventState(SDL_TEXTINPUT) == SDL_ENABLE) {
+        SDL_Event event;
+        event.text.type = SDL_TEXTINPUT;
+        event.text.windowID = keyboard->focus ? keyboard->focus->id : 0;
+        SDL_memcpy(event.edit.text, text, SDL_arraysize(event.text.text));
+        posted = (SDL_PushEvent(&event) > 0);
+    }
+    return (posted);
+
 }
 
 int
