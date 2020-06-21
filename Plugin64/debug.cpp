@@ -15,11 +15,10 @@ namespace Debug {
 		switch (options.version) {
 		case v3_3_0:
 			pattern = "40 57 41 54 41 55 41 56 41 57 B8 F0 17 00 00";
-		INJECT:
 			// hook main thread head
 			// push rdi; push r12; ...
 			BytePattern::temp_instance().find_pattern(pattern);
-			if (BytePattern::temp_instance().has_size(1, "デバッグ")) {
+			if (BytePattern::temp_instance().has_size(1, u8"デバッグ")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// call xxxxx

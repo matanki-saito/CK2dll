@@ -23,7 +23,7 @@ namespace MainText {
 		case v3_3_0:
 			// movsxd rax, edi
 			BytePattern::temp_instance().find_pattern("48 63 C3 42 0F B6 0C 20 4C");
-			if (BytePattern::temp_instance().has_size(1, "テキスト処理ループ２の文字取得修正")) {
+			if (BytePattern::temp_instance().has_size(1, u8"テキスト処理ループ２の文字取得修正")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jnz     short loc_xxxxx
@@ -49,7 +49,7 @@ namespace MainText {
 		case v3_3_0:
 			// movsxd  rax, edi
 			BytePattern::temp_instance().find_pattern("48 63 C7 4C 8D 0D ? ? ? ? 42");
-			if (BytePattern::temp_instance().has_size(1, "テキスト処理ループ１のカウント処理修正")) {
+			if (BytePattern::temp_instance().has_size(1, u8"テキスト処理ループ１のカウント処理修正")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jz      loc_xxxxx
@@ -81,7 +81,7 @@ namespace MainText {
 		case v3_3_0:
 			// cmp cs:byte_xxxxx, 0
 			BytePattern::temp_instance().find_pattern("80 3D ? ? ? ? 00 0F 84 3F 01 00 00");
-			if (BytePattern::temp_instance().has_size(1, "テキスト処理ループ１の改行処理の戻り先２取得")) {
+			if (BytePattern::temp_instance().has_size(1, u8"テキスト処理ループ１の改行処理の戻り先２取得")) {
 				mainTextProc3ReturnAddress2 = BytePattern::temp_instance().get_first().address();
 			}
 			else {
@@ -90,7 +90,7 @@ namespace MainText {
 
 			// cmp     dword ptr [rbp-6Ch], 0
 			BytePattern::temp_instance().find_pattern("83 7D 94 00 0F 85 ? ? 00 00");
-			if (BytePattern::temp_instance().has_size(1, "テキスト処理ループ１の改行処理を修正")) {
+			if (BytePattern::temp_instance().has_size(1, u8"テキスト処理ループ１の改行処理を修正")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				//  jle     loc_xxxxxx
@@ -116,7 +116,7 @@ namespace MainText {
 		case v3_3_0:
 			// movzx   eax, cl
 			BytePattern::temp_instance().find_pattern("0F B6 C1 4C 8B 8C C6 E8 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, "テキスト処理ループ１の文字取得修正")) {
+			if (BytePattern::temp_instance().has_size(1, u8"テキスト処理ループ１の文字取得修正")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jz loc_xxxxx

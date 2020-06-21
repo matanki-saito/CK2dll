@@ -166,7 +166,7 @@ struct DllError {
 	}
 };
 
-typedef struct {
+typedef struct _ParadoxTextObject {
 	union {
 		char text[0x10];
 		char* p;

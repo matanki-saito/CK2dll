@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "plugin_64.h"
 
 namespace Font {
@@ -17,7 +17,7 @@ namespace Font {
 		case v3_3_0:
 			// mov rcx,cs:hHeap
 			BytePattern::temp_instance().find_pattern("48 8B 0D ? ? ? ? 4C 8B C3 33 D2");
-			if (BytePattern::temp_instance().has_size(1, "Font buffer heap zero clear")) {
+			if (BytePattern::temp_instance().has_size(1, u8"Font buffer heap zero clear")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// mov rcx, {cs:hHeap}
@@ -46,7 +46,7 @@ namespace Font {
 		switch (options.version) {
 		case v3_3_0:
 			BytePattern::temp_instance().find_pattern("BA 88 3B 00 00");
-			if (BytePattern::temp_instance().has_size(2, "Font buffer clear")) {
+			if (BytePattern::temp_instance().has_size(2, u8"Font buffer clear")) {
 				// mov edx, 3B88h
 				Injector::WriteMemory<uint8_t>(BytePattern::temp_instance().get_first().address(0x3), 0x10, true);
 			}
@@ -55,7 +55,7 @@ namespace Font {
 			}
 
 			BytePattern::temp_instance().find_pattern("BA A0 3B 00 00");
-			if (BytePattern::temp_instance().has_size(2, "Font buffer clear")) {
+			if (BytePattern::temp_instance().has_size(2, u8"Font buffer clear")) {
 				// mov edx, 3BA0h
 				Injector::WriteMemory<uint8_t>(BytePattern::temp_instance().get_first().address(0x3), 0x10, true);
 			}
@@ -76,7 +76,7 @@ namespace Font {
 		switch (options.version) {
 		case v3_3_0:
 			BytePattern::temp_instance().find_pattern("B9 88 3B 00 00");
-			if (BytePattern::temp_instance().has_size(1, "Font buffer expansion")) {
+			if (BytePattern::temp_instance().has_size(1, u8"Font buffer expansion")) {
 				// mov ecx, 3B88h
 				Injector::WriteMemory<uint8_t>(BytePattern::temp_instance().get_first().address(0x3), 0x10, true);
 			}
@@ -85,7 +85,7 @@ namespace Font {
 			}
 
 			BytePattern::temp_instance().find_pattern("B9 A0 3B 00 00");
-			if (BytePattern::temp_instance().has_size(1, "Font buffer expansion")) {
+			if (BytePattern::temp_instance().has_size(1, u8"Font buffer expansion")) {
 				// mov ecx, 3BA0h
 				Injector::WriteMemory<uint8_t>(BytePattern::temp_instance().get_first().address(0x3), 0x10, true);
 			}
@@ -106,7 +106,7 @@ namespace Font {
 		switch (options.version) {
 		case v3_3_0:
 			BytePattern::temp_instance().find_pattern("B9 00 00 00 02");
-			if (BytePattern::temp_instance().has_size(1, "Font size limit")) {
+			if (BytePattern::temp_instance().has_size(1, u8"Font size limit")) {
 				// mov     ecx, 2000000h
 				Injector::WriteMemory<uint8_t>(BytePattern::temp_instance().get_first().address(0x4), 0x04, true);
 			}
@@ -115,7 +115,7 @@ namespace Font {
 			}
 
 			BytePattern::temp_instance().find_pattern("48 8B F8 3D 00 00 00 02");
-			if (BytePattern::temp_instance().has_size(1, "Font size limit")) {
+			if (BytePattern::temp_instance().has_size(1, u8"Font size limit")) {
 				// mov     rdi, rax
 				// cmp     eax, 2000000h / 2000000h byte = 33Mbyte -> 67Mbyte
 				Injector::WriteMemory<uint8_t>(BytePattern::temp_instance().get_first().address(0x7), 0x04, true);
@@ -125,7 +125,7 @@ namespace Font {
 			}
 
 			BytePattern::temp_instance().find_pattern("4C 8B F0 3D 00 00 00 02");
-			if (BytePattern::temp_instance().has_size(1, "Font size limit")) {
+			if (BytePattern::temp_instance().has_size(1, u8"Font size limit")) {
 				// mov     r14, rax
 				// cmp     eax, 2000000h / 2000000h byte = 33Mbyte -> 67Mbyte
 				Injector::WriteMemory<uint8_t>(BytePattern::temp_instance().get_first().address(0x7), 0x04, true);
@@ -146,18 +146,18 @@ namespace Font {
 	DllError Init(RunOptions options) {
 		DllError result = {};
 
-		BytePattern::LoggingInfo("font etc fix");
+		BytePattern::LoggingInfo(u8"font etc fix");
 
-		/* ƒq[ƒvƒ[ƒƒtƒ‰ƒO‚ÌC³ */
+		/* ãƒ’ãƒ¼ãƒ—ã‚¼ãƒ­ãƒ•ãƒ©ã‚°ã®ä¿®æ­£ */
 		result |= fontBufferHeapZeroClearInjector(options);
 
-		/* ƒtƒHƒ“ƒgƒoƒbƒtƒ@ƒNƒŠƒA */
+		/* ãƒ•ã‚©ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã‚¯ãƒªã‚¢ */
 		result |= fontBufferClearInjector(options);
 
-		/* ƒtƒHƒ“ƒgƒoƒbƒtƒ@Šg’£ */
+		/* ãƒ•ã‚©ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡æ‹¡å¼µ */
 		result |= fontBufferExpansionInjector(options);
 
-		/* ƒtƒHƒ“ƒgƒTƒCƒY‚ÌŠg’£ */
+		/* ãƒ•ã‚©ãƒ³ãƒˆã‚µã‚¤ã‚ºã®æ‹¡å¼µ */
 		result |= fontSizeLimitInjector(options);
 
 		return result;

@@ -28,7 +28,7 @@ namespace MainTextAdjustment {
 		case v3_3_0:
 			// movzx   eax, byte ptr [rax+rdx]
 			BytePattern::temp_instance().find_pattern("0F B6 04 10 4D 8B BC C3 E8 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, "文字取得")) {
+			if (BytePattern::temp_instance().has_size(1, u8"文字取得")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jz      loc_xxxxx
@@ -54,7 +54,7 @@ namespace MainTextAdjustment {
 		case v3_3_0:
 			// movzx   eax, byte ptr [rax+rdx]
 			BytePattern::temp_instance().find_pattern("FF C7 4C 8B 4B 10 41 3B F9");
-			if (BytePattern::temp_instance().has_size(1, "カウントアップ")) {
+			if (BytePattern::temp_instance().has_size(1, u8"カウントアップ")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jmp     loc_xxxxx
@@ -83,7 +83,7 @@ namespace MainTextAdjustment {
 		case v3_3_0:
 			// cmp     cl, 20h
 			BytePattern::temp_instance().find_pattern("80 F9 20 44 0F 44 FF");
-			if (BytePattern::temp_instance().has_size(1, "文字取得前のスペース(0x20)チェック")) {
+			if (BytePattern::temp_instance().has_size(1, u8"文字取得前のスペース(0x20)チェック")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// cmp     r8, 10h
@@ -109,7 +109,7 @@ namespace MainTextAdjustment {
 		case v3_3_0:
 			// r13d, [rbp+3Fh+var_s28]
 			BytePattern::temp_instance().find_pattern("44 8B 6D 67 45 3B FD");
-			if (BytePattern::temp_instance().has_size(1, "分岐処理の修正")) {
+			if (BytePattern::temp_instance().has_size(1, u8"分岐処理の修正")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				//  mov     [rbp+3Fh+var_80], 0Fh （左）
@@ -138,7 +138,7 @@ namespace MainTextAdjustment {
 		case v3_3_0:
 			// inc     r8
 			BytePattern::temp_instance().find_pattern("49 FF C0 48 8B 54 24 20 48 8D 4C 24 20 E8 ? ? ? ? 48 C7 45 97 0F 00 00 00 4C 89 75 8F C6 44 24 20 00 4C 8B 45 E7");
-			if (BytePattern::temp_instance().has_size(1, "分岐処理（右）の修正")) {
+			if (BytePattern::temp_instance().has_size(1, u8"分岐処理（右）の修正")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// mov     [rbp+3Fh+var_A8], 0Fh
@@ -167,7 +167,7 @@ namespace MainTextAdjustment {
 		case v3_3_0:
 			// mov     r15d, edi
 			BytePattern::temp_instance().find_pattern("44 8B FF 8B CF 89 4D 67 45 8B E6 44 8B 55 77");
-			if (BytePattern::temp_instance().has_size(1, "変数リセットキャンセル")) {
+			if (BytePattern::temp_instance().has_size(1, u8"変数リセットキャンセル")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jmp     short loc_xxxxx

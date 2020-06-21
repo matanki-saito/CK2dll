@@ -4,7 +4,7 @@
 using namespace std;
 
 namespace Version {
-	typedef struct {
+	typedef struct _Pattern {
 		char ascii1;
 		char dot;
 		char ascii2;
@@ -18,9 +18,9 @@ namespace Version {
 	string versionString(Ck2Version version) {
 		switch (version) {
 		case v3_3_0:
-			return "v3_3_0";
+			return u8"v3_3_0";
 		default:
-			return "UNKNOWN";
+			return u8"UNKNOWN";
 		}
 	}
 

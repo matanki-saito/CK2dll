@@ -27,7 +27,7 @@ namespace FileName {
 		case v3_3_0:
 			// movsxd  r10, dword ptr [rcx+10h]
 			BytePattern::temp_instance().find_pattern("4C 63 51 10 4D 85 D2 0F 8E 30 03 00 00 45 33 C0");
-			if (BytePattern::temp_instance().has_size(1, "ファイル名を文字化けしないように設定")) {
+			if (BytePattern::temp_instance().has_size(1, u8"ファイル名を文字化けしないように設定")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jle     locret_xxxxx
@@ -53,7 +53,7 @@ namespace FileName {
 		case v3_3_0:
 			// mov     [rsp+210h+var_1D8], 0Fh
 			BytePattern::temp_instance().find_pattern("48 C7 44 24 38 0F 00 00 00 48 89 7C 24 30 C6 44 24 20 00 48 8D 54 24 60");
-			if (BytePattern::temp_instance().has_size(1, "UTF-8に変換して保存")) {
+			if (BytePattern::temp_instance().has_size(1, u8"UTF-8に変換して保存")) {
 				// lea     rcx, [rbp+110h+var_170]
 				uintptr_t address = BytePattern::temp_instance().get_first().address() + 0x18;
 
@@ -86,7 +86,7 @@ namespace FileName {
 		case v3_3_0:
 			// 
 			BytePattern::temp_instance().find_pattern("48 8B 16 48 8B CA 41 B0 01 0F B6 02 84 C0");
-			if (BytePattern::temp_instance().has_size(2, "UTF-8の完全なファイル名列挙")) {
+			if (BytePattern::temp_instance().has_size(2, u8"UTF-8の完全なファイル名列挙")) {
 				// jz short loc_XXXXX -> jmp XXXXX
 				Injector::WriteMemory<uint8_t>(BytePattern::temp_instance().get_first().address(14),0xEB,true);
 				Injector::WriteMemory<uint8_t>(BytePattern::temp_instance().get_second().address(14), 0xEB, true);
@@ -109,7 +109,7 @@ namespace FileName {
 		case v3_3_0:
 			// mov r9d, esi
 			BytePattern::temp_instance().find_pattern("44 8B CE 45 33 C0 48 8D 54 24 60 49 8D 4F 50");
-			if (BytePattern::temp_instance().has_size(1, "UTF-8のファイル名の変換")) {
+			if (BytePattern::temp_instance().has_size(1, u8"UTF-8のファイル名の変換")) {
 				fileNameProcUtf8ToEscapedStr = (uintptr_t)utf8ToEscapedStr2;
 
 				// nop
@@ -142,7 +142,7 @@ namespace FileName {
 			// 場所は適当
 			// call    sub_xxxxx
 			BytePattern::temp_instance().find_pattern("E8 FA DE 27 00 90 4C 8B 44 24 58 49 83 F8 10 72 12");
-			if (BytePattern::temp_instance().has_size(1, "UTF-8のファイル名の変換")) {
+			if (BytePattern::temp_instance().has_size(1, u8"UTF-8のファイル名の変換")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// call    sub_{xxxxx}

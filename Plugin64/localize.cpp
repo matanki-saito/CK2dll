@@ -16,7 +16,7 @@ namespace Localize {
 		case v3_3_0:
 			// lea     rcx, [rsp+128h+var_F8]
 			BytePattern::temp_instance().find_pattern("48 8D 4C 24 30 49 83 F9 10 49 0F 43 C8 41 8D 42 FF");
-			if (BytePattern::temp_instance().has_size(2, "dynastyに-idがついてしまう問題のreturn address")) {
+			if (BytePattern::temp_instance().has_size(2, u8"dynastyに-idがついてしまう問題のreturn address")) {
 				uintptr_t address = BytePattern::temp_instance().get_second().address();
 
 				// jump先が複数見つかるので、この方法を使う
@@ -35,7 +35,7 @@ namespace Localize {
 		case v3_3_0:
 			// mov     r8, [rsp+128h+var_F8]
 			BytePattern::temp_instance().find_pattern("4C 8B 44 24 30 4C 8B 4C 24 48 41 83 FA 04");
-			if (BytePattern::temp_instance().has_size(1, "dynastyに-idがついてしまう問題")) {
+			if (BytePattern::temp_instance().has_size(1, u8"dynastyに-idがついてしまう問題")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				Injector::MakeJMP(address, localizeProc1, true);

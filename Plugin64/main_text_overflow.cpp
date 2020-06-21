@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "plugin_64.h"
 
 namespace MainTextOverflow {
@@ -20,7 +20,7 @@ namespace MainTextOverflow {
 		case v3_3_0:
 			// movzx   eax, byte ptr [rax+rdi]
 			BytePattern::temp_instance().find_pattern("0F B6 04 38 4D 8B 94 C5 E8 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, "•¶šæ“¾ˆ—")) {
+			if (BytePattern::temp_instance().has_size(1, u8"æ–‡å­—å–å¾—å‡¦ç†")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jz      loc_xxxxx
@@ -46,7 +46,7 @@ namespace MainTextOverflow {
 		case v3_3_0:
 			// movzx   eax, byte ptr [rax+rdi]
 			BytePattern::temp_instance().find_pattern("8B 53 10 FF C7 3B FA 0F 8D FB 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, "ƒJƒEƒ“ƒgƒAƒbƒv")) {
+			if (BytePattern::temp_instance().has_size(1, u8"ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jge loc {xxxxx}
@@ -76,7 +76,7 @@ namespace MainTextOverflow {
 		case v3_3_0:
 			// movzx   eax, byte ptr [rax+rdi]
 			BytePattern::temp_instance().find_pattern("8D 47 FD C6 04 10 2E 49 83 7F 18 10 72 05 49 8B");
-			if (BytePattern::temp_instance().has_size(1, "ƒJƒEƒ“ƒgƒAƒbƒv")) {
+			if (BytePattern::temp_instance().has_size(1, u8"ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jmp loc_xxxxx

@@ -33,7 +33,7 @@ namespace WordOrder {
 		case v3_3_0:
 			// mov     [rsp+arg_10], rbx
 			BytePattern::temp_instance().find_pattern("48 89 5C 24 18 55 41 56 41 57 48 83 EC 20 4D 8B F0");
-			if (BytePattern::temp_instance().has_size(1, "std::basic_string<char>#insertをフック")) {
+			if (BytePattern::temp_instance().has_size(1, u8"std::basic_string<char>#insertをフック")) {
 				insert = BytePattern::temp_instance().get_first().address();
 			}
 			else {
@@ -54,7 +54,7 @@ namespace WordOrder {
 		case v3_3_0:
 			// nop
 			BytePattern::temp_instance().find_pattern("90 4C 8D 45 D0 48 8D 55 90 48 8D 4D B0");
-			if (BytePattern::temp_instance().has_size(2, "日付の順番を入れ替え")) {
+			if (BytePattern::temp_instance().has_size(2, u8"日付の順番を入れ替え")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				append = Injector::GetBranchDestination(address + 0xD).as_int();
@@ -83,7 +83,7 @@ namespace WordOrder {
 		case v3_3_0:
 			// nop
 			BytePattern::temp_instance().find_pattern("90 49 8B 07 48 8D 55 40 49 8B CF");
-			if (BytePattern::temp_instance().has_size(1, "issue-32 「家 XXX」を「XXX家」にしたい")) {
+			if (BytePattern::temp_instance().has_size(1, u8"issue-32 「家 XXX」を「XXX家」にしたい")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				constructFromKey = Injector::GetBranchDestination(address + 0x1C).as_int();

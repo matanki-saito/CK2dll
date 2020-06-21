@@ -19,7 +19,7 @@ namespace MapView {
 		case v3_3_0:
 			// movzx   eax, byte ptr [rax+rsi]
 			BytePattern::temp_instance().find_pattern("0F B6 04 30 4C 8B 9C C7 E8 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, "処理ループ２の文字取得処理")) {
+			if (BytePattern::temp_instance().has_size(1, u8"処理ループ２の文字取得処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				//  jnz     short loc_xxxxx
@@ -45,7 +45,7 @@ namespace MapView {
 		case v3_3_0:
 			// movzx   eax, byte ptr [rax+r12]
 			BytePattern::temp_instance().find_pattern("42 0F B6 04 20 48 8B 8D 30 03 00 00");
-			if (BytePattern::temp_instance().has_size(1, "処理ループ１の文字取得処理")) {
+			if (BytePattern::temp_instance().has_size(1, u8"処理ループ１の文字取得処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// test    r15, r15
@@ -71,7 +71,7 @@ namespace MapView {
 		case v3_3_0:
 			// byte ptr [rbp-8], 0
 			BytePattern::temp_instance().find_pattern("C6 45 F8 00 45 0F B6 04 04");
-			if (BytePattern::temp_instance().has_size(1, "処理ループ１の文字コピー")) {
+			if (BytePattern::temp_instance().has_size(1, u8"処理ループ１の文字コピー")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// call {sub_xxxxx}

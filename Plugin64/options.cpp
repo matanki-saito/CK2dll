@@ -1,11 +1,11 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "plugin_64.h"
 
 using namespace std;
 
 namespace Ini {
 	wstring constructIniPath() {
-		// exe‚ÌƒpƒX‚ğŒ©‚Â‚¯‚é
+		// exeã®ãƒ‘ã‚¹ã‚’è¦‹ã¤ã‘ã‚‹
 		wchar_t exe_path[1024];
 		wchar_t drive[8];
 		wchar_t dir[1024];

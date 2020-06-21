@@ -35,7 +35,7 @@ namespace DecorativeLetter {
 		case v3_3_0:
 			// mov     r9d, 1
 			BytePattern::temp_instance().find_pattern("41 B9 01 00 00 00 45 33 C0 48 8D 95 30 12 00 00");
-			if (BytePattern::temp_instance().has_size(1, "切り出し")) {
+			if (BytePattern::temp_instance().has_size(1, u8"切り出し")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// call    sub_140D5FDF0
@@ -62,7 +62,7 @@ namespace DecorativeLetter {
 		case v3_3_0:
 			// lea     rsi, [rax+rdi]
 			BytePattern::temp_instance().find_pattern("48 8D 34 38 0F B6 04 38");
-			if (BytePattern::temp_instance().has_size(1, "大文字化キャンセル")) {
+			if (BytePattern::temp_instance().has_size(1, u8"大文字化キャンセル")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// call {sub_xxxxx}
@@ -91,7 +91,7 @@ namespace DecorativeLetter {
 		case v3_3_0:
 			// mov     rbx, rax
 			BytePattern::temp_instance().find_pattern("48 8B D8 44 8B 8D E8 02 00 00");
-			if (BytePattern::temp_instance().has_size(1, "切り出した残りの部分の処理")) {
+			if (BytePattern::temp_instance().has_size(1, u8"切り出した残りの部分の処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jnz	short loc_xxxxx
@@ -118,7 +118,7 @@ namespace DecorativeLetter {
 		case v3_3_0:
 			//  mov     rbx, rax
 			BytePattern::temp_instance().find_pattern("48 8B D8 41 B9 01 00 00 00 45 33 C0");
-			if (BytePattern::temp_instance().has_size(3, "切り出し")) {
+			if (BytePattern::temp_instance().has_size(3, u8"切り出し")) {
 				uintptr_t address = BytePattern::temp_instance().get(2).address();
 
 				// lea     rcx, [rbp+810h+var_760]
@@ -144,7 +144,7 @@ namespace DecorativeLetter {
 		case v3_3_0:
 			//  mov     r9d, [rbp+810h+var_750]
 			BytePattern::temp_instance().find_pattern("44 8B 8D C0 00 00 00 41 B8 01 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, "切り出した残りの部分の処理")) {
+			if (BytePattern::temp_instance().has_size(1, u8"切り出した残りの部分の処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// lea     rcx, [rbp+810h+var_760]
@@ -170,7 +170,7 @@ namespace DecorativeLetter {
 		case v3_3_0:
 			// mov     rbx, rax
 			BytePattern::temp_instance().find_pattern("48 8B D8 41 B9 01 00 00 00");
-			if (BytePattern::temp_instance().has_size(2, "切り出し")) {
+			if (BytePattern::temp_instance().has_size(2, u8"切り出し")) {
 				uintptr_t address = BytePattern::temp_instance().get_second().address();
 
 				// lea     rcx, [rbp+70h]
@@ -196,7 +196,7 @@ namespace DecorativeLetter {
 		case v3_3_0:
 			// mov     r9d, [rbp+80h]
 			BytePattern::temp_instance().find_pattern("44 8B 8D 80 00 00 00 41 B8 01 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, "切り出した残りの部分の処理")) {
+			if (BytePattern::temp_instance().has_size(1, u8"切り出した残りの部分の処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// lea     rcx, [rbp+70h]
@@ -223,7 +223,7 @@ namespace DecorativeLetter {
 		case v3_3_0:
 			// mov     rbx, rax
 			BytePattern::temp_instance().find_pattern("48 8B D8 41 B9 01 00 00 00 45 33 C0");
-			if (BytePattern::temp_instance().has_size(1, "1文字切り出し")) {
+			if (BytePattern::temp_instance().has_size(1, u8"1文字切り出し")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// lea     rcx, [rbp+48h]
@@ -249,7 +249,7 @@ namespace DecorativeLetter {
 		case v3_3_0:
 			// r9d, [rbp+58h]
 			BytePattern::temp_instance().find_pattern("44 8B 4D 58 41 B8 01 00 00 00 48 8D 95 88 01 00");
-			if (BytePattern::temp_instance().has_size(1, "切り出した残りの部分の処理")) {
+			if (BytePattern::temp_instance().has_size(1, u8"切り出した残りの部分の処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// lea     rcx, [rbp+48h]
@@ -275,7 +275,7 @@ namespace DecorativeLetter {
 		case v3_3_0:
 			// mov     r9d, 1
 			BytePattern::temp_instance().find_pattern("41 B9 01 00 00 00 45 33 C0 48 8D 95 10 03 00 00");
-			if (BytePattern::temp_instance().has_size(1, "1文字切り出し")) {
+			if (BytePattern::temp_instance().has_size(1, u8"1文字切り出し")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// lea     rcx, [rbp+0]
@@ -301,7 +301,7 @@ namespace DecorativeLetter {
 		case v3_3_0:
 			//  mov     r9d, [rbp+10h]
 			BytePattern::temp_instance().find_pattern("44 8B 4D 10 41 B8 01 00 00 00 48 8D 95 D0 02 00");
-			if (BytePattern::temp_instance().has_size(1, "切り出した残りの部分の処理")) {
+			if (BytePattern::temp_instance().has_size(1, u8"切り出した残りの部分の処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// lea     rcx, [rbp+0]

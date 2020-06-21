@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Injectors - Base Header
  *
  *  Copyright (C) 2012-2014 LINK/2012 <dma_2012@hotmail.com>
@@ -29,7 +29,7 @@
 
 namespace Injector
 {
-
+	
 	class game_version_manager
 	{
 	public:
@@ -606,7 +606,7 @@ namespace Injector
 	 *  MakeJMP
 	 *      Creates a JMP instruction at address @at that jumps into address @dest
 	 *      If there was already a branch instruction there, returns the previosly destination of the branch
-	 *      �S�̂ł�14�o�C�g�g�p����
+	 *      全体では14バイト使用する
 	 */
 	inline memory_pointer_raw MakeJMP(memory_pointer_tr at, memory_pointer_raw dest, bool vp = true)
 	{
@@ -615,16 +615,16 @@ namespace Injector
 		auto offset = GetRelativeOffset(dest, at + 1 + 4);
 
 		if (offset > 0x7FFFFFFF) {
-			//WriteMemory<uint8_t>(at, 0x48, vp); // REX.w �] 1=�I�y�����h�T�C�Y��64�r�b�g�ɂ���B
-			WriteMemory<uint8_t>(at, 0xFF, vp); // operand�@
-			// Mod/R: [RIP + disp32]���Ӗ�����
-			//        Mod: 00b : ���W�X�^�[+���W�X�^�[
-			//        reg: 100b : operand�A �@�ƇA�̑g�ݍ��킹��jmp��near�Ŏ��{�ɂȂ�
-			//        r/m: 101b : x86����disp32�݂̂�������x64�ł�RIP�i���̖��߂̏I���̃A�h���X�j���Ӗ�
+			//WriteMemory<uint8_t>(at, 0x48, vp); // REX.w ‐ 1=オペランドサイズを64ビットにする。
+			WriteMemory<uint8_t>(at, 0xFF, vp); // operand①
+			// Mod/R: [RIP + disp32]を意味する
+			//        Mod: 00b : レジスター+レジスター
+			//        reg: 100b : operand② ①と②の組み合わせでjmpをnearで実施になる
+			//        r/m: 101b : x86だとdisp32のみだったがx64ではRIP（この命令の終わりのアドレス）を意味
 			WriteMemory<uint8_t>(at + 1, 0x25, vp);
-			// displacement 32�ɂ�0������RIP�̂�����������悤�ɂ���
+			// displacement 32には0を入れてRIPのすぐ後ろを見るようにする
 			WriteMemory<uint32_t>(at + 2, 0x0, vp);
-			// jmp��̃A�h���X������
+			// jmp先のアドレスを書く
 			WriteMemory<memory_pointer_raw>(at + 6, dest, vp);
 		}
 		else {
@@ -647,15 +647,15 @@ namespace Injector
 		auto aOffset = abs((long long)offset);
 
 		if (aOffset > 0xFFFFFFFF) {
-			WriteMemory<uint8_t>(at, 0xFF, vp); // operand �@
-			// Mod/R: [RIP + disp32]���Ӗ�����
-			//        Mod: 00b : ���W�X�^�[+���W�X�^�[
-			//        reg: 010b :  �@�ƇA�̑g�ݍ��킹��call��near�Ŏ��{�ɂȂ�
-			//        r/m: 101b : x86����disp32�݂̂�������x64�ł�RIP�i���̖��߂̏I���̃A�h���X�j���Ӗ�
+			WriteMemory<uint8_t>(at, 0xFF, vp); // operand ①
+			// Mod/R: [RIP + disp32]を意味する
+			//        Mod: 00b : レジスター+レジスター
+			//        reg: 010b :  ①と②の組み合わせでcallをnearで実施になる
+			//        r/m: 101b : x86だとdisp32のみだったがx64ではRIP（この命令の終わりのアドレス）を意味
 			WriteMemory<uint8_t>(at + 1, 0x15, vp);
-			// displacement 32�ɂ�0������RIP�̂�����������悤�ɂ���
+			// displacement 32には0を入れてRIPのすぐ後ろを見るようにする
 			WriteMemory<uint32_t>(at + 2, 0x0, vp);
-			// call��̃A�h���X������
+			// call先のアドレスを書く
 			WriteMemory<memory_pointer_raw>(at + 6, dest, vp);
 		}
 		else {
@@ -672,15 +672,15 @@ namespace Injector
 		auto aOffset = abs((long long)offset);
 
 		if (aOffset > 0xFFFFFFFF) {
-			WriteMemory<uint8_t>(at, 0xFF, vp); // operand �@
-			// Mod/R: [RIP + disp32]���Ӗ�����
-			//        Mod: 00b : ���W�X�^�[+���W�X�^�[
-			//        reg: 010b :  �@�ƇA�̑g�ݍ��킹��call��near�Ŏ��{�ɂȂ�
-			//        r/m: 101b : x86����disp32�݂̂�������x64�ł�RIP�i���̖��߂̏I���̃A�h���X�j���Ӗ�
+			WriteMemory<uint8_t>(at, 0xFF, vp); // operand ①
+			// Mod/R: [RIP + disp32]を意味する
+			//        Mod: 00b : レジスター+レジスター
+			//        reg: 010b :  ①と②の組み合わせでcallをnearで実施になる
+			//        r/m: 101b : x86だとdisp32のみだったがx64ではRIP（この命令の終わりのアドレス）を意味
 			WriteMemory<uint8_t>(at + 1, 0x15, vp);
-			// displacement 32�ɂ�0������RIP�̂�����������悤�ɂ���
+			// displacement 32には0を入れてRIPのすぐ後ろを見るようにする
 			WriteMemory<uint32_t>(at + 2, 0x0, vp);
-			// call��̃A�h���X������
+			// call先のアドレスを書く
 			WriteMemory<memory_pointer_raw>(at + 6, dest, vp);
 
 			return at + 14;

@@ -1,8 +1,8 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "plugin_64.h"
 #include "escape_tool.h"
 
-// 3.3.2“_‚ÅSDL‚Ìversion‚Í2.0.5‚ÅŠO•”DLL‰»‚³‚ê‚½B
+// 3.3.2æ™‚ç‚¹ã§SDLã®versionã¯2.0.5ã§å¤–éƒ¨DLLåŒ–ã•ã‚ŒãŸã€‚
 namespace Input {
 	extern "C" {
 		void inputProc1();
@@ -21,7 +21,7 @@ namespace Input {
 		case v3_3_0:
 			// movzx   ecx, [rbp+57h+var_6C]
 			BytePattern::temp_instance().find_pattern("0F B6 4D EB 41 8B DF 80 F9 80 73 05 0F B6 D9 EB 17");
-			if (BytePattern::temp_instance().has_size(1, "“ü—Í‚µ‚½•¶š‚ğutf8‚©‚çƒGƒXƒP[ƒv—ñ‚Ö•ÏŠ·‚·‚é")) {
+			if (BytePattern::temp_instance().has_size(1, u8"å…¥åŠ›ã—ãŸæ–‡å­—ã‚’utf8ã‹ã‚‰ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—åˆ—ã¸å¤‰æ›ã™ã‚‹")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				inputProc1CallAddress = (uintptr_t)utf8ToEscapedStr3;
@@ -37,7 +37,7 @@ namespace Input {
 
 			// mov     rax, [r14]
 			BytePattern::temp_instance().find_pattern("49 8B 06 45 33 C9 8B 55 DF");
-			if (BytePattern::temp_instance().has_size(1, "“ü—Í‚µ‚½•¶š‚ğutf8‚©‚çƒGƒXƒP[ƒv—ñ‚Ö•ÏŠ·‚·‚é")) {
+			if (BytePattern::temp_instance().has_size(1, u8"å…¥åŠ›ã—ãŸæ–‡å­—ã‚’utf8ã‹ã‚‰ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—åˆ—ã¸å¤‰æ›ã™ã‚‹")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 				// lea     rbx, off_xxxxx
 				inputProc1ReturnAddress2 = address + 0xF;
@@ -61,7 +61,7 @@ namespace Input {
 		case v3_3_0:
 			// mov     rax, [rdi]
 			BytePattern::temp_instance().find_pattern("48 8B 07 48 8B CF 85 DB 74 08 FF 90 40 01 00 00");
-			if (BytePattern::temp_instance().has_size(1, "ƒoƒbƒNƒXƒy[ƒXˆ—‚ÌC³")) {
+			if (BytePattern::temp_instance().has_size(1, u8"ãƒãƒƒã‚¯ã‚¹ãƒšãƒ¼ã‚¹å‡¦ç†ã®ä¿®æ­£")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// movzx   r8d, word ptr [rdi+56h]

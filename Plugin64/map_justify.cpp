@@ -21,7 +21,7 @@ namespace MapJustify {
 		case v3_3_0:
 			// movsd   xmm3, [rbp+1B0h+var_190]
 			BytePattern::temp_instance().find_pattern("F2 0F 10 5D 20 FF C6 F2 0F 10 65 28");
-			if (BytePattern::temp_instance().has_size(1, "文字取得処理リターン先２")) {
+			if (BytePattern::temp_instance().has_size(1, u8"文字取得処理リターン先２")) {
 				mapJustifyProc1ReturnAddress2 = BytePattern::temp_instance().get_first().address();
 			}
 			else {
@@ -30,7 +30,7 @@ namespace MapJustify {
 
 			// movzx   eax, byte ptr [r14+rax]
 			BytePattern::temp_instance().find_pattern("41 0F B6 04 06 4C 8B 14 C1 4D 85 D2");
-			if (BytePattern::temp_instance().has_size(1, "文字取得処理")) {
+			if (BytePattern::temp_instance().has_size(1, u8"文字取得処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// cmp     dword ptr [r10+0Ch], 0
@@ -56,7 +56,7 @@ namespace MapJustify {
 		case v3_3_0:
 			// lea     eax, [rdx-1]
 			BytePattern::temp_instance().find_pattern("8D 42 FF 45 0F 57 C0 F3 44 0F 10 C0");
-			if (BytePattern::temp_instance().has_size(1, "一文字表示の調整")) {
+			if (BytePattern::temp_instance().has_size(1, u8"一文字表示の調整")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// cvtdq2ps xmm6, xmm6
@@ -82,7 +82,7 @@ namespace MapJustify {
 		case v3_3_0:
 			// movsd   xmm3, [rbp+1D0h+var_168]
 			BytePattern::temp_instance().find_pattern("F2 0F 10 5D 20 FF C6 F2 0F 10 65 28");
-			if (BytePattern::temp_instance().has_size(1, "カウント処理")) {
+			if (BytePattern::temp_instance().has_size(1, u8"カウント処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// cmp     r13, rax
@@ -109,7 +109,7 @@ namespace MapJustify {
 		case v3_3_0:
 			// movzx   eax, byte ptr [rdi+rax]
 			BytePattern::temp_instance().find_pattern("0F B6 04 07 4D 8B 94 C4 E8 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, "文字取得処理")) {
+			if (BytePattern::temp_instance().has_size(1, u8"文字取得処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jz      loc_xxxxx

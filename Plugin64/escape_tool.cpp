@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "escape_tool.h"
 
 inline wchar_t UCS2ToCP1252(int cp) {
@@ -88,7 +88,7 @@ errno_t convertWideTextToEscapedText(const wchar_t* from, char** to) {
 	/* */
 	size = wcslen(from);
 
-	/* ‘S•”ƒGƒXƒP[ƒv‚µ‚Ä‚à‚R”{‚ğ’´‚¦‚é‚±‚Æ‚Í‚È‚¢B‚P‚O‚Íƒoƒbƒtƒ@*/
+	/* å…¨éƒ¨ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã—ã¦ã‚‚ï¼“å€ã‚’è¶…ãˆã‚‹ã“ã¨ã¯ãªã„ã€‚ï¼‘ï¼ã¯ãƒãƒƒãƒ•ã‚¡*/
 	*to = (char*)calloc(size * 3 * 2 + 10, sizeof(char));
 
 	if (*to == NULL) {
@@ -107,26 +107,26 @@ errno_t convertWideTextToEscapedText(const wchar_t* from, char** to) {
 			continue;
 		}
 
-		/* ‚¸‚ç‚· */
+		/* ãšã‚‰ã™ */
 		if (cp > 0x100 && cp < 0xA00) {
 			cp = cp + 0xE000;
 		}
 
-		/* ãˆÊƒoƒCƒg */
+		/* ä¸Šä½ãƒã‚¤ãƒˆ */
 		BYTE high = (cp >> 8) & 0x000000FF;
 
-		/* ‰ºˆÊƒoƒCƒg */
+		/* ä¸‹ä½ãƒã‚¤ãƒˆ */
 		BYTE low = cp & 0x000000FF;
 
 		BYTE escapeChr = 0x10;
 
-		/* 2byte‚¶‚á‚È‚¢ */
+		/* 2byteã˜ã‚ƒãªã„ */
 		if (high == 0) {
 			(*to)[toIndex++] = (BYTE)cp;
 			continue;
 		}
 
-		/* high byte‚æ‚èŒˆ’è */
+		/* high byteã‚ˆã‚Šæ±ºå®š */
 		switch (high) {
 		case 0xA4:case 0xA3:case 0xA7:case 0x24:case 0x5B:case 0x00:case 0x5C:
 		case 0x20:case 0x0D:case 0x0A:case 0x22:case 0x7B:case 0x7D:case 0x40:
@@ -138,7 +138,7 @@ errno_t convertWideTextToEscapedText(const wchar_t* from, char** to) {
 			break;
 		}
 
-		/* low byte‚æ‚èŒˆ’è */
+		/* low byteã‚ˆã‚Šæ±ºå®š */
 		switch (low) {
 		case 0xA4:case 0xA3:case 0xA7:case 0x24:case 0x5B:case 0x00:case 0x5C:
 		case 0x20:case 0x0D:case 0x0A:case 0x22:case 0x7B:case 0x7D:case 0x40:

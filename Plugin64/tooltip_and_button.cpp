@@ -28,7 +28,7 @@ namespace TooltipAndButton {
 		case v3_3_0:
 			//  mov     byte ptr [rbp+440h+var_3B8], 0
 			BytePattern::temp_instance().find_pattern("C6 85 88 00 00 00 00 45 0F B6 04 06");
-			if (BytePattern::temp_instance().has_size(1, "処理ループ１の文字コピー")) {
+			if (BytePattern::temp_instance().has_size(1, u8"処理ループ１の文字コピー")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// call {sub_xxxxx}
@@ -57,7 +57,7 @@ namespace TooltipAndButton {
 		case v3_3_0:
 			// movzx   eax, byte ptr [r14+rax]
 			BytePattern::temp_instance().find_pattern("41 0F B6 04 06 4D 8B 8C C7 E8 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, "処理ループ１の文字取得")) {
+			if (BytePattern::temp_instance().has_size(1, u8"処理ループ１の文字取得")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// test    r9, r9
@@ -83,7 +83,7 @@ namespace TooltipAndButton {
 		case v3_3_0:
 			// mov ecx, ebx
 			BytePattern::temp_instance().find_pattern("8B CB 0F B6 04 01 4D 8B 9C C7 E8 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, "処理ループ２の文字取得")) {
+			if (BytePattern::temp_instance().has_size(1, u8"処理ループ２の文字取得")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// test r11, r11
@@ -109,7 +109,7 @@ namespace TooltipAndButton {
 		case v3_3_0:
 			// cmp     [rbp+440h+var_400], 0
 			BytePattern::temp_instance().find_pattern("83 7D 40 00 0F 85 F8 01 00 00");
-			if (BytePattern::temp_instance().has_size(1, "処理ループ１の改行処理")) {
+			if (BytePattern::temp_instance().has_size(1, u8"処理ループ１の改行処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jnz {loc_xxxxx} / inc ebx
@@ -139,7 +139,7 @@ namespace TooltipAndButton {
 		case v3_3_0:
 			// mov     rdi, [rsp+48h+arg_0]
 			BytePattern::temp_instance().find_pattern("48 8B 7C 24 50 41 3B F6 44 0F 4F F6");
-			if (BytePattern::temp_instance().has_size(1, "ツールチップの改行処理のリターン先２")) {
+			if (BytePattern::temp_instance().has_size(1, u8"ツールチップの改行処理のリターン先２")) {
 				tooltipAndButtonProc5ReturnAddress2 = BytePattern::temp_instance().get_first().address();
 			}
 			else {
@@ -148,7 +148,7 @@ namespace TooltipAndButton {
 
 			// movsxd  rax, ebx
 			BytePattern::temp_instance().find_pattern("48 63 C3 0F B6 0C 28 4D 8B 84 CC E8 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, "ツールチップの改行処理")) {
+			if (BytePattern::temp_instance().has_size(1, u8"ツールチップの改行処理")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jz short loc_xxxxx
@@ -174,7 +174,7 @@ namespace TooltipAndButton {
 		case v3_3_0:
 			// inc ebx
 			BytePattern::temp_instance().find_pattern("FF C3 3B 5D 08 7D 23 41 B9 01 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, "ループ１のカウントアップ")) {
+			if (BytePattern::temp_instance().has_size(1, u8"ループ１のカウントアップ")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jmp		loc_xxxxx  
