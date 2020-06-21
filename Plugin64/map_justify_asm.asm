@@ -92,8 +92,9 @@ mapJustifyProc2 PROC
 	jnz		JMP_A;
 
 	; 3byte = 1•¶Žš‚©‚Ç‚¤‚©
-	cmp		rdx, 3;
+	cmp		rdx, 2;
 	ja		JMP_A;
+	inc		rdx;
 	inc		rdx;
 	mov		rsi,1;
 	movd	xmm6, esi;
