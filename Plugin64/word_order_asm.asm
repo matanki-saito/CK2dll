@@ -1,4 +1,3 @@
-EXTERN	insert						:	QWORD
 EXTERN	append						:	QWORD
 EXTERN	constructFromKey			:	QWORD
 EXTERN	appendFromStatic			:	QWORD

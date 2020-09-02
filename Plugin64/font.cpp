@@ -106,11 +106,15 @@ namespace Font {
 		switch (options.version) {
 		case v3_3_0:
 			BytePattern::temp_instance().find_pattern("B9 00 00 00 02");
-			if (BytePattern::temp_instance().has_size(1, u8"Font size limit")) {
+			// CKIII発売日に3.3.3自体がアップデートしたのでそれの対策
+			if (BytePattern::temp_instance().count() == 1 || BytePattern::temp_instance().count() == 2) {
+				BytePattern::LoggingInfo("Font size limit:[OK]");
+
 				// mov     ecx, 2000000h
 				Injector::WriteMemory<uint8_t>(BytePattern::temp_instance().get_first().address(0x4), 0x04, true);
 			}
 			else {
+				BytePattern::LoggingInfo("Font size limit:[NG]");
 				e.unmatch.fontSizeLimitInjector = true;
 			}
 

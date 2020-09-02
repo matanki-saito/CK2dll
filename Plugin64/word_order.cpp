@@ -7,7 +7,6 @@ namespace WordOrder {
 		void wordOrderProc1();
 		void wordOrderProc2();
 
-		uintptr_t insert;
 		uintptr_t append;
 		uintptr_t constructFromKey;
 		uintptr_t appendFromStatic;
@@ -25,27 +24,6 @@ namespace WordOrder {
 	ParadoxTextObject _year;
 	ParadoxTextObject _month;
 	ParadoxTextObject _day;
-
-	DllError insertInjector(RunOptions options) {
-		DllError e = {};
-
-		switch (options.version) {
-		case v3_3_0:
-			// mov     [rsp+arg_10], rbx
-			BytePattern::temp_instance().find_pattern("48 89 5C 24 18 55 41 56 41 57 48 83 EC 20 4D 8B F0");
-			if (BytePattern::temp_instance().has_size(1, u8"std::basic_string<char>#insertをフック")) {
-				insert = BytePattern::temp_instance().get_first().address();
-			}
-			else {
-				e.unmatch.general = true;
-			}
-			break;
-		default:
-			e.version.general = true;
-		}
-
-		return e;
-	}
 
 	DllError wordOrderProc1Injector(RunOptions options) {
 		DllError e = {};
@@ -129,7 +107,6 @@ namespace WordOrder {
 		month = (uintptr_t)&_month;
 		day = (uintptr_t)&_day;
 
-		result |= insertInjector(options);
 		result |= wordOrderProc1Injector(options);
 		result |= wordOrderProc2Injector(options);
 
