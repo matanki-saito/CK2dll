@@ -71,6 +71,57 @@ mainTextOverflowProc1 ENDP
 
 ;------------------;
 
+mainTextOverflowProc1v3332 PROC
+	mov		multibyteFlag, 0h;
+
+	cmp		byte ptr [rax + rsi], ESCAPE_SEQ_1;
+	jz		JMP_A;
+			
+	cmp		byte ptr [rax + rsi], ESCAPE_SEQ_2;
+	jz		JMP_B;
+
+	cmp		byte ptr [rax + rsi], ESCAPE_SEQ_3;
+	jz		JMP_C;
+
+	cmp		byte ptr [rax + rsi], ESCAPE_SEQ_4;
+	jz		JMP_D;
+
+	movzx	eax, byte ptr [rax + rsi];
+	jmp		JMP_E;
+
+JMP_A:
+	movzx	eax, word ptr [rax + rsi + 1];
+	jmp		JMP_F;
+JMP_B:
+	movzx	eax, word ptr [rax + rsi + 1];
+	sub		eax, SHIFT_2;
+	jmp		JMP_F;
+JMP_C:
+	movzx	eax, word ptr [rax + rsi + 1];
+	add		eax, SHIFT_3;
+	jmp		JMP_F;
+JMP_D:
+	movzx	eax, word ptr [rax + rsi + 1];
+	add		eax, SHIFT_4;
+	jmp		JMP_F;
+
+JMP_F:
+	mov		multibyteFlag, 1h;
+	movzx	eax, ax;
+	cmp		eax, NO_FONT;
+	ja		JMP_E;
+	mov		eax, NOT_DEF;
+
+JMP_E:
+	mov		r10, qword ptr [r13 + rax * 8 +0E8h];
+
+	test	r10,r10;
+	push	mainTextOverflowProc1ReturnAddress;
+	ret;
+mainTextOverflowProc1v3332 ENDP
+
+;------------------;
+
 mainTextOverflowProc2 PROC
 	mov		edx, dword ptr [rbx + 10h];
 
