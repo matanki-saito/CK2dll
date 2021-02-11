@@ -9,6 +9,7 @@ namespace MainTextAdjustment {
 		void mainTextAdjustmentProc2();
 		void mainTextAdjustmentProc2v3332();
 		void mainTextAdjustmentProc3();
+		void mainTextAdjustmentProc3v3332();
 		void mainTextAdjustmentProc4();
 		void mainTextAdjustmentProc5();
 		void mainTextAdjustmentProc6();
@@ -111,17 +112,29 @@ namespace MainTextAdjustment {
 		switch (options.version) {
 		case v3_3_0:
 			// cmp     cl, 20h
-			BytePattern::temp_instance().find_pattern("80 F9 20 44 0F 44 FF");
-			if (BytePattern::temp_instance().has_size(1, u8"文字取得前のスペース(0x20)チェック")) {
+			BytePattern::temp_instance().find_pattern("80 F9 20 44 0F 44 DE");
+			if (BytePattern::temp_instance().has_size(1, u8"文字取得前のスペース(0x20)チェック v3.3.3.2")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// cmp     r8, 10h
 				mainTextAdjustmentProc3ReturnAddress = address + 0x15;
 
-				Injector::MakeJMP(address, mainTextAdjustmentProc3, true);
+				Injector::MakeJMP(address, mainTextAdjustmentProc3v3332, true);
 			}
 			else {
-				e.unmatch.mainTextAdjustmentProc3Injector = true;
+				// cmp     cl, 20h
+				BytePattern::temp_instance().find_pattern("80 F9 20 44 0F 44 FF");
+				if (BytePattern::temp_instance().has_size(1, u8"文字取得前のスペース(0x20)チェック v3.3.3.[0-1]")) {
+					uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+					// cmp     r8, 10h
+					mainTextAdjustmentProc3ReturnAddress = address + 0x15;
+
+					Injector::MakeJMP(address, mainTextAdjustmentProc3, true);
+				}
+				else {
+					e.unmatch.mainTextAdjustmentProc3Injector = true;
+				}
 			}
 			break;
 		default:

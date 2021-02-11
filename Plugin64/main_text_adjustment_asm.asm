@@ -255,6 +255,55 @@ mainTextAdjustmentProc3 ENDP
 
 ;-------------------------------------------;
 
+mainTextAdjustmentProc3v3332 PROC
+
+	cmp		cl, ESCAPE_SEQ_1;
+	jz		JMP_A;
+
+	cmp		cl, ESCAPE_SEQ_2;
+	jz		JMP_A;
+
+	cmp		cl, ESCAPE_SEQ_3;
+	jz		JMP_A;
+
+	cmp		cl, ESCAPE_SEQ_4;
+	jz		JMP_A;
+
+	cmp		cl, 20h;
+
+JMP_A:
+	cmovz	r11d, esi;
+
+JMP_B:
+	mov		dword ptr [rbp + 3Fh + 18h], r11d;
+	mov		eax, r15d;
+
+	cmp		cl, ESCAPE_SEQ_1;
+	jz		JMP_C;
+
+	cmp		cl, ESCAPE_SEQ_2;
+	jz		JMP_C;
+
+	cmp		cl, ESCAPE_SEQ_3;
+	jz		JMP_C;
+
+	cmp		cl, ESCAPE_SEQ_4;
+	jz		JMP_C;
+
+	cmp		cl, 20h;
+
+JMP_C:
+	cmovnz	eax, r13d;
+
+JMP_D:
+	
+	mov		r13d, eax;
+	push	mainTextAdjustmentProc3ReturnAddress;
+	ret;
+mainTextAdjustmentProc3v3332 ENDP
+
+;-------------------------------------------;
+
 mainTextAdjustmentProc4 PROC
 	mov		r13d, dword ptr[ rbp + 3Fh + 28h];
 
