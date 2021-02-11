@@ -8,6 +8,7 @@ namespace MainTextOverflow {
 		void mainTextOverflowProc2();
 		void mainTextOverflowProc2v3332();
 		void mainTextOverflowProc3();
+		void mainTextOverflowProc3v3332();
 		uintptr_t mainTextOverflowProc1ReturnAddress;
 		uintptr_t mainTextOverflowProc2ReturnAddress1;
 		uintptr_t mainTextOverflowProc2ReturnAddress2;
@@ -58,7 +59,7 @@ namespace MainTextOverflow {
 
 		switch (options.version) {
 		case v3_3_0:
-			// movzx   eax, byte ptr [rax+rdi]
+			// mov     edx, [rbx+10h]
 			BytePattern::temp_instance().find_pattern("8B 53 10 FF C6 3B F2 0F 8D 02 01 00 00");
 			if (BytePattern::temp_instance().has_size(1, u8"カウントアップ v3.3.3.2")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
@@ -72,7 +73,7 @@ namespace MainTextOverflow {
 				Injector::MakeJMP(address, mainTextOverflowProc2v3332, true);
 			}
 			else {
-				// movzx   eax, byte ptr [rax+rdi]
+				// mov     edx, [rbx+10h]
 				BytePattern::temp_instance().find_pattern("8B 53 10 FF C7 3B FA 0F 8D FB 00 00 00");
 				if (BytePattern::temp_instance().has_size(1, u8"カウントアップ v3.3.3.[0-1]")) {
 					uintptr_t address = BytePattern::temp_instance().get_first().address();
@@ -103,9 +104,9 @@ namespace MainTextOverflow {
 
 		switch (options.version) {
 		case v3_3_0:
-			// movzx   eax, byte ptr [rax+rdi]
-			BytePattern::temp_instance().find_pattern("8D 47 FD C6 04 10 2E 49 83 7F 18 10 72 05 49 8B");
-			if (BytePattern::temp_instance().has_size(1, u8"カウントアップ")) {
+			// lea     eax, [rsi-3]
+			BytePattern::temp_instance().find_pattern("8D 46 FD C6 04 10 2E 49 83 7F 18 10 72 05 49 8B");
+			if (BytePattern::temp_instance().has_size(1, u8"0x2E -> 0x20 v3.3.3.2")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jmp loc_xxxxx
@@ -113,10 +114,24 @@ namespace MainTextOverflow {
 
 				mainTextOverflowProc3ReturnAddress2 = address + 0x16;
 
-				Injector::MakeJMP(address, mainTextOverflowProc3, true);
+				Injector::MakeJMP(address, mainTextOverflowProc3v3332, true);
 			}
 			else {
-				e.unmatch.mainTextOverflowProc1Injector = true;
+				// lea     eax, [rdi-3]
+				BytePattern::temp_instance().find_pattern("8D 47 FD C6 04 10 2E 49 83 7F 18 10 72 05 49 8B");
+				if (BytePattern::temp_instance().has_size(1, u8"0x2E -> 0x20 v3.3.3.[0-1]")) {
+					uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+					// jmp loc_xxxxx
+					mainTextOverflowProc3ReturnAddress1 = address + 0x13;
+
+					mainTextOverflowProc3ReturnAddress2 = address + 0x16;
+
+					Injector::MakeJMP(address, mainTextOverflowProc3, true);
+				}
+				else {
+					e.unmatch.mainTextOverflowProc1Injector = true;
+				}
 			}
 			break;
 		default:

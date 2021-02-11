@@ -189,4 +189,23 @@ JMP_A:
 	ret;
 
 mainTextOverflowProc3 ENDP
+
+;------------------;
+
+mainTextOverflowProc3v3332 PROC
+	lea		eax, [rsi - 3];
+	mov		byte ptr [rax + rdx], 20h;
+	cmp		qword ptr [r15 + 18h], 10h;
+	jb		JMP_A;
+	mov		rdx, [r15];
+
+	push	mainTextOverflowProc3ReturnAddress2;
+	ret;
+
+JMP_A:
+	push	mainTextOverflowProc3ReturnAddress1;
+	ret;
+
+mainTextOverflowProc3v3332 ENDP
+
 END
