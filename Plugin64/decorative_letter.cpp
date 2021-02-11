@@ -4,6 +4,7 @@
 namespace DecorativeLetter {
 	extern "C" {
 		void decorativeLetterProc1();
+		void decorativeLetterProc1v3332();
 		void decorativeLetterProc2();
 		void decorativeLetterProc3();
 		void decorativeLetterProc4();
@@ -34,17 +35,29 @@ namespace DecorativeLetter {
 		switch (options.version) {
 		case v3_3_0:
 			// mov     r9d, 1
-			BytePattern::temp_instance().find_pattern("41 B9 01 00 00 00 45 33 C0 48 8D 95 30 12 00 00");
-			if (BytePattern::temp_instance().has_size(1, u8"切り出し")) {
+			BytePattern::temp_instance().find_pattern("41 B9 01 00 00 00 45 33 C0 48 8D 95 28 12 00 00");
+			if (BytePattern::temp_instance().has_size(1, u8"切り出し v3.3.3.2")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
-				// call    sub_140D5FDF0
+				// call    sub_xxxxx
 				decorativeLetterProc1ReturnAddress = address + 0x17;
 
-				Injector::MakeJMP(address, decorativeLetterProc1, true);
+				Injector::MakeJMP(address, decorativeLetterProc1v3332, true);
 			}
 			else {
-				e.unmatch.decorativeLetterProc1Injector = true;
+				// mov     r9d, 1
+				BytePattern::temp_instance().find_pattern("41 B9 01 00 00 00 45 33 C0 48 8D 95 30 12 00 00");
+				if (BytePattern::temp_instance().has_size(1, u8"切り出し v3.3.3.[0-1]")) {
+					uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+					// call    sub_140D5FDF0
+					decorativeLetterProc1ReturnAddress = address + 0x17;
+
+					Injector::MakeJMP(address, decorativeLetterProc1, true);
+				}
+				else {
+					e.unmatch.decorativeLetterProc1Injector = true;
+				}
 			}
 			break;
 		default:
