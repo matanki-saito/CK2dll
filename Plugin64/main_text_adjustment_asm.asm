@@ -333,6 +333,36 @@ mainTextAdjustmentProc4 ENDP
 
 ;-------------------------------------------;
 
+mainTextAdjustmentProc4v3332 PROC
+	mov		edi, [rbp + 3Fh + 18h];
+	mov		r13d, dword ptr[ rbp + 3Fh + 28h];
+
+	cmp		dword ptr[mainTextAdjustmentProc1TmpCharacter], 9;
+	jz		JMP_B;
+
+	cmp		dword ptr[mainTextAdjustmentProc1TmpCharacter], 100h;
+	ja		JMP_B;
+
+	; Ç±Ç±Ç©ÇÁâ∫ÇÕà⁄êA
+JMP_C:
+	cmp		edi, r13d;
+	jle		JMP_B;
+	cmp		r10d, dword ptr [rbp + 3Fh + 30h];
+	jle		JMP_A;
+	cmp		byte ptr [rbp + 3Fh + 50h], 0;
+	jnz		JMP_B;
+
+JMP_A: ; ç∂
+	push	mainTextAdjustmentProc4ReturnAddress1;
+	ret;
+
+JMP_B: ; âE
+	push	mainTextAdjustmentProc4ReturnAddress2;
+	ret;
+mainTextAdjustmentProc4v3332 ENDP
+
+;-------------------------------------------;
+
 mainTextAdjustmentProc5 PROC
 
 	;cmp		dword ptr [mainTextAdjustmentProc1TmpCharacter], 100h;

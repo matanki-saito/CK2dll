@@ -11,6 +11,7 @@ namespace MainTextAdjustment {
 		void mainTextAdjustmentProc3();
 		void mainTextAdjustmentProc3v3332();
 		void mainTextAdjustmentProc4();
+		void mainTextAdjustmentProc4v3332();
 		void mainTextAdjustmentProc5();
 		void mainTextAdjustmentProc6();
 		uintptr_t mainTextAdjustmentProc1ReturnAddress;
@@ -150,20 +151,35 @@ namespace MainTextAdjustment {
 		switch (options.version) {
 		case v3_3_0:
 			// r13d, [rbp+3Fh+var_s28]
-			BytePattern::temp_instance().find_pattern("44 8B 6D 67 45 3B FD");
-			if (BytePattern::temp_instance().has_size(1, u8"分岐処理の修正")) {
+			BytePattern::temp_instance().find_pattern("8B 7D 57 44 8B 6D 67 41 3B FD");
+			if (BytePattern::temp_instance().has_size(1, u8"分岐処理の修正 v3.3.3.2")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				//  mov     [rbp+3Fh+var_80], 0Fh （左）
-				mainTextAdjustmentProc4ReturnAddress1 = address + 0x20;
+				mainTextAdjustmentProc4ReturnAddress1 = address + 0x23;
 
 				//  mov     [rbp+3Fh+var_80], 0Fh （右） /  jle     loc_{xxxxx}
-				mainTextAdjustmentProc4ReturnAddress2 = Injector::GetBranchDestination(address + 7).as_int();
+				mainTextAdjustmentProc4ReturnAddress2 = Injector::GetBranchDestination(address + 0xA).as_int();
 
-				Injector::MakeJMP(address, mainTextAdjustmentProc4, true);
+				Injector::MakeJMP(address, mainTextAdjustmentProc4v3332, true);
 			}
 			else {
-				e.unmatch.mainTextAdjustmentProc4Injector = true;
+				// r13d, [rbp+3Fh+var_s28]
+				BytePattern::temp_instance().find_pattern("44 8B 6D 67 45 3B FD");
+				if (BytePattern::temp_instance().has_size(1, u8"分岐処理の修正 v3.3.3.[0-1]")) {
+					uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+					//  mov     [rbp+3Fh+var_80], 0Fh （左）
+					mainTextAdjustmentProc4ReturnAddress1 = address + 0x20;
+
+					//  mov     [rbp+3Fh+var_80], 0Fh （右） /  jle     loc_{xxxxx}
+					mainTextAdjustmentProc4ReturnAddress2 = Injector::GetBranchDestination(address + 7).as_int();
+
+					Injector::MakeJMP(address, mainTextAdjustmentProc4, true);
+				}
+				else {
+					e.unmatch.mainTextAdjustmentProc4Injector = true;
+				}
 			}
 			break;
 		default:
