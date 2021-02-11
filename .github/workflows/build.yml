@@ -19,7 +19,7 @@ jobs:
         nuget-version: '5.3.1'
 
     - name: Restore nuget db
-      run: nuget restore EuropaEnginePatcher.sln
+      run: nuget restore CK2JPS.sln
 
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
