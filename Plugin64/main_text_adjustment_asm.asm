@@ -184,6 +184,28 @@ mainTextAdjustmentProc2 ENDP
 
 ;-------------------------------------------;
 
+mainTextAdjustmentProc2v3332 PROC
+	cmp		mainTextAdjustmentProc1TmpCharacter,100h;
+	jb		JMP_A;
+	add		esi,2;
+
+JMP_A:
+	inc		esi;
+	mov		r9, qword ptr [rbx+10h];
+	cmp		esi, r9d;
+	jge		JMP_B;
+	mov		r10d, dword ptr [rbp + 3Fh + 38h];
+
+	push	mainTextAdjustmentProc2ReturnAddress1;
+	ret;
+
+JMP_B:
+	push	mainTextAdjustmentProc2ReturnAddress2;
+	ret;
+mainTextAdjustmentProc2v3332 ENDP
+
+;-------------------------------------------;
+
 mainTextAdjustmentProc3 PROC
 
 	cmp		cl, ESCAPE_SEQ_1;

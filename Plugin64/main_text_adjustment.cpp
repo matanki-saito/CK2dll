@@ -7,6 +7,7 @@ namespace MainTextAdjustment {
 		void mainTextAdjustmentProc1();
 		void mainTextAdjustmentProc1v3332();
 		void mainTextAdjustmentProc2();
+		void mainTextAdjustmentProc2v3332();
 		void mainTextAdjustmentProc3();
 		void mainTextAdjustmentProc4();
 		void mainTextAdjustmentProc5();
@@ -29,7 +30,7 @@ namespace MainTextAdjustment {
 		case v3_3_0:
 			// movzx   eax, byte ptr [rax+rdx]
 			BytePattern::temp_instance().find_pattern("0F B6 04 10 48 8B BC C7 E8 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, u8"文字取得")) {
+			if (BytePattern::temp_instance().has_size(1, u8"文字取得 v3.3.3.2")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jz      loc_xxxxx
@@ -40,7 +41,7 @@ namespace MainTextAdjustment {
 			else {
 				// movzx   eax, byte ptr [rax+rdx]
 				BytePattern::temp_instance().find_pattern("0F B6 04 10 4D 8B BC C3 E8 00 00 00");
-				if (BytePattern::temp_instance().has_size(1, u8"文字取得")) {
+				if (BytePattern::temp_instance().has_size(1, u8"文字取得 v3.3.3.[0-1]")) {
 					uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 					// jz      loc_xxxxx
@@ -65,21 +66,36 @@ namespace MainTextAdjustment {
 
 		switch (options.version) {
 		case v3_3_0:
-			// movzx   eax, byte ptr [rax+rdx]
-			BytePattern::temp_instance().find_pattern("FF C7 4C 8B 4B 10 41 3B F9");
-			if (BytePattern::temp_instance().has_size(1, u8"カウントアップ")) {
+			// inc	esi
+			BytePattern::temp_instance().find_pattern("FF C6 4C 8B 4B 10 41 3B F1");
+			if (BytePattern::temp_instance().has_size(1, u8"カウントアップ v3.3.3.2")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jmp     loc_xxxxx
-				mainTextAdjustmentProc2ReturnAddress1 = address + 0x17;
+				mainTextAdjustmentProc2ReturnAddress1 = address + 0x13;
 
 				// jge     {loc_xxxxx}
 				mainTextAdjustmentProc2ReturnAddress2 = Injector::GetBranchDestination(address + 0x9).as_int();
 
-				Injector::MakeJMP(address, mainTextAdjustmentProc2, true);
+				Injector::MakeJMP(address, mainTextAdjustmentProc2v3332, true);
 			}
 			else {
-				e.unmatch.mainTextAdjustmentProc2Injector = true;
+				// inc	edi
+				BytePattern::temp_instance().find_pattern("FF C7 4C 8B 4B 10 41 3B F9");
+				if (BytePattern::temp_instance().has_size(1, u8"カウントアップ v3.3.3.[0-1]")) {
+					uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+					// jmp     loc_xxxxx
+					mainTextAdjustmentProc2ReturnAddress1 = address + 0x17;
+
+					// jge     {loc_xxxxx}
+					mainTextAdjustmentProc2ReturnAddress2 = Injector::GetBranchDestination(address + 0x9).as_int();
+
+					Injector::MakeJMP(address, mainTextAdjustmentProc2, true);
+				}
+				else {
+					e.unmatch.mainTextAdjustmentProc2Injector = true;
+				}
 			}
 			break;
 		default:
