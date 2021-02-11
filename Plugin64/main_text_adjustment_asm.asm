@@ -402,4 +402,24 @@ JMP_A:
 	ret;
 mainTextAdjustmentProc6 ENDP
 
+;-------------------------------------------;
+
+mainTextAdjustmentProc6v3332 PROC
+	mov		r11d, esi;
+	mov		dword ptr [rbp + 3Fh + 18h], esi;
+	mov		ecx, esi;
+	mov		dword ptr [rbp + 3Fh + 28h], ecx;
+
+	cmp		dword ptr [mainTextAdjustmentProc1TmpCharacter], 100h;
+	jae		JMP_A;
+	mov		r12d, r15d; // r15d‚ª0. ‚±‚ê‚ðƒLƒƒƒ“ƒZƒ‹‚·‚é
+
+JMP_A:
+	mov		r10d, dword ptr [rbp + 3Fh + 38h];
+	movzx	eax, byte ptr [rbp + 3Fh + 48h];
+
+	push	mainTextAdjustmentProc6ReturnAddress;
+	ret;
+mainTextAdjustmentProc6v3332 ENDP
+
 END

@@ -14,6 +14,7 @@ namespace MainTextAdjustment {
 		void mainTextAdjustmentProc4v3332();
 		void mainTextAdjustmentProc5();
 		void mainTextAdjustmentProc6();
+		void mainTextAdjustmentProc6v3332();
 		uintptr_t mainTextAdjustmentProc1ReturnAddress;
 		uintptr_t mainTextAdjustmentProc2ReturnAddress1;
 		uintptr_t mainTextAdjustmentProc2ReturnAddress2;
@@ -223,18 +224,30 @@ namespace MainTextAdjustment {
 
 		switch (options.version) {
 		case v3_3_0:
-			// mov     r15d, edi
-			BytePattern::temp_instance().find_pattern("44 8B FF 8B CF 89 4D 67 45 8B E6 44 8B 55 77");
+			// mov     r11d, esi
+			BytePattern::temp_instance().find_pattern("44 8B DE 89 75 57 8B CE 89 4D 67 45 8B E7 44 8B 55 77");
 			if (BytePattern::temp_instance().has_size(1, u8"変数リセットキャンセル")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jmp     short loc_xxxxx
-				mainTextAdjustmentProc6ReturnAddress = address + 0x16;
+				mainTextAdjustmentProc6ReturnAddress = address + 0x19;
 
-				Injector::MakeJMP(address, mainTextAdjustmentProc6, true);
+				Injector::MakeJMP(address, mainTextAdjustmentProc6v3332, true);
 			}
 			else {
-				e.unmatch.mainTextAdjustmentProc6Injector = true;
+				// mov     r15d, edi
+				BytePattern::temp_instance().find_pattern("44 8B FF 8B CF 89 4D 67 45 8B E6 44 8B 55 77");
+				if (BytePattern::temp_instance().has_size(1, u8"変数リセットキャンセル")) {
+					uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+					// jmp     short loc_xxxxx
+					mainTextAdjustmentProc6ReturnAddress = address + 0x16;
+
+					Injector::MakeJMP(address, mainTextAdjustmentProc6, true);
+				}
+				else {
+					e.unmatch.mainTextAdjustmentProc6Injector = true;
+				}
 			}
 			break;
 		default:
