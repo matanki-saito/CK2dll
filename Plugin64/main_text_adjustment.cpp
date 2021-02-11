@@ -195,7 +195,7 @@ namespace MainTextAdjustment {
 		switch (options.version) {
 		case v3_3_0:
 			// inc     r8
-			BytePattern::temp_instance().find_pattern("49 FF C0 48 8B 54 24 20 48 8D 4C 24 20 E8 ? ? ? ? 48 C7 45 97 0F 00 00 00 4C 89 75 8F C6 44 24 20 00 4C 8B 45 E7");
+			BytePattern::temp_instance().find_pattern("49 FF C0 48 8B 54 24 20 48 8D 4C 24 20 E8 ? ? ? ? 48 C7 45 97 0F 00 00 00 4C 89 ? 8F C6 44 24 20 00 4C 8B 45 E7");
 			if (BytePattern::temp_instance().has_size(1, u8"分岐処理（右）の修正")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
