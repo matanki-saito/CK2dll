@@ -6,6 +6,7 @@ namespace MainTextOverflow {
 		void mainTextOverflowProc1();
 		void mainTextOverflowProc1v3332();
 		void mainTextOverflowProc2();
+		void mainTextOverflowProc2v3332();
 		void mainTextOverflowProc3();
 		uintptr_t mainTextOverflowProc1ReturnAddress;
 		uintptr_t mainTextOverflowProc2ReturnAddress1;
@@ -58,20 +59,35 @@ namespace MainTextOverflow {
 		switch (options.version) {
 		case v3_3_0:
 			// movzx   eax, byte ptr [rax+rdi]
-			BytePattern::temp_instance().find_pattern("8B 53 10 FF C7 3B FA 0F 8D FB 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, u8"カウントアップ")) {
+			BytePattern::temp_instance().find_pattern("8B 53 10 FF C6 3B F2 0F 8D 02 01 00 00");
+			if (BytePattern::temp_instance().has_size(1, u8"カウントアップ v3.3.3.2")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jge loc {xxxxx}
 				mainTextOverflowProc2ReturnAddress1 = Injector::GetBranchDestination(address + 7).as_int();
 
-				// jmp loc_xxxxx
+				// edi, dword ptr [rsp+78h+arg_28]
 				mainTextOverflowProc2ReturnAddress2 = address + 0x1D;
 
-				Injector::MakeJMP(address, mainTextOverflowProc2, true);
+				Injector::MakeJMP(address, mainTextOverflowProc2v3332, true);
 			}
 			else {
-				e.unmatch.mainTextOverflowProc1Injector = true;
+				// movzx   eax, byte ptr [rax+rdi]
+				BytePattern::temp_instance().find_pattern("8B 53 10 FF C7 3B FA 0F 8D FB 00 00 00");
+				if (BytePattern::temp_instance().has_size(1, u8"カウントアップ v3.3.3.[0-1]")) {
+					uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+					// jge loc {xxxxx}
+					mainTextOverflowProc2ReturnAddress1 = Injector::GetBranchDestination(address + 7).as_int();
+
+					// jmp loc_xxxxx
+					mainTextOverflowProc2ReturnAddress2 = address + 0x1D;
+
+					Injector::MakeJMP(address, mainTextOverflowProc2, true);
+				}
+				else {
+					e.unmatch.mainTextOverflowProc1Injector = true;
+				}
 			}
 			break;
 		default:

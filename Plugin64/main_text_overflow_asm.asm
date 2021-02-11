@@ -148,6 +148,32 @@ mainTextOverflowProc2 ENDP
 
 ;------------------;
 
+mainTextOverflowProc2v3332 PROC
+	mov		edx, dword ptr [rbx + 10h];
+
+	cmp		multibyteFlag, 0;
+	jz		JMP_A;
+	add		esi,2;
+
+JMP_A:
+	inc		esi;
+	cmp		esi, edx;
+	jge		JMP_B;
+
+	mov		r8d, dword ptr [rsp + 78h + 20h];
+	mov		r11d, dword ptr [rsp + 78h + 28h];
+
+	push	mainTextOverflowProc2ReturnAddress2;
+	ret;
+
+JMP_B:
+	push	mainTextOverflowProc2ReturnAddress1;
+	ret;
+
+mainTextOverflowProc2v3332 ENDP
+
+;------------------;
+
 mainTextOverflowProc3 PROC
 	lea		eax, [rdi - 3];
 	mov		byte ptr [rax + rdx], 20h;
