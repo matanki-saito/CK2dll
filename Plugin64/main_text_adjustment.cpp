@@ -5,6 +5,7 @@
 namespace MainTextAdjustment {
 	extern "C" {
 		void mainTextAdjustmentProc1();
+		void mainTextAdjustmentProc1v3332();
 		void mainTextAdjustmentProc2();
 		void mainTextAdjustmentProc3();
 		void mainTextAdjustmentProc4();
@@ -27,17 +28,29 @@ namespace MainTextAdjustment {
 		switch (options.version) {
 		case v3_3_0:
 			// movzx   eax, byte ptr [rax+rdx]
-			BytePattern::temp_instance().find_pattern("0F B6 04 10 4D 8B BC C3 E8 00 00 00");
+			BytePattern::temp_instance().find_pattern("0F B6 04 10 48 8B BC C7 E8 00 00 00");
 			if (BytePattern::temp_instance().has_size(1, u8"文字取得")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jz      loc_xxxxx
 				mainTextAdjustmentProc1ReturnAddress = address + 0xF;
 
-				Injector::MakeJMP(address, mainTextAdjustmentProc1, true);
+				Injector::MakeJMP(address, mainTextAdjustmentProc1v3332, true);
 			}
 			else {
-				e.unmatch.mainTextAdjustmentProc1Injector = true;
+				// movzx   eax, byte ptr [rax+rdx]
+				BytePattern::temp_instance().find_pattern("0F B6 04 10 4D 8B BC C3 E8 00 00 00");
+				if (BytePattern::temp_instance().has_size(1, u8"文字取得")) {
+					uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+					// jz      loc_xxxxx
+					mainTextAdjustmentProc1ReturnAddress = address + 0xF;
+
+					Injector::MakeJMP(address, mainTextAdjustmentProc1, true);
+				}
+				else {
+					e.unmatch.mainTextAdjustmentProc1Injector = true;
+				}
 			}
 			break;
 		default:

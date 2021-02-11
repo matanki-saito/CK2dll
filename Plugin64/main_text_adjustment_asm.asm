@@ -93,6 +93,74 @@ mainTextAdjustmentProc1 ENDP
 
 ;-------------------------------------------;
 
+mainTextAdjustmentProc1v3332 PROC
+	cmp		byte ptr[rax + rdx], ESCAPE_SEQ_1;
+	jz		JMP_A;
+	cmp		byte ptr[rax + rdx], ESCAPE_SEQ_2;
+	jz		JMP_B;
+	cmp		byte ptr[rax + rdx], ESCAPE_SEQ_3;
+	jz		JMP_C;
+	cmp		byte ptr[rax + rdx], ESCAPE_SEQ_4;
+	jz		JMP_D;
+	movzx	eax, byte ptr [rax + rdx];
+	jmp		JMP_E;
+
+JMP_A:
+	movzx	eax, word ptr[rax + rdx + 1];
+	jmp		JMP_F;
+
+JMP_B:
+	movzx	eax, word ptr[rax + rdx + 1];
+	sub		eax, SHIFT_2;
+	jmp		JMP_F;
+
+JMP_C:
+	movzx	eax, word ptr[rax + rdx + 1];
+	add		eax, SHIFT_3;
+	jmp		JMP_F;
+
+JMP_D:
+	movzx	eax, word ptr[rax + rdx + 1];
+	add		eax, SHIFT_4;
+
+JMP_F:
+	movzx	eax, ax;
+	cmp		eax, NO_FONT;
+
+	ja		JMP_E;
+	mov		eax, NOT_DEF;
+JMP_E:
+
+	cmp		eax, 20h;
+	jz		k_2_2;
+
+	cmp		eax, 100h;
+	ja		k_2_2;
+
+	cmp		dword ptr [mainTextAdjustmentProc1TmpCharacter], 100h;
+	jb		k_2_5;
+
+k_2_6:
+	mov		dword ptr[mainTextAdjustmentProc1TmpCharacter], 9;
+	jmp		k_2_3;
+
+k_2_5:
+	cmp		dword ptr[mainTextAdjustmentProc1TmpCharacter], 9;
+	jz		k_2_6;
+
+k_2_2:
+	mov		dword ptr[mainTextAdjustmentProc1TmpCharacter], eax;
+
+k_2_3:
+
+	mov		rdi, qword ptr [rdi + rax * 8 + 0E8h];
+	test    rdi, rdi;
+	push	mainTextAdjustmentProc1ReturnAddress;
+	ret;
+mainTextAdjustmentProc1v3332 ENDP
+
+;-------------------------------------------;
+
 mainTextAdjustmentProc2 PROC
 	cmp		mainTextAdjustmentProc1TmpCharacter,100h;
 	jb		JMP_A;
