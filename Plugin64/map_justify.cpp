@@ -108,27 +108,27 @@ namespace MapJustify {
 
 		switch (options.version) {
 		case v3_3_0:
-			// movzx   eax, byte ptr [rdi+rax]
-			BytePattern::temp_instance().find_pattern("0F B6 04 07 4D 8B 94 C4 E8 00 00 00");
-			if (BytePattern::temp_instance().has_size(1, u8"文字取得処理 v.3.3.3.[0-1]")) {
+			// versionが全く同じなまま更新されてしまった（3.3.3 -> 3.3.3）
+			// movzx   eax, byte ptr [rsi+rax]
+			BytePattern::temp_instance().find_pattern("0F B6 04 06 4D 8B 94 C4 E8 00 00 00");
+			if (BytePattern::temp_instance().has_size(1, u8"文字取得処理 v3.3.3.2")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jz      loc_xxxxx
 				mapJustifyProc4ReturnAddress = address + 0x0F;
 
-				Injector::MakeJMP(address, mapJustifyProc4, true);
+				Injector::MakeJMP(address, mapJustifyProc4v3332, true);
 			}
 			else {
-				// versionが全く同じなまま更新されてしまった（3.3.3 -> 3.3.3）
-				// movzx   eax, byte ptr [rsi+rax]
-				BytePattern::temp_instance().find_pattern("0F B6 04 06 4D 8B 94 C4 E8 00 00 00");
-				if (BytePattern::temp_instance().has_size(1, u8"文字取得処理 v3.3.3.2")) {
+				// movzx   eax, byte ptr [rdi+rax]
+				BytePattern::temp_instance().find_pattern("0F B6 04 07 4D 8B 94 C4 E8 00 00 00");
+				if (BytePattern::temp_instance().has_size(1, u8"文字取得処理 v.3.3.3.[0-1]")) {
 					uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 					// jz      loc_xxxxx
 					mapJustifyProc4ReturnAddress = address + 0x0F;
 
-					Injector::MakeJMP(address, mapJustifyProc4v3332, true);
+					Injector::MakeJMP(address, mapJustifyProc4, true);
 				}
 				else {
 					e.unmatch.mapJustifyProc4Injector = true;
