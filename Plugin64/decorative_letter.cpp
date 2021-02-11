@@ -7,6 +7,7 @@ namespace DecorativeLetter {
 		void decorativeLetterProc1v3332();
 		void decorativeLetterProc2();
 		void decorativeLetterProc3();
+		void decorativeLetterProc3v3332();
 		void decorativeLetterProc4();
 		void decorativeLetterProc5();
 		void decorativeLetterProc6();
@@ -103,17 +104,29 @@ namespace DecorativeLetter {
 		switch (options.version) {
 		case v3_3_0:
 			// mov     rbx, rax
-			BytePattern::temp_instance().find_pattern("48 8B D8 44 8B 8D E8 02 00 00");
-			if (BytePattern::temp_instance().has_size(1, u8"切り出した残りの部分の処理")) {
+			BytePattern::temp_instance().find_pattern("48 8B D8 44 8B 8D E0 02 00 00 41 B8 01 00 00 00");
+			if (BytePattern::temp_instance().has_size(1, u8"切り出した残りの部分の処理 v3.3.3.2")) {
 				uintptr_t address = BytePattern::temp_instance().get_first().address();
 
 				// jnz	short loc_xxxxx
 				decorativeLetterProc3ReturnAddress = address + 0x1E;
 
-				Injector::MakeJMP(address, decorativeLetterProc3, true);
+				Injector::MakeJMP(address, decorativeLetterProc3v3332, true);
 			}
 			else {
-				e.unmatch.decorativeLetterProc3Injector = true;
+				// mov     rbx, rax
+				BytePattern::temp_instance().find_pattern("48 8B D8 44 8B 8D E8 02 00 00");
+				if (BytePattern::temp_instance().has_size(1, u8"切り出した残りの部分の処理 v3.3.3.[0-1]")) {
+					uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+					// jnz	short loc_xxxxx
+					decorativeLetterProc3ReturnAddress = address + 0x1E;
+
+					Injector::MakeJMP(address, decorativeLetterProc3, true);
+				}
+				else {
+					e.unmatch.decorativeLetterProc3Injector = true;
+				}
 			}
 			break;
 		default:

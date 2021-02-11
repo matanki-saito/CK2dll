@@ -183,6 +183,44 @@ decorativeLetterProc3 ENDP
 
 ;----------------------;
 
+decorativeLetterProc3v3332 PROC
+	mov     rbx, rax;
+	mov		r9d, dword ptr [rbp + 19B0h - 16D0h];
+
+	lea		rcx, [rbp + 19B0h - 16E0h];
+	cmp		dword ptr[rcx + 10h], 10h;
+	jb		JMP_A;
+	mov		rcx, [rcx];
+
+JMP_A:
+	mov		al, byte ptr [rcx];
+	cmp		al, ESCAPE_SEQ_1;
+	jz		JMP_B;
+	cmp		al, ESCAPE_SEQ_2;
+	jz		JMP_B;
+	cmp		al, ESCAPE_SEQ_3;
+	jz		JMP_B;
+	cmp		al, ESCAPE_SEQ_4;
+	jz		JMP_B;
+	jmp		JMP_C;
+
+JMP_B:
+	mov		r8d, 3;
+	jmp		JMP_D;
+
+JMP_C:
+	mov		r8d, 1;
+
+JMP_D:
+	lea		rdx, [rbp + 19B0h - 768h];
+	lea		rcx, [rbp + 19B0h - 16E0h];
+
+	push	decorativeLetterProc3ReturnAddress;
+	ret;
+decorativeLetterProc3v3332 ENDP
+
+;----------------------;
+
 decorativeLetterProc4 PROC
 	mov		rbx, rax;
 	lea		rdx, [rbp + 810h - 500h];
