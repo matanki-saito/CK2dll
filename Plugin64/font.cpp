@@ -107,7 +107,7 @@ namespace Font {
 		case v3_3_0:
 			BytePattern::temp_instance().find_pattern("B9 00 00 00 02");
 			// CKIII発売日に3.3.3自体がアップデートしたのでそれの対策
-			if (BytePattern::temp_instance().count() == 1 || BytePattern::temp_instance().count() == 2) {
+			if (BytePattern::temp_instance().count() == 1 || BytePattern::temp_instance().count() == 2 || BytePattern::temp_instance().count() == 3) {
 				BytePattern::LoggingInfo("Font size limit:[OK]");
 
 				// mov     ecx, 2000000h
